@@ -1,0 +1,19 @@
+Our Offices section:
+  by: .//div[contains(@class, 'section')][8]
+
+  Regions: .tabs__link
+
+  Locations:
+    by: .locations-viewer__country
+
+    Name: .locations-viewer__country-title
+
+  DetailsSection:
+    by: .locations-viewer__country-details.active
+
+    Offices:
+      by: .locations-viewer__office
+
+      Name: .locations-viewer__office-name
+      Address: .locations-viewer__office-address
+      Contact: .locations-viewer__office-contact

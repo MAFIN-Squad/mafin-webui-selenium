@@ -1,0 +1,25 @@
+url: about/who-we-are/contact
+
+The reason for your inquiry:
+  by: //select[@name='mail_subjects']/..
+  base: singleselectioncombobox
+
+Location:
+  by: //select[@name='user_country']/..
+  base: singleselectioncombobox
+
+First name: //input[@name='user_first_name']
+
+Last name: //input[@name='user_last_name']
+
+Email: //input[@name='user_email']
+
+Phone: //input[@name='user_phone']
+
+HowDidYouHearAboutEpam:
+  by: //select[@name='user_comment_how_hear_about']/..
+  base: singleselectioncombobox
+
+Consent:
+  by: id new_form_gdprConsent
+  base: checkbox

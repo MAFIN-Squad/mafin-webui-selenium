@@ -1,0 +1,7 @@
+﻿SelectionPane: .selected-params
+
+Flyout:
+  by: .multi-select-dropdown-container
+
+  Option:
+    by: .//li/label[.//span[text() = '{name}']]

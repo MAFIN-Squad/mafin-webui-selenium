@@ -1,0 +1,30 @@
+header:
+  by: .header-ui
+
+  navigation:
+    by: .top-navigation__row
+
+    items:
+      by: .top-navigation__item
+
+      title: css a
+
+      flyout:
+        by: .top-navigation__flyout
+
+        sub item: //a[text() = '{name}']
+
+  Contact us button: .cta-button-ui
+
+  Search:
+    by: .header-search-ui
+
+    SearchButton: .header-search__button
+
+    Search input: id new_form_search
+    FindButton: .header-search__submit
+
+Cookies pane:
+  by: id onetrust-banner-sdk
+
+  AcceptAll: id onetrust-accept-btn-handler

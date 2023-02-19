@@ -1,0 +1,6 @@
+url: /careers/job-listings
+
+ResultItems:
+  by: .search-result__item
+
+  ViewAndApplyButton: .search-result__item-apply

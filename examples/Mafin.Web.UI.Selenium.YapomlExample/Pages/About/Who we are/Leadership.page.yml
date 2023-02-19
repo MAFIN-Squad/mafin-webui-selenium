@@ -1,0 +1,7 @@
+url: /about/who-we-are/leadership
+
+Directors:
+  by: .leadership-viewer__info
+
+  Name: .leadership-viewer__link
+  Title: .leadership-viewer__title

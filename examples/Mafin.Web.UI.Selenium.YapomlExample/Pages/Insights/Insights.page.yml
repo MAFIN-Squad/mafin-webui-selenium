@@ -1,0 +1,15 @@
+Filter:
+  by: .detail-pages-filter__top-panel
+
+  Industry:
+    by: .//select[contains(@class, 'detail-pages-filter__select--industries')]/..
+    base: multi_selection_combobox
+
+  Content type:
+    by: .//select[contains(@class, 'detail-pages-filter__select--content-types')]/..
+    base: multi_selection_combobox
+
+Tags:
+  by: .filter-tag
+
+FilterErrorMessage: .detail-pages-filter__error-message

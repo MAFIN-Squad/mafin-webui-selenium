@@ -1,0 +1,11 @@
+﻿Arrow: .select2-selection__arrow
+
+Flyout:
+  by: ./span[contains(@class, 'select2-container--default')][2]
+
+  Groups:
+    by: .//li[@role='list']
+
+    Name: ./strong
+
+    Options: .//li[@role='option']

@@ -1,0 +1,14 @@
+url: /careers
+
+JobFilter:
+  by: id jobSearchFilterForm
+
+  Location:
+    by: .//select[@name='location']/..
+    base: singleselectionwithgroupscombobox
+
+  Skill:
+    by: .job-search__departments
+    base: multiselectioncombobox
+
+  FindButton: .recruiting-search__submit
