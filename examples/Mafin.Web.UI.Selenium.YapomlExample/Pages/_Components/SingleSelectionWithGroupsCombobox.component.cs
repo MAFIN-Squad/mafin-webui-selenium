@@ -1,13 +1,13 @@
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages.Components;
 
-partial class SingleSelectionWithGroupsComboboxComponent
+partial class SingleSelectionWithGroupsComboboxComponent<TComponent, TConditions>
 {
     public void Expand()
     {
         Arrow.Click();
     }
 
-    public SingleSelectionWithGroupsComboboxComponent Select(string groupName, string optionName)
+    public TComponent Select(string groupName, string optionName)
     {
         Expand();
 
@@ -16,6 +16,6 @@ partial class SingleSelectionWithGroupsComboboxComponent
             .Options.First(o => o.Text.TrimEnd() == optionName)
             .Click();
 
-        return this;
+        return component;
     }
 }
