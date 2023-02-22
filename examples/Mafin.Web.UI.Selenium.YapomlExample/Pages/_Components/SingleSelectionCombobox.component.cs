@@ -1,6 +1,6 @@
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages.Components;
 
-partial class SingleSelectionComboboxComponent
+partial class SingleSelectionComboboxComponent<TComponent, TConditions>
 {
     public string SelectedOption => Selected.Text.Trim();
 
@@ -9,12 +9,12 @@ partial class SingleSelectionComboboxComponent
         Arrow.Click();
     }
 
-    public SingleSelectionComboboxComponent Select(string optionName)
+    public TComponent Select(string optionName)
     {
         Expand();
 
         Flyout.Options.First(o => o.Text.TrimEnd() == optionName).Click();
 
-        return this;
+        return component;
     }
 }

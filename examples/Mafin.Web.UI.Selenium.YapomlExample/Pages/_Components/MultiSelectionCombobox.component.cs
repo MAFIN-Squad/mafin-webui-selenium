@@ -1,6 +1,6 @@
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages.Components;
 
-partial class MultiSelectionComboboxComponent
+partial class MultiSelectionComboboxComponent<TComponent, TConditions>
 {
     public void Expand()
     {
