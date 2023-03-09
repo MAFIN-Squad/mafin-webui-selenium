@@ -10,7 +10,7 @@ namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
 public abstract class AbstractDriverStrategy
 {
-    protected readonly WebConfiguration _webConfiguration;
+    private readonly WebConfiguration _webConfiguration;
 
     protected AbstractDriverStrategy(WebConfiguration webConfiguration)
     {
