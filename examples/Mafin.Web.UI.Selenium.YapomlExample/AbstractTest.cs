@@ -20,6 +20,7 @@ public abstract class AbstractTest
         {
             DriverType = "chrome",
             RunType = RunType.Local,
+            IsMaximizeWindow = true,
             RemoteConfig = new RemoteConfig
             {
                 BrowserVersion = "97.0",
