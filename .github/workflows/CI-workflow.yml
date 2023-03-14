@@ -26,8 +26,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore --configuration Release
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+    - name: Run Unit Tests
+      run: dotnet test tests/Mafin.Web.UI.Selenium.Tests.Unit/Mafin.Web.UI.Selenium.Tests.Unit.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
 
     - name: Code Coverage Report      
       uses: irongut/CodeCoverageSummary@v1.3.0
@@ -48,6 +48,12 @@ jobs:
       with:
         recreate: true
         path: code-coverage-results.md
+        
+    - name: Run Selenium Tests
+      run: dotnet test examples/Mafin.Web.UI.Selenium.Example/Mafin.Web.UI.Selenium.Example.csproj --configuration Release --no-build
+      
+    - name: Run Selenium Yapoml Tests
+      run: dotnet test examples/Mafin.Web.UI.Selenium.YapomlExample/Mafin.Web.UI.Selenium.YapomlExample.csproj --configuration Release --no-build
         
     - name: Pack
       if: success() || failure()
