@@ -29,8 +29,7 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
 
-    - name: Code Coverage Report
-      if: success() || failure()
+    - name: Code Coverage Report      
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: coverage/**/coverage.cobertura.xml
@@ -45,7 +44,7 @@ jobs:
 
     - name: Add Coverage PR Comment      
       uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request' && (success() || failure())
+      if: github.event_name == 'pull_request'
       with:
         recreate: true
         path: code-coverage-results.md
