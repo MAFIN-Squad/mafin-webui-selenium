@@ -4,6 +4,8 @@ using Mafin.Web.UI.Selenium.Meta;
 using Mafin.Web.UI.Selenium.Models;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Safari;
 
 namespace Mafin.Web.UI.Selenium.Example.Tests;
 
@@ -20,6 +22,12 @@ public abstract class AbstractTest
         {
             DriverType = "chrome",
             RunType = RunType.Local,
+            Arguments = new List<string>() { "--start-maximized", "--lang=en" },
+            Preferences = new Dictionary<string, object>
+            {
+                ["credentials_enable_service"] = false,
+                ["profile.password_manager_enabled"] = false
+            },
             RemoteConfig = new RemoteConfig
             {
                 BrowserVersion = "97.0",
@@ -44,7 +52,7 @@ public abstract class AbstractTest
     [TearDown]
     public void TearDownUi()
     {
-        driver.Quit();
+        driver?.Quit();
     }
 }
 

@@ -1,30 +1,30 @@
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
 using WebDriverManager.DriverConfigs;
 using WebDriverManager.DriverConfigs.Impl;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
-public class ChromeStrategy : AbstractDriverStrategy
+public class EdgeStrategy : AbstractDriverStrategy
 {
-    public ChromeStrategy(WebConfiguration webConfiguration)
+    public EdgeStrategy(WebConfiguration webConfiguration)
         : base(webConfiguration)
     {
     }
 
     protected override IWebDriver GetSpecificDriver()
     {
-        return new ChromeDriver((ChromeOptions)GetDriverSpecificOptions());
+        return new EdgeDriver((EdgeOptions)GetDriverSpecificOptions());
     }
 
     protected override IDriverConfig GetDriverSpecificConfig()
     {
-        return new ChromeConfig();
+        return new EdgeConfig();
     }
 
     protected override DriverOptions GetDriverSpecificOptions()
     {
-        return BuildDriverOptions<ChromeOptions>();
+        return BuildDriverOptions<EdgeOptions>();
     }
 }
