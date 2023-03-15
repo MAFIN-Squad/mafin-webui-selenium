@@ -50,9 +50,11 @@ jobs:
         path: code-coverage-results.md
         
     - name: Run Selenium Tests
+      if: success() || failure()
       run: dotnet test examples/Mafin.Web.UI.Selenium.Example/Mafin.Web.UI.Selenium.Example.csproj --configuration Release --no-build
       
     - name: Run Selenium Yapoml Tests
+      if: success() || failure()
       run: dotnet test examples/Mafin.Web.UI.Selenium.YapomlExample/Mafin.Web.UI.Selenium.YapomlExample.csproj --configuration Release --no-build
         
     - name: Pack
