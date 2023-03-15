@@ -29,11 +29,6 @@ public abstract class AbstractDriverStrategy
             GetLocalDriver() :
             GetRemoteDriver();
 
-        if (_webConfiguration.IsMaximizeWindow)
-        {
-            driver.Manage().Window.Maximize();
-        }
-
         return driver;
     }
 

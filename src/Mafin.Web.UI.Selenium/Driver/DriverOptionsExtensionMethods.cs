@@ -8,7 +8,7 @@ namespace Mafin.Web.UI.Selenium.Driver;
 /// <summary>
 /// Presents extension methods for <see cref="DriverOptions"/>.
 /// </summary>
-internal static class DriverOptionsExtensionMethods
+internal static class DriverOptionsExtensions
 {
     /// <summary>
     /// Adds driver arguments to the <paramref name="options"/>.

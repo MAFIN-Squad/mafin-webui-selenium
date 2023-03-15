@@ -22,6 +22,4 @@ public class WebConfiguration
     public List<string> Extensions { get; set; }
 
     public Dictionary<string, object> Preferences { get; set; }
-
-    public bool IsMaximizeWindow { get; set; }
 }
