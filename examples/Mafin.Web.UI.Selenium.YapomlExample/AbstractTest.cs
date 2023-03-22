@@ -20,6 +20,12 @@ public abstract class AbstractTest
         {
             DriverType = "chrome",
             RunType = RunType.Local,
+            Arguments = new List<string>() { "--start-maximized", "--lang=en" },
+            Preferences = new Dictionary<string, object>
+            {
+                ["credentials_enable_service"] = false,
+                ["profile.password_manager_enabled"] = false
+            },
             RemoteConfig = new RemoteConfig
             {
                 BrowserVersion = "97.0",
