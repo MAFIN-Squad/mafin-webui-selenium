@@ -64,6 +64,8 @@ jobs:
     - name: Git Version
       if: success() || failure()
       uses: codacy/git-version@2.4.0
+      with:
+        release-branch: main
       
     - name: Upload Pack Artifact
       if: success() || failure()
