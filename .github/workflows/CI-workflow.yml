@@ -86,12 +86,16 @@ jobs:
       uses: codacy/git-version@2.4.0
       with:
         release-branch: main
+        
+    - name: Use the version
+        run:|
+          echo ${{ steps.version.outputs.version }}
       
     - name: Upload Pack Artifact
       if: success() || failure()
       uses: actions/upload-artifact@v3.1.2
       with:    
-        name: uiframeworkpack:${{steps.version.outputs.version}}
+        name: uiframeworkpack
         path: artifact/**
         if-no-files-foud: error
         retention-days: 30
