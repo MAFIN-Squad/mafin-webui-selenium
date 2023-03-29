@@ -61,11 +61,14 @@ jobs:
       if: success() || failure()
       run: dotnet pack --configuration Release --output artifact/
       
+    - name: Git Version 
+      uses: codacy/git-version@2.4.0
+      
     - name: Upload Pack Artifact
       if: success() || failure()
       uses: actions/upload-artifact@v3.1.2
       with:    
-        name: uiframeworkpack
+        name: uiframeworkpack:${{steps.version.outputs.version}}
         path: artifact/**
         if-no-files-foud: error
         retention-days: 30
