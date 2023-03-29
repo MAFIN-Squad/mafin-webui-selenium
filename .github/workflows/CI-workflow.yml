@@ -61,7 +61,8 @@ jobs:
       if: success() || failure()
       run: dotnet pack --configuration Release --output artifact/
       
-    - name: Git Version 
+    - name: Git Version
+      if: success() || failure()
       uses: codacy/git-version@2.4.0
       
     - name: Upload Pack Artifact
