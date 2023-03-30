@@ -87,8 +87,9 @@ jobs:
       with:
         release-branch: main
         
-    - name: Use the version      
-        run:|
+    - name: Use the version
+      if: success() || failure()
+      run: |
           echo ${{ steps.version.outputs.version }}
       
     - name: Upload Pack Artifact
