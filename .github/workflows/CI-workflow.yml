@@ -87,8 +87,7 @@ jobs:
       with:
         release-branch: main
         
-    - name: Use the version
-      if: success() || failure()
+    - name: Use the version      
         run:|
           echo ${{ steps.version.outputs.version }}
       
