@@ -9,6 +9,7 @@ public class BaseEpamTest : AbstractTest
 {
     protected ActionsSteps _actionsSteps;
     protected BaseEpamPage _baseEpamPage;
+    protected HomePage _homePage;
     protected ContactUsPage _contactUsPage;
     protected NavigationBar _navigationBar;
     protected ServicesPage _servicesPage;
@@ -18,7 +19,7 @@ public class BaseEpamTest : AbstractTest
     protected CareersPage _careersPage;
     protected JobListeningPage _jobListeningPage;
     protected InsightsPage _insightsPage;
-    protected OurWorkPage _ourWorkPage;
+    protected ClientWorkPage _clientWorkPage;
 
     [SetUp]
     public void BaseEpamSetUp()
@@ -27,6 +28,7 @@ public class BaseEpamTest : AbstractTest
         _actionsSteps = new ActionsSteps(wdm);
         _baseEpamPage = new BaseEpamPage(wdm, _actionsSteps);
         wdm.SetActionsToIntercept(GetCommonInterceptActions(_baseEpamPage));
+        _homePage = new HomePage(wdm, _actionsSteps);
         _contactUsPage = new ContactUsPage(wdm, _actionsSteps);
         _servicesPage = new ServicesPage(wdm, _actionsSteps);
         _searchPage = new SearchPage(wdm, _actionsSteps);
@@ -36,7 +38,7 @@ public class BaseEpamTest : AbstractTest
         _navigationBar = new NavigationBar(wdm, _actionsSteps);
         _jobListeningPage = new JobListeningPage(wdm, _actionsSteps);
         _insightsPage = new InsightsPage(wdm, _actionsSteps);
-        _ourWorkPage = new OurWorkPage(wdm, _actionsSteps);
+        _clientWorkPage = new ClientWorkPage(wdm, _actionsSteps);
 
         _baseEpamPage.OpenSite();
     }

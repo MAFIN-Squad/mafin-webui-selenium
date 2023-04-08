@@ -7,7 +7,7 @@ namespace Mafin.Web.UI.Selenium.Example.Pages;
 
 public class NavigationBar : BaseEpamPage
 {
-    private const string BaseNavigationCssLocator = "ul[class='top-navigation__row']";
+    private const string BaseNavigationCssLocator = "a.top-navigation__item-link";
     private readonly Dictionary<NavigationMenu, By> _navigationMenuMapping;
 
     public NavigationBar(WdmExtended wdm, ActionsSteps actions)
@@ -16,8 +16,6 @@ public class NavigationBar : BaseEpamPage
         _navigationMenuMapping = new Dictionary<NavigationMenu, By>
         {
             { NavigationMenu.Services, Services },
-            { NavigationMenu.HowWeDoIt, HowWeDoIt },
-            { NavigationMenu.OurWork, OurWork },
             { NavigationMenu.Insights, Insights },
             { NavigationMenu.About, About },
             { NavigationMenu.Careers, Careers },
@@ -25,19 +23,15 @@ public class NavigationBar : BaseEpamPage
         };
     }
 
-    public By Services => By.CssSelector($"{BaseNavigationCssLocator} a[href='/services']");
+    public By Services => By.CssSelector($"{BaseNavigationCssLocator}[href='/services']");
 
-    public By HowWeDoIt => By.CssSelector($"{BaseNavigationCssLocator} a[href='/how-we-do-it']");
+    public By Insights => By.CssSelector($"{BaseNavigationCssLocator}[href='/insights']");
 
-    public By OurWork => By.CssSelector($"{BaseNavigationCssLocator} a[href='/our-work']");
+    public By About => By.CssSelector($"{BaseNavigationCssLocator}[href='/about']");
 
-    public By Insights => By.CssSelector($"{BaseNavigationCssLocator} a[href='/insights']");
+    public By Careers => By.CssSelector($"{BaseNavigationCssLocator}[href='/careers']");
 
-    public By About => By.CssSelector($"{BaseNavigationCssLocator} a[href='/about']");
-
-    public By Careers => By.CssSelector($"{BaseNavigationCssLocator} a[href='/careers']");
-
-    public By ContactUs => By.CssSelector("a[data-gtm-category='header-contact-cta']");
+    public By ContactUs => By.CssSelector("div.header__content > a[data-gtm-category='header-contact-cta']");
 
     public By SearchIcon => By.CssSelector("button[class*='header-search__button header__icon']");
 

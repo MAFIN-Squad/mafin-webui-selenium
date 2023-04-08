@@ -11,7 +11,7 @@ public class ServicesPage : BaseEpamPage
     {
     }
 
-    public By ContactUsButton => By.CssSelector("a[aria-label='button for accessibility']");
+    public By ContactUsButton => By.CssSelector("div[class='button'] a[href*='contact']");
 
     public override string Path => "services";
 }

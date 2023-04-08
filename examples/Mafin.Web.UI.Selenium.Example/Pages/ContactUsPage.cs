@@ -38,13 +38,13 @@ public class ContactUsPage : BaseEpamPage
     public By HowDidYouHearAboutEpamList => By.CssSelector("li[id*='how_hear_about-result']");
 
     // checkboxes
-    public By PrivatePolicyCheckBox => By.CssSelector("label[for='new_form_gdprConsent']");
+    public By PrivatePolicyCheckBox => By.CssSelector("label[for*='new_form_gdprConsent']");
 
-    public By PrivatePolicyCheckBoxInput => By.Id("new_form_gdprConsent");
+    public By PrivatePolicyCheckBoxInput => By.CssSelector("input[id*='new_form_gdprConsent']");
 
     public By SubscribeCheckBox => By.CssSelector("label[for*='form_constructor_subscription_checkbox']");
 
-    public By SubscribeCheckBoxInput => By.Name("subscriptions");
+    public By SubscribeCheckBoxInput => By.CssSelector("input[id*='subscription']");
 
     // methods
     public ContactUsPage FillMandatoryFields(ContactUsRequiredFieldsModel model)

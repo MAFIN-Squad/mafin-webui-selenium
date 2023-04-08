@@ -1,5 +1,8 @@
+using AngleSharp.Dom;
 using Mafin.Web.UI.Selenium.Example.Core;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Mafin.Web.UI.Selenium.Example.Steps;
 
@@ -19,7 +22,7 @@ public class ActionsSteps : BaseSteps
 
     public IWebElement Click(By by)
     {
-        return Click(GetElement(by));
+        return Click(Wdm.GetElement(by, after: d => d.FindElement(by).Enabled));
     }
 
     public IWebElement Click(IWebElement element)
@@ -62,6 +65,13 @@ public class ActionsSteps : BaseSteps
         var element = GetElement(by);
         element.Clear();
         element.SendKeys(text);
+        return element;
+    }
+
+    public IWebElement TypeTextWithJs(By by, string text)
+    {
+        var element = Wdm.GetElement(by, after: d => d.FindElement(by).Enabled);
+        Wdm.GetDriver().ExecuteJavaScript("arguments[0].value = arguments[1]", element, text);
         return element;
     }
 
