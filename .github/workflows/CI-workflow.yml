@@ -61,7 +61,7 @@ jobs:
     - name: Git Version
       if: success() || failure()
       id: version
-      uses: codacy/git-version@2.4.0
+      uses: battila7/get-version-action@v2      
       with:
         release-branch: main
         
