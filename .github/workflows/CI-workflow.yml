@@ -56,18 +56,19 @@ jobs:
       
     - name: Run Selenium Yapoml Tests
       if: success() || failure()
-      run: dotnet test examples/Mafin.Web.UI.Selenium.YapomlExample/Mafin.Web.UI.Selenium.YapomlExample.csproj --configuration Release --no-build
-        
-    - name: Pack
-      if: success() || failure()
-      run: dotnet pack --configuration Release --output artifact/
+      run: dotnet test examples/Mafin.Web.UI.Selenium.YapomlExample/Mafin.Web.UI.Selenium.YapomlExample.csproj --configuration Release --no-build    
       
     - name: Git Version
       if: success() || failure()
+      id: version
       uses: codacy/git-version@2.4.0
       with:
         release-branch: main
         
+    - name: Pack
+      if: success() || failure()
+      run: dotnet pack --configuration Release --no-restore --no-build -p:PackageVersion=${{ steps.version.otputs.version-without-v }} --output artifact/
+      
     - name: Use the version
       if: success() || failure()
       run: |
