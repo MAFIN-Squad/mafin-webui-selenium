@@ -35,7 +35,7 @@ public class NavigationBar : BaseEpamPage
 
     public By SearchIcon => By.CssSelector("button[class*='header-search__button header__icon']");
 
-    public By SearchInput => By.Id("new_form_search");
+    public By SearchInput => By.CssSelector(".search-results__input-holder input");
 
     public By FindButton => By.CssSelector(".header-search__submit");
 

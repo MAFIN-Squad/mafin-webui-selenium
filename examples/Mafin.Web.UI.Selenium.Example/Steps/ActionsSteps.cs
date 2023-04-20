@@ -62,7 +62,7 @@ public class ActionsSteps : BaseSteps
 
     public IWebElement TypeText(By by, string text)
     {
-        var element = GetElement(by);
+        var element = Wdm.GetElement(by, after: d => d.FindElement(by).Enabled);
         element.Clear();
         element.SendKeys(text);
         return element;
