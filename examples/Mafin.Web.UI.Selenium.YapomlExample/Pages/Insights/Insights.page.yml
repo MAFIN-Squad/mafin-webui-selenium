@@ -1,15 +1,6 @@
-Filter:
-  by: .detail-pages-filter__top-panel
-
-  Industry:
-    by: .//select[contains(@class, 'detail-pages-filter__select--industries')]/..
-    base: multi_selection_combobox
-
-  Content type:
-    by: .//select[contains(@class, 'detail-pages-filter__select--content-types')]/..
-    base: multi_selection_combobox
+Industry:
+    by: css div[class*='detail-pages-filter-23-ui multi-select-filter']
+    base: multi_selection_filter_list
 
 Tags:
-  by: .filter-tag
-
-FilterErrorMessage: .detail-pages-filter__error-message
+  by: .//li[@class='detail-pages-filter-23__filter-tag-item']

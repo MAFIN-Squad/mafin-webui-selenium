@@ -1,7 +1,7 @@
 url: /about/who-we-are/leadership
 
 Directors:
-  by: .leadership-viewer__info
+  by: .leadership-viewer-ui-23__info
 
-  Name: .leadership-viewer__link
-  Title: .leadership-viewer__title
+  Name: .leadership-viewer-ui-23__name
+  Title: .leadership-viewer-ui-23__title

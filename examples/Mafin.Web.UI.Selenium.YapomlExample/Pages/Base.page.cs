@@ -1,5 +1,7 @@
 using System.Drawing;
+using AngleSharp.Dom;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
 using Yapoml.Selenium.Services.Factory;
 using Yapoml.Selenium.Services.Locator;
 
@@ -98,7 +100,8 @@ partial class BasePage
             {
                 SearchButton.Click();
 
-                SearchInput.SendKeys(text);
+                SearchInput.When(it => it.IsDisplayed().IsEnabled());
+                WebDriver.ExecuteJavaScript("arguments[0].value = arguments[1]", SearchInput.WrappedElement, text);
 
                 if (usingKeyboard)
                 {
@@ -106,7 +109,7 @@ partial class BasePage
                 }
                 else
                 {
-                    FindButton.Click();
+                    FindButton.When(it => it.IsEnabled()).Click();
                 }
 
                 return SpaceOptions.Services.Get<IPageFactory>().Create<SearchPage>(WebDriver, new ElementHandlerRepository(), SpaceOptions);

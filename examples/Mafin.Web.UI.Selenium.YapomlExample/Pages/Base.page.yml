@@ -1,5 +1,5 @@
 header:
-  by: .header-ui
+  by: css header[class*='header-ui']
 
   navigation:
     by: .top-navigation__row
@@ -14,7 +14,8 @@ header:
 
         sub item: //a[text() = '{name}']
 
-  Contact us button: .cta-button-ui
+  Contact us button:
+    by: css div.header__content > a[data-gtm-category='header-contact-cta
 
   Search:
     by: .header-search-ui

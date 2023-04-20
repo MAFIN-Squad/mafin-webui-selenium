@@ -7,7 +7,7 @@ public class CareersTests : AbstractTest
     [Test]
     public void CheckSoftwareAndTestingEngineersPositions()
     {
-        Ya.HomePage.Navigate("CAREERS");
+        Ya.HomePage.Navigate("Careers");
 
         Assert.That(driver.Title, Is.EqualTo("Explore Professional Growth Opportunities | EPAM Careers"));
 
@@ -15,8 +15,10 @@ public class CareersTests : AbstractTest
 
         Ya.Careers.CareersPage.JobFilter.FindButton.Click();
 
+        var expectedItemName = Ya.Careers.JobListingPage.ResultItems.First().Name.Text;
+
         Ya.Careers.JobListingPage.ResultItems.First().ViewAndApplyButton.Click();
 
-        Assert.That(Ya.Careers.JobDetailPage.ApplyFor.Name.Text, Is.EqualTo("Engineering Team Lead"));
+        Assert.That(Ya.Careers.JobDetailPage.ApplyFor.Name.Text, Is.EqualTo(expectedItemName));
     }
 }
