@@ -1,8 +1,6 @@
-using AngleSharp.Dom;
 using Mafin.Web.UI.Selenium.Example.Core;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Mafin.Web.UI.Selenium.Example.Steps;
 
