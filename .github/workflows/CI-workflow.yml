@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [ "main" ]
   push:
+
+env:
+  PACKAGE_OUPUT_DIRECTORY: ${{ github.workspace }}\output
   
 jobs:
   build:
@@ -65,21 +68,9 @@ jobs:
       with:
         release-branch: main
         
-    - name: Pack
-      if: success() || failure()
-      run: dotnet pack --configuration Release --no-restore --no-build -p:PackageVersion=${{ steps.version.otputs.version-without-v }} --output artifact/
+    - name: Pack      
+      run: dotnet pack --configuration Release --no-restore --no-build -p:PackageVersion=${{ steps.version.otputs.version-without-v }} --include-symbols --output ${{ env.PACKAGE_OUPUT_DIRECTORY }}
       
-    - name: Use the version
-      if: success() || failure()
-      run: |
-          echo ${{ steps.version.outputs.version }}
-      
-    - name: Upload Pack Artifact
-      if: success() || failure()
-      uses: actions/upload-artifact@v3.1.2
-      with:    
-        name: uiframeworkpack
-        path: artifact/**
-        if-no-files-foud: error
-        retention-days: 30
+    - name: Push
+      run: dotnet nuget push ${{ env.PACKAGE_OUPUT_DIRECTORY }}/*.nupkg -k ${{ secrets.AUTH_TOKEN }} --skip-duplicate -s https://nuget.pkg.github.com/MAFIN-Squad/index.json
       
