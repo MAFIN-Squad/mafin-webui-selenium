@@ -5,7 +5,8 @@ name: Release and Publish flow
 
 on:  
   workflow_dispatch: 
-  push:    
+  push:
+    branches: [ "main" ]
 
 env:
   PACKAGE_OUPUT_DIRECTORY: ${{ github.workspace }}\output
