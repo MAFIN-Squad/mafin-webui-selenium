@@ -33,8 +33,7 @@ jobs:
     - name: Run Unit Tests
       run: dotnet test tests/Mafin.Web.UI.Selenium.Tests.Unit/Mafin.Web.UI.Selenium.Tests.Unit.csproj --configuration Release --no-build --verbosity normal    
 
-    - name: Git Version
-      if: success() || failure()
+    - name: Git Version      
       id: version
       uses: codacy/git-version@2.4.0      
       with:
