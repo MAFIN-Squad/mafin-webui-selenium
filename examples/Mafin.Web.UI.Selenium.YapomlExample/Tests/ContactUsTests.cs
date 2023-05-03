@@ -12,10 +12,10 @@ public class ContactUsTests : AbstractTest
         var contactUsPage = Ya.About.WhoWeAre.ContactPage;
 
         contactUsPage.TheReasonForYourInquiry.Select("Careers");
-        contactUsPage.FirstName.SendKeys("TestFirstName");
-        contactUsPage.LastName.SendKeys("TestLastName");
-        contactUsPage.Email.SendKeys("testemail@test.com");
-        contactUsPage.Phone.SendKeys("1234567890");
+        contactUsPage.FirstName.Type("TestFirstName");
+        contactUsPage.LastName.Type("TestLastName");
+        contactUsPage.Email.Type("testemail@test.com");
+        contactUsPage.Phone.Type("1234567890");
         contactUsPage.Location.Select("Japan");
         contactUsPage.HowDidYouHearAboutEpam.Select("Worked at EPAM");
         contactUsPage.Consent.Check();

@@ -105,14 +105,14 @@ partial class BasePage
 
                 if (usingKeyboard)
                 {
-                    SearchInput.SendKeys(Keys.Enter);
+                    SearchInput.Type(Keys.Enter);
                 }
                 else
                 {
                     FindButton.When(it => it.IsEnabled()).Click();
                 }
 
-                return SpaceOptions.Services.Get<IPageFactory>().Create<SearchPage>(WebDriver, new ElementHandlerRepository(), SpaceOptions);
+                return SpaceOptions.Services.Get<ISpaceFactory>().Create<PagesSpace>(WebDriver, SpaceOptions).SearchPage;
             }
         }
     }
