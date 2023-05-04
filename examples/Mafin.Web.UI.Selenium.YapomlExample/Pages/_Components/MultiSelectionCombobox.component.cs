@@ -4,7 +4,7 @@ partial class MultiSelectionComboboxComponent<TComponent, TConditions>
 {
     public void Expand()
     {
-        SelectionPane.When(it => it.IsDisplayed()).Click();
+        SelectionPane.Click(when => when.IsDisplayed());
     }
 
     public void Collapse()
@@ -16,8 +16,7 @@ partial class MultiSelectionComboboxComponent<TComponent, TConditions>
     {
         Expand();
 
-        Flyout.When(it => it.IsDisplayed());
-        Thread.Sleep(1000);
+        Flyout.When(it => it.IsDisplayed().Elapsed(TimeSpan.FromSeconds(1)));
 
         foreach (var optionName in optionNames)
         {

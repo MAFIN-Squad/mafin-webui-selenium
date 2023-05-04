@@ -4,7 +4,7 @@ partial class MultiSelectionFilterListComponent<TComponent, TConditions>
 {
     public void Expand()
     {
-        Panel.When(it => it.IsDisplayed()).Click();
+        Panel.Click(when => when.IsDisplayed());
     }
 
     public void Collapse()

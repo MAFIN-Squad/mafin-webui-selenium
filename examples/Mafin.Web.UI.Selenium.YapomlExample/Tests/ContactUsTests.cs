@@ -21,9 +21,9 @@ public class ContactUsTests : AbstractTest
         contactUsPage.Consent.Check();
 
         Assert.That(contactUsPage.TheReasonForYourInquiry.SelectedOption, Is.EqualTo("Careers"));
-        Assert.That(contactUsPage.FirstName.Value, Is.EqualTo("TestFirstName"));
-        Assert.That(contactUsPage.Email.Value, Is.EqualTo("testemail@test.com"));
-        Assert.That(contactUsPage.Phone.Value, Is.EqualTo("1234567890"));
+        Assert.That(contactUsPage.FirstName.Attributes.Value, Is.EqualTo("TestFirstName"));
+        Assert.That(contactUsPage.Email.Attributes.Value, Is.EqualTo("testemail@test.com"));
+        Assert.That(contactUsPage.Phone.Attributes.Value, Is.EqualTo("1234567890"));
         Assert.That(contactUsPage.Location.SelectedOption, Is.EqualTo("Japan"));
         Assert.That(contactUsPage.HowDidYouHearAboutEpam.SelectedOption, Is.EqualTo("Worked at EPAM"));
         Assert.That(contactUsPage.Consent.IsChecked, Is.True);

@@ -15,9 +15,9 @@ public class CareersTests : AbstractTest
 
         Ya.Careers.CareersPage.JobFilter.FindButton.Click();
 
-        var expectedItemName = Ya.Careers.JobListingPage.ResultItems.First().Name.Text;
+        var expectedItemName = Ya.Careers.JobListingPage.ResultItems[0].Name.Text;
 
-        Ya.Careers.JobListingPage.ResultItems.First().ViewAndApplyButton.Click();
+        Ya.Careers.JobListingPage.ResultItems[0].ViewAndApplyButton.Click();
 
         Assert.That(Ya.Careers.JobDetailPage.ApplyFor.Name.Text, Is.EqualTo(expectedItemName));
     }

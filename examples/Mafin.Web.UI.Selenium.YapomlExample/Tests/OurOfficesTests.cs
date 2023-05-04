@@ -12,10 +12,9 @@ public class OurOfficesTests : AbstractTest
         Ya.HomePage.ExploreOurClientsWork.Click();
 
         var section = Ya.ClientWorkPage.OurOfficesSection;
-        section.Regions.First(r => r.Text == "EMEA").Click();
-        section.Locations.First(l => l.Text == "BELARUS").Click();
-        section.DetailsSection.When(it => it.IsDisplayed()).Offices.FirstOrDefault()
-            ?.When(it => it.Name.Text.IsNot(string.Empty));
+        section.Regions[r => r == "EMEA"].Click();
+        section.Locations[l => l == "BELARUS"].Click();
+        section.DetailsSection.When(it => it.IsDisplayed()).Offices[0].When(it => it.Name.Text.IsNot(string.Empty));
 
         Assert.That(section.DetailsSection.Offices.Select(o => o.Name.Text), Is.EqualTo(expectedOfficeList));
     }

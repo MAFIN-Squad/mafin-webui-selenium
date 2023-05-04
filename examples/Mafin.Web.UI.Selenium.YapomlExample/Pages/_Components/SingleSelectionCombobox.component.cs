@@ -13,7 +13,7 @@ partial class SingleSelectionComboboxComponent<TComponent, TConditions>
     {
         Expand();
 
-        Flyout.Options.First(o => o.Text.TrimEnd() == optionName).Click();
+        Flyout.Options[o => o.Text.TrimEnd() == optionName].Click();
 
         return component;
     }
