@@ -7,13 +7,13 @@ public class SearchTests : AbstractTest
     [Test]
     public void SearchByWord()
     {
-        var results = Ya.HomePage.Header.Search.When(it => it.SearchButton.IsEnabled()).Search("automation").Results;
+        var results = Ya.HomePage.Header.Search.When(it => it.SearchButton.IsEnabled()).Search("RPA").Results;
 
         Assert.That(results.Count, Is.GreaterThan(0));
 
         results.First().Title.Click();
 
-        Assert.That(driver.Title, Is.EqualTo("Intelligent Automation Services | EPAM"));
+        Assert.That(driver.Title, Is.EqualTo("RPA Vs Cognitive Automation: Which Technology Will Drive IT Spends for CIOs? I EPAM"));
     }
 
     [Test]
@@ -23,7 +23,7 @@ public class SearchTests : AbstractTest
 
         results.First().Title.Click();
 
-        Assert.That(driver.Title, Is.EqualTo("About"));
+        Assert.That(driver.Title, Is.EqualTo("One of the Fastest-Growing Public Tech Companies | About EPAM"));
 
         Ya.About.AboutPage.SeeAll.Click();
 
