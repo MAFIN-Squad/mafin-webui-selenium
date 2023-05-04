@@ -100,8 +100,7 @@ partial class BasePage
             {
                 SearchButton.Click();
 
-                SearchInput.When(it => it.IsDisplayed().IsEnabled());
-                WebDriver.ExecuteJavaScript("arguments[0].value = arguments[1]", SearchInput.WrappedElement, text);
+                SearchInput.When(it => it.IsDisplayed().IsEnabled()).Type(text);
 
                 if (usingKeyboard)
                 {
