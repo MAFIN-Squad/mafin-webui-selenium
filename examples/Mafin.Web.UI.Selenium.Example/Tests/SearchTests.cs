@@ -9,12 +9,12 @@ public class SearchTests : BaseEpamTest
     public void SearchByWord()
     {
         // prepare
-        const string textToFind = "automation";
-        const string expectedPageTitle = "Intelligent Automation Services | EPAM";
+        const string textToFind = "RPA";
+        const string expectedPageTitle = "RPA Vs Cognitive Automation: Which Technology Will Drive IT Spends for CIOs? I EPAM";
 
         // act
         _actionsSteps.Click(_navigationBar.SearchIcon);
-        _actionsSteps.TypeTextWithJs(_navigationBar.SearchInput, textToFind);
+        _actionsSteps.TypeText(_navigationBar.SearchInput, textToFind);
         _actionsSteps.Click(_navigationBar.FindButton);
 
         Assert.IsTrue(_searchPage.IsOnPage(), "Verify that Search page is opened");
