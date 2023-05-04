@@ -60,16 +60,10 @@ public class ActionsSteps : BaseSteps
 
     public IWebElement TypeText(By by, string text)
     {
-        var element = Wdm.GetElement(by, after: d => d.FindElement(by).Enabled);
+        var element = Wdm.GetElement(by, after: d =>
+            d.FindElement(by).Displayed && d.FindElement(by).Enabled);
         element.Clear();
         element.SendKeys(text);
-        return element;
-    }
-
-    public IWebElement TypeTextWithJs(By by, string text)
-    {
-        var element = Wdm.GetElement(by, after: d => d.FindElement(by).Enabled);
-        Wdm.GetDriver().ExecuteJavaScript("arguments[0].value = arguments[1]", element, text);
         return element;
     }
 
