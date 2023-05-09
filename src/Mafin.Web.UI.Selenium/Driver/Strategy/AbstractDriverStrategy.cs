@@ -25,16 +25,24 @@ public abstract class AbstractDriverStrategy
 
     public virtual IWebDriver GetDriver()
     {
-        return _webConfiguration.RunType == RunType.Local ?
+        var driver = _webConfiguration.RunType == RunType.Local ?
             GetLocalDriver() :
             GetRemoteDriver();
+
+        return driver;
     }
 
     public virtual IWebDriver GetLocalDriver()
     {
         var isLatestLocal = _webConfiguration.IsLatestLocal;
         var version = isLatestLocal ? VersionResolveStrategy.Latest : VersionResolveStrategy.MatchingBrowser;
-        new DriverManager().SetUpDriver(GetDriverSpecificConfig(), version);
+
+        var driverConfig = GetDriverSpecificConfig();
+        if (driverConfig is not null)
+        {
+            new DriverManager().SetUpDriver(driverConfig, version);
+        }
+
         return SetTimeouts(GetSpecificDriver());
     }
 
@@ -54,6 +62,43 @@ public abstract class AbstractDriverStrategy
     }
 
     public TimeoutsConfig GetTimeouts() => _webConfiguration.TimeoutsConfig;
+
+    protected DriverOptions BuildDriverOptions<T>()
+        where T : DriverOptions, new()
+    {
+        var driverOptions = new T();
+
+        if (_webConfiguration.Capabilities is not null && _webConfiguration.Capabilities.Any())
+        {
+            foreach (var capability in _webConfiguration.Capabilities)
+            {
+                driverOptions.AddAdditionalOption(capability.Key, capability.Value);
+            }
+        }
+
+        if (_webConfiguration.Arguments is not null && _webConfiguration.Arguments.Any())
+        {
+            driverOptions.AddArguments(_webConfiguration.Arguments);
+        }
+
+        if (_webConfiguration.Extensions is not null && _webConfiguration.Extensions.Any())
+        {
+            foreach (var extension in _webConfiguration.Extensions)
+            {
+                driverOptions.AddExtension(extension);
+            }
+        }
+
+        if (_webConfiguration.Preferences is not null && _webConfiguration.Preferences.Any())
+        {
+            foreach (var preference in _webConfiguration.Preferences)
+            {
+                driverOptions.AddPreference(preference.Key, preference.Value);
+            }
+        }
+
+        return driverOptions;
+    }
 
     private DriverOptions GetRemoteOptions()
     {

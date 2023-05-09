@@ -1,23 +1,32 @@
+using System.Diagnostics.CodeAnalysis;
 using Mafin.Web.UI.Selenium.Models;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
 public static class DriverMapping
 {
-    private static readonly Dictionary<string, Type> DriverMappings = new()
+    private static readonly Dictionary<string, Type> DriverMappings = new(StringComparer.InvariantCultureIgnoreCase)
     {
-        { "chrome", typeof(ChromeStrategy) }
+        { "chrome", typeof(ChromeStrategy) },
+        { "edge", typeof(EdgeStrategy) },
+        { "safari", typeof(SafariStrategy) },
+        { "firefox", typeof(FirefoxStrategy) }
     };
 
-    public static AbstractDriverStrategy GetDriverStrategy(WebConfiguration webConfiguration)
+    public static AbstractDriverStrategy GetDriverStrategy([NotNull] WebConfiguration webConfiguration)
     {
         var driverType = webConfiguration.DriverType;
-        if (!DriverMappings.ContainsKey(driverType))
+
+        if (string.IsNullOrEmpty(driverType))
         {
-            throw new KeyNotFoundException($"There is no registered DriverStrategy for the driverType = {driverType}. Available values are: {DriverMappings.Keys}");
+            throw new ArgumentNullException($"Driver type is not defined, set {nameof(webConfiguration.DriverType)} in {nameof(webConfiguration)}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
         }
 
-        return (AbstractDriverStrategy)Activator.CreateInstance(DriverMappings[driverType], webConfiguration);
-    }
+        if (!DriverMappings.ContainsKey(driverType))
+        {
+            throw new KeyNotFoundException($"There is no registered DriverStrategy for the {nameof(driverType)} = {driverType}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
+        }
 
+        return (AbstractDriverStrategy)Activator.CreateInstance(DriverMappings[driverType], webConfiguration)!;
+    }
 }
