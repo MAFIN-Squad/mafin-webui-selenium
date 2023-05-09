@@ -20,8 +20,6 @@ public class ChromeStrategy : AbstractDriverStrategy
         // Use full screen mode
         chromeOptions.AddArgument("--start-maximized");
 
-        chromeOptions.AddArgument("--headless");
-
         // Use same language on all environments
         chromeOptions.AddArgument("--lang=en");
 
