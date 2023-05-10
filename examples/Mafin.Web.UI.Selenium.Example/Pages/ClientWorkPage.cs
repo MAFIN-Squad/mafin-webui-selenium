@@ -28,7 +28,7 @@ public class ClientWorkPage : BaseEpamPage
 
     public By ActiveCountryParent => By.CssSelector("div[class='locations-viewer-23__country-details active']");
 
-    public By ActiveCountryOfficesName => By.CssSelector(".locations-viewer-23__office-name");
+    public By ActiveCountryOfficesName => By.CssSelector("li[class='locations-viewer-23__office'] h5");
 
     // methods
     public ClientWorkPage SelectTab(string tab)
