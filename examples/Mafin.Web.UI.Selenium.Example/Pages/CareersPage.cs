@@ -22,9 +22,9 @@ public class CareersPage : BaseEpamPage
     // search results
     public By SearchResultItem => By.CssSelector("li[class='search-result__item']");
 
-    public By SearchResultItemName => By.CssSelector("a[class='search-result__item-name']");
+    public By SearchResultItemName => By.CssSelector("a[class*=search-result__item-name]");
 
-    public By SearchResultItemViewAndApplyButton => By.CssSelector("a[class='search-result__item-apply']");
+    public By SearchResultItemViewAndApplyButton => By.CssSelector("a[class*='search-result__item-apply']");
 
     // methods
     public CareersPage SelectSkills(params string[] skills)

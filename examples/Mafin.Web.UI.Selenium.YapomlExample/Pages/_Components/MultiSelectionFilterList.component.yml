@@ -1,0 +1,13 @@
+Panel: .detail-pages-filter-23__filter-panel-btn
+
+Flyout:
+  by: .detail-pages-filter-23__filter-list-container
+
+  Apply:
+   by: css button[class*='apply']
+
+  Selected:
+   by: css button[class*='selected']
+
+  Option:
+    by: .//li[contains(text(),'{name}')]

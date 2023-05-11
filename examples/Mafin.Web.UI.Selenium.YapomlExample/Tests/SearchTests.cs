@@ -7,28 +7,30 @@ public class SearchTests : AbstractTest
     [Test]
     public void SearchByWord()
     {
-        var results = Ya.HomePage.Header.Search.Search("automation").Results;
+        var results = Ya.HomePage.Header.Search
+            .Search("RPA").Results;
 
         Assert.That(results.Count, Is.GreaterThan(0));
 
-        results.First().Title.Click();
+        results[0].Title.Click();
 
-        Assert.That(driver.Title, Is.EqualTo("Making Workload Management Automation Accessible in Retail & CPG | EPAM"));
+        Assert.That(driver.Title, Is.EqualTo("RPA Vs Cognitive Automation: Which Technology Will Drive IT Spends for CIOs? I EPAM"));
     }
 
     [Test]
     public void VerifyLeadershipPage()
     {
-        var results = Ya.HomePage.Header.Search.Search("about", usingKeyboard: true).Results;
-
-        results.First().Title.Click();
+        Ya.HomePage.Header.Search.Search("about", usingKeyboard: true)
+            .Results[0].Title.Click();
 
         Assert.That(driver.Title, Is.EqualTo("One of the Fastest-Growing Public Tech Companies | About EPAM"));
 
         Ya.About.AboutPage.SeeAll.Click();
 
-        Assert.That(driver.Title, Is.EqualTo("Board of Directors & Executive Leadership | EPAM Leadership"));
+        Assert.That(driver.Title, Is.EqualTo("Leadership"));
 
-        Assert.That(Ya.About.WhoWeAre.LeadershipPage.Directors.First().Name.Text, Is.EqualTo("ARKADIY DOBKIN"));
+        var firstDirector = Ya.About.WhoWeAre.LeadershipPage.Directors[0];
+        Assert.That(firstDirector.Name.Firstname.Text, Is.EqualTo("Arkadiy"));
+        Assert.That(firstDirector.Name.Lastname.Text, Is.EqualTo("Dobkin"));
     }
 }

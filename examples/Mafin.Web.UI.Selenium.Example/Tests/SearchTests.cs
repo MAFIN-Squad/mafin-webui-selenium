@@ -9,13 +9,14 @@ public class SearchTests : BaseEpamTest
     public void SearchByWord()
     {
         // prepare
-        const string textToFind = "automation";
-        const string expectedPageTitle = "Making Workload Management Automation Accessible in Retail & CPG | EPAM";
+        const string textToFind = "RPA";
+        const string expectedPageTitle = "RPA Vs Cognitive Automation: Which Technology Will Drive IT Spends for CIOs? I EPAM";
 
         // act
         _actionsSteps.Click(_navigationBar.SearchIcon);
         _actionsSteps.TypeText(_navigationBar.SearchInput, textToFind);
         _actionsSteps.Click(_navigationBar.FindButton);
+
         Assert.IsTrue(_searchPage.IsOnPage(), "Verify that Search page is opened");
         var searchResults = _actionsSteps.GetElements(_searchPage.SearchResultsLinks);
         Assert.IsTrue(searchResults.Any(), "Verify that Search results are present");
@@ -44,7 +45,8 @@ public class SearchTests : BaseEpamTest
         Assert.IsTrue(_leadershipPage.IsOnPage(), "Verify that Leadership page is opened");
 
         // verify
-        var element = _actionsSteps.GetElements(_leadershipPage.Names).FirstOrDefault(e => e.Text == expectedName);
+        var element = _actionsSteps.GetElements(_leadershipPage.Names)
+            .FirstOrDefault(e => e.Text.Replace("\r\n", " ").ToUpper().Equals(expectedName));
         Assert.IsNotNull(element, $"Verify that leadership name contains '{expectedName}'");
     }
 }

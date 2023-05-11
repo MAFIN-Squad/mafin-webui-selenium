@@ -13,5 +13,5 @@ public class LeadershipPage : BaseEpamPage
 
     public override string Path => "about/who-we-are/leadership";
 
-    public By Names => By.CssSelector("h3[class='leadership-viewer__name']");
+    public By Names => By.CssSelector("h3[class*='leadership-viewer-ui']");
 }

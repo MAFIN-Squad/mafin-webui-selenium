@@ -12,18 +12,18 @@ public class ContactUsTests : AbstractTest
         var contactUsPage = Ya.About.WhoWeAre.ContactPage;
 
         contactUsPage.TheReasonForYourInquiry.Select("Careers");
-        contactUsPage.FirstName.SendKeys("TestFirstName");
-        contactUsPage.LastName.SendKeys("TestLastName");
-        contactUsPage.Email.SendKeys("testemail@test.com");
-        contactUsPage.Phone.SendKeys("1234567890");
+        contactUsPage.FirstName.Type("TestFirstName");
+        contactUsPage.LastName.Type("TestLastName");
+        contactUsPage.Email.Type("testemail@test.com");
+        contactUsPage.Phone.Type("1234567890");
         contactUsPage.Location.Select("Japan");
         contactUsPage.HowDidYouHearAboutEpam.Select("Worked at EPAM");
         contactUsPage.Consent.Check();
 
         Assert.That(contactUsPage.TheReasonForYourInquiry.SelectedOption, Is.EqualTo("Careers"));
-        Assert.That(contactUsPage.FirstName.Value, Is.EqualTo("TestFirstName"));
-        Assert.That(contactUsPage.Email.Value, Is.EqualTo("testemail@test.com"));
-        Assert.That(contactUsPage.Phone.Value, Is.EqualTo("1234567890"));
+        Assert.That(contactUsPage.FirstName.Attributes.Value, Is.EqualTo("TestFirstName"));
+        Assert.That(contactUsPage.Email.Attributes.Value, Is.EqualTo("testemail@test.com"));
+        Assert.That(contactUsPage.Phone.Attributes.Value, Is.EqualTo("1234567890"));
         Assert.That(contactUsPage.Location.SelectedOption, Is.EqualTo("Japan"));
         Assert.That(contactUsPage.HowDidYouHearAboutEpam.SelectedOption, Is.EqualTo("Worked at EPAM"));
         Assert.That(contactUsPage.Consent.IsChecked, Is.True);

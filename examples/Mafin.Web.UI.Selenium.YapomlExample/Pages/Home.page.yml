@@ -1,1 +1,4 @@
 url: /
+
+ExploreOurClientsWork:
+  by: .//div[@class="owl-item active"]//a[contains(@class, 'single-slide__cta-link') and contains(., 'Our Client Work')]

@@ -1,7 +1,6 @@
 using System.Drawing;
 using OpenQA.Selenium;
 using Yapoml.Selenium.Services.Factory;
-using Yapoml.Selenium.Services.Locator;
 
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages;
 
@@ -16,17 +15,15 @@ partial class BasePage
 
     public void Navigate(string menuName)
     {
-        Header.Navigation.Items
-           .First(i => i.Title.Text == menuName)
-           .Click();
+        Header.Navigation.Items[i => i.Title == menuName].Click();
     }
 
     public void Navigate(string menuName, string subMenuName)
     {
-        Header.Navigation.Items.First(i => i.Title.Text == menuName)
-           .Hover()
-           .Flyout.SubItem(subMenuName)
-           .Click();
+        Header.Navigation
+            .Items[i => i.Title == menuName].Hover()
+            .Flyout.SubItem(subMenuName)
+            .Click();
     }
 
     partial class CookiesPaneComponent
@@ -56,7 +53,7 @@ partial class BasePage
                         }
                     },
                     TimeSpan.FromSeconds(5),
-                    TimeSpan.FromMilliseconds(0));
+                    TimeSpan.FromMilliseconds(50));
 
                 return this;
             }
@@ -83,7 +80,7 @@ partial class BasePage
                         }
                     },
                     TimeSpan.FromSeconds(5),
-                    TimeSpan.FromMilliseconds(0));
+                    TimeSpan.FromMilliseconds(50));
 
                 return this;
             }
@@ -96,20 +93,19 @@ partial class BasePage
         {
             public SearchPage Search(string text, bool usingKeyboard = false)
             {
-                SearchButton.Click();
-
-                SearchInput.SendKeys(text);
+                SearchButton.Click()
+                    .SearchInput.Type(text, when => when.IsDisplayed().IsEnabled());
 
                 if (usingKeyboard)
                 {
-                    SearchInput.SendKeys(Keys.Enter);
+                    SearchInput.Type(Keys.Enter);
                 }
                 else
                 {
-                    FindButton.Click();
+                    FindButton.Click(when => when.IsEnabled());
                 }
 
-                return SpaceOptions.Services.Get<IPageFactory>().Create<SearchPage>(WebDriver, new ElementHandlerRepository(), SpaceOptions);
+                return SpaceOptions.Services.Get<ISpaceFactory>().Create<PagesSpace>(WebDriver, SpaceOptions).SearchPage;
             }
         }
     }

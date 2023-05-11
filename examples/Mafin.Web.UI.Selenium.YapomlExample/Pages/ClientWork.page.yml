@@ -1,0 +1,17 @@
+Our Offices section:
+  by: id id-2ad74d35-bc00-309b-be65-59663dc6e807
+
+  Regions: css .tabs-23__title
+
+  Locations:
+    by: .locations-viewer-23__country
+
+    Name: .locations-viewer-23__country-title
+
+  DetailsSection:
+    by: .locations-viewer-23__country-details.active
+
+    Offices:
+      by: css li[class='locations-viewer-23__office']
+
+      Name: css h5[class='locations-viewer-23__office-name list']
