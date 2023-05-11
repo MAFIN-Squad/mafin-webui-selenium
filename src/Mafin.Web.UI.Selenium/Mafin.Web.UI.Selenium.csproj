@@ -4,6 +4,7 @@
     <PackageId>Mafin.Web.UI.Selenium</PackageId>
     <Description>MAFIN Web UI Selenium-based package</Description>
     <Authors>MAFIN Squad</Authors>
+    <Version></Version>
   </PropertyGroup>
 
   <ItemGroup>
