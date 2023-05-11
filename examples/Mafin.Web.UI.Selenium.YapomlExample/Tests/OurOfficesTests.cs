@@ -9,12 +9,13 @@ public class OurOfficesTests : AbstractTest
     {
         var expectedOfficeList = new List<string> { "BREST", "GOMEL", "GRODNO", "MINSK", "MOGILEV", "VITEBSK" };
 
-        Ya.HomePage.Navigate("OUR WORK");
+        Ya.HomePage.ExploreOurClientsWork.Click();
 
-        var section = Ya.OurWorkPage.OurOfficesSection;
-        section.Regions.First(r => r.Text == "EMEA").Click();
-        section.Locations.First(l => l.Text == "BELARUS").Click();
+        var section = Ya.ClientWorkPage.OurOfficesSection;
+        section.Regions["EMEA"].Click();
+        section.Locations["BELARUS"].Click();
+        section.DetailsSection.When(it => it.IsDisplayed()).Offices[0].When(it => it.Name.Text.IsNot(string.Empty));
 
-        Assert.That(section.DetailsSection.When(it => it.IsDisplayed()).Offices.Select(o => o.Name.Text), Is.EqualTo(expectedOfficeList));
+        Assert.That(section.DetailsSection.Offices.Select(o => o.Name.Text), Is.EqualTo(expectedOfficeList));
     }
 }

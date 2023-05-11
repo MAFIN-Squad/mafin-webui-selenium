@@ -44,7 +44,7 @@ public abstract class AbstractTest
         var strategy = DriverMapping.GetDriverStrategy(webConfiguration);
         driver = strategy.GetDriver();
 
-        Ya = driver.Ya(opts => opts.UseBaseUrl("https://www.epam.com")).Pages;
+        Ya = driver.Ya(opts => opts.WithBaseUrl("https://www.epam.com")).Pages;
 
         Ya.HomePage.Open().AcceptCookies();
     }

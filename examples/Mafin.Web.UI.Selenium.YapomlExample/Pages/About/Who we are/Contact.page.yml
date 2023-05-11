@@ -21,5 +21,5 @@ HowDidYouHearAboutEpam:
   base: singleselectioncombobox
 
 Consent:
-  by: id new_form_gdprConsent
+  by: css input[id*='new_form_gdprConsent']
   base: checkbox

@@ -1,5 +1,6 @@
 using Mafin.Web.UI.Selenium.Example.Core;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
 
 namespace Mafin.Web.UI.Selenium.Example.Steps;
 
@@ -19,7 +20,7 @@ public class ActionsSteps : BaseSteps
 
     public IWebElement Click(By by)
     {
-        return Click(GetElement(by));
+        return Click(Wdm.GetElement(by, after: d => d.FindElement(by).Enabled));
     }
 
     public IWebElement Click(IWebElement element)
@@ -59,7 +60,8 @@ public class ActionsSteps : BaseSteps
 
     public IWebElement TypeText(By by, string text)
     {
-        var element = GetElement(by);
+        var element = Wdm.GetElement(by, after: d =>
+            d.FindElement(by).Displayed && d.FindElement(by).Enabled);
         element.Clear();
         element.SendKeys(text);
         return element;

@@ -11,4 +11,4 @@ JobFilter:
     by: .job-search__departments
     base: multiselectioncombobox
 
-  FindButton: .recruiting-search__submit
+  FindButton: css button[type='submit']

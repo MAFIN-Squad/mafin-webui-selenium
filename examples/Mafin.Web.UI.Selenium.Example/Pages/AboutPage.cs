@@ -13,5 +13,5 @@ public class AboutPage : BaseEpamPage
 
     public override string Path => "about";
 
-    public By SeeAllLeaderShipLink => By.CssSelector("a[title*='Executive Leadership and Senior Management']");
+    public By SeeAllLeaderShipLink => By.CssSelector("div[class*=button-in-columns] [href*='who-we-are/leadership']");
 }

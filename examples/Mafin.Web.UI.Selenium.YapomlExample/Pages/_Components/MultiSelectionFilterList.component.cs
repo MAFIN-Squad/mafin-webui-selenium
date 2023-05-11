@@ -1,28 +1,28 @@
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages.Components;
 
-partial class MultiSelectionComboboxComponent<TComponent, TConditions>
+partial class MultiSelectionFilterListComponent<TComponent, TConditions>
 {
     public void Expand()
     {
-        SelectionPane.Click(when => when.IsDisplayed());
+        Panel.Click(when => when.IsDisplayed());
     }
 
     public void Collapse()
     {
-        SelectionPane.Click();
+        Panel.Click();
     }
 
     public void Select(params string[] optionNames)
     {
         Expand();
 
-        Flyout.When(it => it.IsDisplayed().Elapsed(TimeSpan.FromSeconds(1)));
+        Flyout.When(it => it.IsDisplayed());
 
         foreach (var optionName in optionNames)
         {
             Flyout.Option(optionName).Click();
         }
 
-        Collapse();
+        Flyout.Apply.Click();
     }
 }

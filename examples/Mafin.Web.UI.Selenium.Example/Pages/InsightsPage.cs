@@ -13,18 +13,16 @@ public class InsightsPage : BaseEpamPage
 
     public override string Path => "insights";
 
-    public By IndustriesDropDown => By.XPath("//select[contains(@class,'select--industries')]//..//div[contains(@class,'selected-params')]");
+    public By IndustriesDropDown => By.XPath("//span[contains(.,'Industry')]");
 
-    public By IndustriesDropDownList => By.XPath("//select[contains(@class,'select--industries')]//..//span[@class='checkbox-custom-label']");
+    public By IndustriesDropDownList => By.XPath("//li[contains(@class,'filter-list')]");
 
-    public By ContentTypesDropDown => By.XPath("//select[contains(@class,'select--content-types')]//..//div[contains(@class,'selected-params')]");
-
-    public By ContentTypesDropDownList => By.XPath("//select[contains(@class,'select--content-types')]//..//span[@class='checkbox-custom-label']");
+    public By ApplyButton => By.CssSelector("button[class*='filter-list-btn-apply']");
 
     // search results
-    public By IndustriesItem => By.CssSelector("li[class*='detail-pages-list__item']");
+    public By IndustriesList => By.CssSelector("ul[class*='detail-pages-list-23__tag-list']");
 
-    public By ErrorMessage => By.CssSelector(".detail-pages-filter__error-message");
+    public By IndustriesItem => By.CssSelector("li[class*='detail-pages-list-23__tag']");
 
     // methods
     public InsightsPage SelectIndustries(params string[] industries)
@@ -32,15 +30,6 @@ public class InsightsPage : BaseEpamPage
         industries.ToList().ForEach(industry =>
         {
             _actions.SelectValueInTheList(IndustriesDropDown, IndustriesDropDownList, industry);
-        });
-        return this;
-    }
-
-    public InsightsPage SelectContentTypes(params string[] contentTypes)
-    {
-        contentTypes.ToList().ForEach(contentType =>
-        {
-            _actions.SelectValueInTheList(ContentTypesDropDown, ContentTypesDropDownList, contentType);
         });
         return this;
     }

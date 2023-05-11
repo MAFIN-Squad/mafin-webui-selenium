@@ -11,9 +11,9 @@ partial class SingleSelectionWithGroupsComboboxComponent<TComponent, TConditions
     {
         Expand();
 
-        Flyout.Groups.
-            First(g => g.Name.Text == groupName).Click()
-            .Options.First(o => o.Text.TrimEnd() == optionName)
+        Flyout
+            .Groups[g => g.Name == groupName].Click()
+            .Options[o => o.Text.TrimEnd() == optionName]
             .Click();
 
         return component;
