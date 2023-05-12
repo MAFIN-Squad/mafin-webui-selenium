@@ -4,11 +4,18 @@
     <PackageId>Mafin.Web.UI.Selenium</PackageId>
     <Description>MAFIN Web UI Selenium-based package</Description>
     <Authors>MAFIN Squad</Authors>
+    <PackageProjectUrl>https://github.com/MAFIN-Squad</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MAFIN-Squad/mafin-webui-selenium</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Version></Version>
   </PropertyGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
+
+    <None Include="..\..\LICENSE" Pack="True" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="True" PackagePath="\" />
 
     <PackageReference Include="Selenium.WebDriver" />
     <PackageReference Include="Selenium.Support" />
