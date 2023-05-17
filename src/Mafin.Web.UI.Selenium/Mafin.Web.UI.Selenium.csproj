@@ -2,13 +2,21 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0;netstandard2.1</TargetFrameworks>
     <PackageId>Mafin.Web.UI.Selenium</PackageId>
-    <PackageVersion></PackageVersion>
-    <Description>MAFIN Web UI Selenium-based Module</Description>
-    <Authors>EPAM MAFIN Team</Authors>
+    <Description>MAFIN Web UI Selenium-based package</Description>
+    <Authors>MAFIN Squad</Authors>
+    <PackageProjectUrl>https://github.com/MAFIN-Squad</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MAFIN-Squad/mafin-webui-selenium</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version></Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersion.MsBuild" PrivateAssets="all" />
+    <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
+
+    <None Include="..\..\LICENSE" Pack="True" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="True" PackagePath="\" />
+
     <PackageReference Include="Selenium.WebDriver" />
     <PackageReference Include="Selenium.Support" />
     <PackageReference Include="WebDriverManager" />
