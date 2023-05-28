@@ -7,8 +7,8 @@ partial class BasePage
 {
     public void AcceptCookies()
     {
-        var pane = CookiesPane.When(it => it.IsDisplayed().IsAnimated());
-        pane.AcceptAll.When(it => it.IsDisplayed()).Click();
+        var pane = CookiesPane.When(it => it.IsAnimated());
+        pane.AcceptAll.Click();
         pane.When(it => it.IsNotDisplayed());
     }
 
@@ -31,8 +31,7 @@ partial class BasePage
         {
             public Conditions IsAnimated()
             {
-                Attributes["style"].Is("bottom: 0px;");
-
+                Styles["bottom"].Is("0px");
                 return this;
             }
         }
