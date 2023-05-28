@@ -10,7 +10,7 @@ partial class BasePage
     {
         var pane = CookiesPane.When(it => it.IsDisplayed().IsAnimated());
         pane.AcceptAll.When(it => it.IsDisplayed()).Click();
-        pane.When(it => it.IsDisappeared());
+        pane.When(it => it.IsNotDisplayed());
     }
 
     public void Navigate(string menuName)
@@ -48,33 +48,6 @@ partial class BasePage
                             return null;
                         }
                         else
-                        {
-                            return true;
-                        }
-                    },
-                    TimeSpan.FromSeconds(5),
-                    TimeSpan.FromMilliseconds(50));
-
-                return this;
-            }
-
-            public Conditions IsDisappeared()
-            {
-                Yapoml.Selenium.Services.Waiter.Until<bool?>(
-                    () =>
-                    {
-                        try
-                        {
-                            if (ElementHandler.Locate().Displayed)
-                            {
-                                return null;
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                        catch (StaleElementReferenceException)
                         {
                             return true;
                         }
