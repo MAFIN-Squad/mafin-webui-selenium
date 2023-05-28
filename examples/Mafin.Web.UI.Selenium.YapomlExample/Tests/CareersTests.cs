@@ -9,7 +9,7 @@ public class CareersTests : AbstractTest
     {
         Ya.HomePage.Navigate("Careers");
 
-        Assert.That(driver.Title, Is.EqualTo("Explore Professional Growth Opportunities | EPAM Careers"));
+        Ya.HomePage.Expect(that => that.Title.Is("Explore Professional Growth Opportunities | EPAM Careers"));
 
         Ya.Careers.CareersPage.JobFilter.Skill.Select("Software, System, and Test Engineering");
 
@@ -19,6 +19,6 @@ public class CareersTests : AbstractTest
 
         Ya.Careers.JobListingPage.ResultItems[0].ViewAndApplyButton.Click();
 
-        Assert.That(Ya.Careers.JobDetailPage.ApplyFor.Name.Text, Is.EqualTo(expectedItemName));
+        Ya.Careers.JobDetailPage.ApplyFor.Name.Expect(that => that.Text.Is(expectedItemName));
     }
 }

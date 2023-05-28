@@ -14,7 +14,7 @@ public class OurOfficesTests : AbstractTest
         var section = Ya.ClientWorkPage.OurOfficesSection;
         section.Regions["EMEA"].Click();
         section.Locations["BELARUS"].Click();
-        section.DetailsSection.When(it => it.IsDisplayed()).Offices[0].When(it => it.Name.Text.IsNot(string.Empty));
+        section.DetailsSection.Expect(it => it.IsDisplayed()).Offices[0].Expect(it => it.Name.Text.IsNot(string.Empty));
 
         Assert.That(section.DetailsSection.Offices.Select(o => o.Name.Text), Is.EqualTo(expectedOfficeList));
     }

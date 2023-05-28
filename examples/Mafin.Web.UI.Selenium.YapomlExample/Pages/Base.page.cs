@@ -7,9 +7,9 @@ partial class BasePage
 {
     public void AcceptCookies()
     {
-        var pane = CookiesPane.When(it => it.IsAnimated());
+        var pane = CookiesPane.Expect(it => it.IsAnimated());
         pane.AcceptAll.Click();
-        pane.When(it => it.IsNotDisplayed());
+        pane.Expect(it => it.IsNotDisplayed());
     }
 
     public void Navigate(string menuName)
