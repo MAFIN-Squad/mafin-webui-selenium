@@ -1,4 +1,3 @@
-using System.Drawing;
 using OpenQA.Selenium;
 using Yapoml.Selenium.Services.Factory;
 
@@ -32,28 +31,7 @@ partial class BasePage
         {
             public Conditions IsAnimated()
             {
-                Point previousLocation = default;
-                Size previousSize = default;
-
-                Yapoml.Selenium.Services.Waiter.Until<bool?>(
-                    () =>
-                    {
-                        var location = this.ElementHandler.Locate().Location;
-                        var size = this.ElementHandler.Locate().Size;
-
-                        if (location != previousLocation && size != previousSize)
-                        {
-                            previousLocation = location;
-                            previousSize = size;
-                            return null;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    },
-                    TimeSpan.FromSeconds(5),
-                    TimeSpan.FromMilliseconds(50));
+                Attributes["style"].Is("bottom: 0px;");
 
                 return this;
             }
