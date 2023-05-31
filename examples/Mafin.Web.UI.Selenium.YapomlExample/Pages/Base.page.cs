@@ -1,4 +1,3 @@
-using System.Drawing;
 using OpenQA.Selenium;
 using Yapoml.Selenium.Services.Factory;
 
@@ -8,9 +7,9 @@ partial class BasePage
 {
     public void AcceptCookies()
     {
-        var pane = CookiesPane.When(it => it.IsDisplayed().IsAnimated());
-        pane.AcceptAll.When(it => it.IsDisplayed()).Click();
-        pane.When(it => it.IsDisappeared());
+        var pane = CookiesPane.Expect(it => it.IsAnimated());
+        pane.AcceptAll.Click();
+        pane.Expect(it => it.IsNotDisplayed());
     }
 
     public void Navigate(string menuName)
@@ -32,56 +31,7 @@ partial class BasePage
         {
             public Conditions IsAnimated()
             {
-                Point previousLocation = default;
-                Size previousSize = default;
-
-                Yapoml.Selenium.Services.Waiter.Until<bool?>(
-                    () =>
-                    {
-                        var location = this.ElementHandler.Locate().Location;
-                        var size = this.ElementHandler.Locate().Size;
-
-                        if (location != previousLocation && size != previousSize)
-                        {
-                            previousLocation = location;
-                            previousSize = size;
-                            return null;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    },
-                    TimeSpan.FromSeconds(5),
-                    TimeSpan.FromMilliseconds(50));
-
-                return this;
-            }
-
-            public Conditions IsDisappeared()
-            {
-                Yapoml.Selenium.Services.Waiter.Until<bool?>(
-                    () =>
-                    {
-                        try
-                        {
-                            if (ElementHandler.Locate().Displayed)
-                            {
-                                return null;
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                        catch (StaleElementReferenceException)
-                        {
-                            return true;
-                        }
-                    },
-                    TimeSpan.FromSeconds(5),
-                    TimeSpan.FromMilliseconds(50));
-
+                Styles["bottom"].Is("0px");
                 return this;
             }
         }

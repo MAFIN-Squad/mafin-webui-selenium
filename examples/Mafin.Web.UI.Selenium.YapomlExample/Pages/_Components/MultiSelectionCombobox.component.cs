@@ -16,7 +16,7 @@ partial class MultiSelectionComboboxComponent<TComponent, TConditions>
     {
         Expand();
 
-        Flyout.When(it => it.IsDisplayed().Elapsed(TimeSpan.FromSeconds(1)));
+        Flyout.Expect(it => it.IsDisplayed().Elapsed(TimeSpan.FromSeconds(1)));
 
         foreach (var optionName in optionNames)
         {

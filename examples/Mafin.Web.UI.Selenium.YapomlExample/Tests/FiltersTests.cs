@@ -10,7 +10,7 @@ public class FiltersTests : AbstractTest
         Ya.HomePage.Navigate("Insights");
 
         var insightsPage = Ya.Insights.InsightsPage;
-        insightsPage.Industry.When(it => it.IsDisplayed()).Select("Software & Hi-Tech");
+        insightsPage.Industry.Expect(it => it.IsDisplayed()).Select("Software & Hi-Tech");
 
         Assert.That(insightsPage.Tags.Select(t => t.Text), Is.EqualTo(new List<string> { "Software & Hi-Tech" }));
     }

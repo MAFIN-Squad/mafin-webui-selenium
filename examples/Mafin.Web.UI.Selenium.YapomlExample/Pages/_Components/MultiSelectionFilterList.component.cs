@@ -16,7 +16,7 @@ partial class MultiSelectionFilterListComponent<TComponent, TConditions>
     {
         Expand();
 
-        Flyout.When(it => it.IsDisplayed());
+        Flyout.Expect(it => it.IsDisplayed());
 
         foreach (var optionName in optionNames)
         {
