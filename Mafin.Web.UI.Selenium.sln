@@ -16,11 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		.gitlab-ci.yml = .gitlab-ci.yml
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
-		GitVersion.yml = GitVersion.yml
 		nuget.config = nuget.config
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{32BF8D0B-AF67-4676-9387-84E4FA4AC738}"
@@ -33,6 +32,17 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mafin.Web.UI.Selenium.Example", "examples\Mafin.Web.UI.Selenium.Example\Mafin.Web.UI.Selenium.Example.csproj", "{F8ECB528-E256-422B-937A-CB483B7D3717}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mafin.Web.UI.Selenium.YapomlExample", "examples\Mafin.Web.UI.Selenium.YapomlExample\Mafin.Web.UI.Selenium.YapomlExample.csproj", "{F13F15CC-6D9E-4B9B-AF79-04C48D3D15AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B2870D2F-1579-4056-9EE6-0F2479C6754A}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{5BC853A0-B589-4747-8EE7-6D850FDF0433}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\test.yml = .github\workflows\test.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +76,8 @@ Global
 		{32BF8D0B-AF67-4676-9387-84E4FA4AC738} = {DABEE7D9-74D7-4FAF-B688-8F7ABBDE8D60}
 		{F8ECB528-E256-422B-937A-CB483B7D3717} = {47773F77-143D-4CC4-8612-BA955AF4C4C4}
 		{F13F15CC-6D9E-4B9B-AF79-04C48D3D15AB} = {47773F77-143D-4CC4-8612-BA955AF4C4C4}
+		{B2870D2F-1579-4056-9EE6-0F2479C6754A} = {DABEE7D9-74D7-4FAF-B688-8F7ABBDE8D60}
+		{5BC853A0-B589-4747-8EE7-6D850FDF0433} = {B2870D2F-1579-4056-9EE6-0F2479C6754A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D8B7548B-B4CE-4A83-BD27-CDB642677955}
