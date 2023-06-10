@@ -6,7 +6,7 @@ partial class BasePage
 {
     public void AcceptCookies()
     {
-        var pane = CookiesPane.Expect(it => it.IsAnimated());
+        var pane = CookiesPane.Expect(it => it.IsDisplayed().IsAnimated());
         pane.AcceptAll.Click();
         pane.Expect(it => it.IsNotDisplayed());
     }
