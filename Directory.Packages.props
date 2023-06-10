@@ -17,6 +17,6 @@
     <PackageVersion Include="Selenium.WebDriver" Version="4.9.1" />
     <PackageVersion Include="Selenium.Support" Version="4.9.1" />
     <PackageVersion Include="WebDriverManager" Version="2.16.2" />
-    <PackageVersion Include="Yapoml.Selenium" Version="0.34.0" />
+    <PackageVersion Include="Yapoml.Selenium" Version="0.35.2" />
   </ItemGroup>
 </Project>
