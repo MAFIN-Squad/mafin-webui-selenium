@@ -1,5 +1,4 @@
 using OpenQA.Selenium;
-using Yapoml.Selenium.Services.Factory;
 
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages;
 
@@ -7,7 +6,7 @@ partial class BasePage
 {
     public void AcceptCookies()
     {
-        var pane = CookiesPane.Expect(it => it.IsAnimated());
+        var pane = CookiesPane.Expect(it => it.IsDisplayed().IsAnimated());
         pane.AcceptAll.Click();
         pane.Expect(it => it.IsNotDisplayed());
     }
@@ -55,7 +54,7 @@ partial class BasePage
                     FindButton.Click(when => when.IsEnabled());
                 }
 
-                return SpaceOptions.Services.Get<ISpaceFactory>().Create<PagesSpace>(WebDriver, SpaceOptions).SearchPage;
+                return SpaceOptions.Services.Get<YaSpace>().Pages.SearchPage;
             }
         }
     }
