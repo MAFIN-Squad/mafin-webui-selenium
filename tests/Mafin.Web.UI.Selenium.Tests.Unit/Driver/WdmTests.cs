@@ -17,7 +17,7 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             _wdm = new Wdm(chromeDriver, timeoutsConfig);
         }
 
-        [Fact]
+        [Fact(Skip = "Driver can not be created on the test runner")]
         public void GetDriver_ShouldReturn_NotNull_ChromeDriver()
         {
             var driver = _wdm.GetDriver();
@@ -26,7 +26,7 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             Assert.IsAssignableFrom<ChromeDriver>(driver);
         }
 
-        [Fact]
+        [Fact(Skip = "Driver can not be created on the test runner")]
         public void GetActions_ShouldReturn_NotNull_ActionsType()
         {
             var actions = _wdm.GetActions();
@@ -35,7 +35,7 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             Assert.IsAssignableFrom<Actions>(actions);
         }
 
-        [Fact]
+        [Fact(Skip = "Driver can not be created on the test runner")]
         public void GetWebDriverWait_ShouldReturn_NotNull_WebDriverWaitType()
         {
             var webDriverWait = _wdm.GetWebDriverWait();
