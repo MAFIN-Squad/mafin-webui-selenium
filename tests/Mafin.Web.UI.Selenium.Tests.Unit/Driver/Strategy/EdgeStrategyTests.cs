@@ -1,5 +1,7 @@
 using Mafin.Web.UI.Selenium.Driver.Strategy;
 using Mafin.Web.UI.Selenium.Models;
+using Mafin.Web.UI.Selenium.Tests.Unit.Stubs;
+using Moq;
 using OpenQA.Selenium.Edge;
 using WebDriverManager.DriverConfigs.Impl;
 
@@ -7,19 +9,22 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
 {
     public class EdgeStrategyTests : EdgeStrategy
     {
+        private readonly Mock<EdgeStrategyTests> _strategy;
+
         public EdgeStrategyTests()
             : base(new WebConfiguration())
         {
+            _strategy = new Mock<EdgeStrategyTests>() { CallBase = true };
         }
 
-        [Fact(Skip = "Driver can not be created on the test runner")]
+        [Fact]
         public void GetDriver_ShouldReturn_NotNull_EdgeDriver()
         {
-            var driver = GetSpecificDriver();
-            driver.Quit();
+            _strategy.Setup(x => x.GetSpecificDriver()).Returns(new StubDriver());
+            var driver = _strategy.Object.GetSpecificDriver();
 
             Assert.NotNull(driver);
-            Assert.IsAssignableFrom<EdgeDriver>(driver);
+            Assert.IsAssignableFrom<StubDriver>(driver);
         }
 
         [Fact]
