@@ -1,4 +1,4 @@
-using System.IO;
+using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver.Strategy;
 using Mafin.Web.UI.Selenium.Models;
 
@@ -22,8 +22,8 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
             webConfiguration.DriverType = driverType;
             var driverStrategy = DriverMapping.GetDriverStrategy(webConfiguration);
 
-            Assert.NotNull(driverStrategy);
-            Assert.IsAssignableFrom(strategyType, driverStrategy);
+            driverStrategy.Should().NotBeNull();
+            driverStrategy.Should().BeAssignableTo(strategyType);
         }
 
         [Fact]
@@ -31,7 +31,9 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
         {
             var webConfiguration = new WebConfiguration();
 
-            Assert.Throws<ArgumentNullException>(() => DriverMapping.GetDriverStrategy(webConfiguration));
+            Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
+
+            act.Should().Throw<ArgumentNullException>(); 
         }
 
         [Fact]
@@ -40,7 +42,9 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
             var webConfiguration = new WebConfiguration();
             webConfiguration.DriverType = string.Empty;
 
-            Assert.Throws<ArgumentNullException>(() => DriverMapping.GetDriverStrategy(webConfiguration));
+            Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
+
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -49,13 +53,17 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
             var webConfiguration = new WebConfiguration();
             webConfiguration.DriverType = "NotValidDriverType";
 
-            Assert.Throws<KeyNotFoundException>(() => DriverMapping.GetDriverStrategy(webConfiguration));
+            Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
+
+            act.Should().Throw<KeyNotFoundException>();
         }
 
         [Fact]
         public void GetDriverStrategy_NullWebConfigurationArgument_ThrowsNullReferenceException()
         {
-            Assert.Throws<NullReferenceException>(() => DriverMapping.GetDriverStrategy(null));
+            Action act = () => DriverMapping.GetDriverStrategy(null);
+
+            act.Should().Throw<NullReferenceException>();
         }
     }
 }

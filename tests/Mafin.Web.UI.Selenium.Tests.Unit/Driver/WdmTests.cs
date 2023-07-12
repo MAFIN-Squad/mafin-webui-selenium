@@ -1,7 +1,7 @@
+using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver;
 using Mafin.Web.UI.Selenium.Models;
 using Mafin.Web.UI.Selenium.Tests.Unit.Stubs;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
@@ -22,8 +22,8 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
         {
             var driver = _wdm.GetDriver();
 
-            Assert.NotNull(driver);
-            Assert.IsAssignableFrom<StubDriver>(driver);
+            driver.Should().NotBeNull();
+            driver.Should().BeAssignableTo<StubDriver>();
         }
 
         [Fact]
@@ -31,8 +31,8 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
         {
             var actions = _wdm.GetActions();
 
-            Assert.NotNull(actions);
-            Assert.IsAssignableFrom<Actions>(actions);
+            actions.Should().NotBeNull();
+            actions.Should().BeAssignableTo<OpenQA.Selenium.Interactions.Actions>();
         }
 
         [Fact]
@@ -40,8 +40,8 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
         {
             var webDriverWait = _wdm.GetWebDriverWait();
 
-            Assert.NotNull(webDriverWait);
-            Assert.IsAssignableFrom<WebDriverWait>(webDriverWait);
+            webDriverWait.Should().NotBeNull();
+            webDriverWait.Should().BeAssignableTo<WebDriverWait>();
         }
     }
 }

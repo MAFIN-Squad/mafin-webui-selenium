@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver.Strategy;
 using Mafin.Web.UI.Selenium.Models;
 using Mafin.Web.UI.Selenium.Tests.Unit.Stubs;
@@ -22,8 +23,8 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
             _strategy.Setup(x => x.GetSpecificDriver()).Returns(new StubDriver());
             var driver = _strategy.Object.GetSpecificDriver();
 
-            Assert.NotNull(driver);
-            Assert.IsAssignableFrom<StubDriver>(driver);
+            driver.Should().NotBeNull();
+            driver.Should().BeAssignableTo<StubDriver>();
         }
 
         [Fact]
@@ -31,7 +32,7 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
         {
             var driverConfig = GetDriverSpecificConfig();
 
-            Assert.Null(driverConfig);
+            driverConfig.Should().BeNull();
         }
 
         [Fact]
@@ -39,8 +40,8 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
         {
             var driverOptions = GetDriverSpecificOptions();
 
-            Assert.NotNull(driverOptions);
-            Assert.IsAssignableFrom<SafariOptions>(driverOptions);
+            driverOptions.Should().NotBeNull();
+            driverOptions.Should().BeAssignableTo<SafariOptions>();
         }
     }
 }

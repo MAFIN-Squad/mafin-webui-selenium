@@ -1,9 +1,10 @@
 using System.Reflection;
+using AutoFixture;
+using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver;
-using OpenQA.Selenium;
+using Mafin.Web.UI.Selenium.Tests.Unit.Stubs;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Chromium;
-using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
 
@@ -11,6 +12,8 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
 {
     public class DriverOptionsExtensionsTests
     {
+        private readonly Fixture _fixture = new();
+
         [Fact]
         public void AddExtensionToChromeOptions_ShouldAddExtension()
         {
@@ -23,9 +26,9 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             var extracedFieldInfo = extractedType.BaseType.GetField(extensionFilesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var extractedFieldValue = (List<string>)extracedFieldInfo.GetValue(options);
 
-            Assert.True(extractedFieldValue != null);
-            Assert.True(extractedFieldValue.Count == 1);
-            Assert.Equal(extractedFieldValue.First(), pathToExistingFile);
+            extractedFieldValue.Should().NotBeNull();
+            extractedFieldValue.Count.Should().Be(1);
+            extractedFieldValue.First().Should().Be(pathToExistingFile);
         }
 
         [Fact]
@@ -41,9 +44,9 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             var extracedFieldInfo = extractedType.GetField(extensionsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var extractedFieldValue = (Dictionary<string, FirefoxExtension>)extracedFieldInfo.GetValue(profile);
 
-            Assert.True(extractedFieldValue != null);
-            Assert.True(extractedFieldValue.Count == 1);
-            Assert.True(pathToExistingFile.Contains(extractedFieldValue.First().Key));
+            extractedFieldValue.Should().NotBeNull();
+            extractedFieldValue.Count().Should().Be(1);
+            pathToExistingFile.Should().Contain(extractedFieldValue.First().Key);
         }
 
         [Fact]
@@ -52,14 +55,16 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path);
             SafariOptions options = new SafariOptions();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => options.AddExtension<SafariOptions>(pathToExistingFile));
+            Action act = () => options.AddExtension<SafariOptions>(pathToExistingFile);
+
+            act.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Fact]
         public void AddArgumentsToChromeOptions_ShouldAddArguments()
         {
             var argumentsFieldName = "arguments";
-            List<string> arguments = new List<string>() { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+            List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
             ChromiumOptions options = new ChromeOptions();
 
             options.AddArguments<ChromiumOptions>(arguments);
@@ -67,16 +72,16 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             var extracedFieldInfo = extractedType.BaseType.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var extractedFieldValue = (List<string>)extracedFieldInfo.GetValue(options);
 
-            Assert.True(extractedFieldValue != null);
-            Assert.True(extractedFieldValue.Count == 2);
-            Assert.Equal<List<string>>(extractedFieldValue, arguments);
+            extractedFieldValue.Should().NotBeNull();
+            extractedFieldValue.Count.Should().Be(2);
+            extractedFieldValue.Should().BeEquivalentTo(arguments);
         }
 
         [Fact]
         public void AddArgumentsToFirefoxOptions_ShouldAddArguments()
         {
             var argumentsFieldName = "firefoxArguments";
-            List<string> arguments = new List<string>() { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+            List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
             FirefoxOptions options = new FirefoxOptions();
 
             options.AddArguments<FirefoxOptions>(arguments);
@@ -84,9 +89,9 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             var extracedFieldInfo = extractedType.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var extractedFieldValue = (List<string>)extracedFieldInfo.GetValue(options);
 
-            Assert.True(extractedFieldValue != null);
-            Assert.True(extractedFieldValue.Count == 2);
-            Assert.Equal<List<string>>(extractedFieldValue, arguments);
+            extractedFieldValue.Should().NotBeNull();
+            extractedFieldValue.Count.Should().Be(2);
+            extractedFieldValue.Should().BeEquivalentTo(arguments);
         }
 
         [Fact]
@@ -94,7 +99,7 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
         {
             var argumentsFieldName = "additionalCapabilities";
             var argsStorageName = "args";
-            List<string> arguments = new List<string>() { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+            List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
             SafariOptions options = new SafariOptions();
 
             options.AddArguments<SafariOptions>(arguments);
@@ -102,26 +107,28 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             var extracedFieldInfo = extractedType.BaseType.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var extractedFieldValue = (Dictionary<string, object>)extracedFieldInfo.GetValue(options);
 
-            Assert.True(extractedFieldValue != null);
-            Assert.True(extractedFieldValue.Count == 1);
-            Assert.Equal<List<string>>(arguments, (List<string>)extractedFieldValue[argsStorageName]);
+            extractedFieldValue.Should().NotBeNull();
+            extractedFieldValue.Count.Should().Be(1);
+            extractedFieldValue[argsStorageName].Should().BeEquivalentTo(arguments);
         }
 
         [Fact]
         public void AddArgumentsToNotValidOptions_ShouldThrowArgumentOutOfRangeException()
         {
-            List<string> arguments = new List<string>() { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+            List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
             FakeOptions options = new FakeOptions();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => options.AddArguments<FakeOptions>(arguments));
+            Action act = () => options.AddArguments<FakeOptions>(arguments);
+
+            act.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Fact]
         public void AddPreferenceToChromeOptions_ShouldAddPreference()
         {
             var preferencesFieldName = "userProfilePreferences";
-            var referenceName = Guid.NewGuid().ToString();
-            var referenceValue = Guid.NewGuid().ToString();
+            var referenceName = _fixture.Create<string>();
+            var referenceValue = _fixture.Create<string>();
             ChromiumOptions options = new ChromeOptions();
 
             options.AddPreference<ChromiumOptions>(referenceName, referenceValue);
@@ -129,17 +136,17 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             var extracedFieldInfo = extractedType.BaseType.GetField(preferencesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var extractedFieldValue = (Dictionary<string, object>)extracedFieldInfo.GetValue(options);
 
-            Assert.True(extractedFieldValue != null);
-            Assert.True(extractedFieldValue.Count == 1);
-            Assert.True(extractedFieldValue[referenceName] == referenceValue);
+            extractedFieldValue.Should().NotBeNull();
+            extractedFieldValue.Count.Should().Be(1);
+            extractedFieldValue[referenceName].Should().BeEquivalentTo(referenceValue);
         }
 
         [Fact]
         public void AddPreferenceToFirefoxOptions_ShouldAddPreference()
         {
             var preferencesFieldName = "profilePreferences";
-            var referenceName = Guid.NewGuid().ToString();
-            var referenceValue = Guid.NewGuid().ToString();
+            var referenceName = _fixture.Create<string>();
+            var referenceValue = _fixture.Create<string>();
             var options = new FirefoxOptions();
 
             options.AddPreference<FirefoxOptions>(referenceName, referenceValue);
@@ -147,27 +154,21 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             var extracedFieldInfo = extractedType.GetField(preferencesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var extractedFieldValue = (Dictionary<string, object>)extracedFieldInfo.GetValue(options);
 
-            Assert.True(extractedFieldValue != null);
-            Assert.True(extractedFieldValue.Count == 1);
-            Assert.True(extractedFieldValue[referenceName] == referenceValue);
+            extractedFieldValue.Should().NotBeNull();
+            extractedFieldValue.Count().Should().Be(1);
+            extractedFieldValue[referenceName].Should().BeEquivalentTo(referenceValue);
         }
 
         [Fact]
         public void AddPreferenceToNotValidOptions_ShouldThrowArgumentOutOfRangeException()
         {
-            var referenceName = Guid.NewGuid().ToString();
-            var referenceValue = Guid.NewGuid().ToString();
+            var referenceName = _fixture.Create<string>();
+            var referenceValue = _fixture.Create<string>();
             var options = new SafariOptions();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => options.AddPreference<SafariOptions>(referenceName, referenceValue));
-        }
-    }
+            Action act = () => options.AddPreference<SafariOptions>(referenceName, referenceValue);
 
-    public class FakeOptions : DriverOptions
-    {
-        public override ICapabilities ToCapabilities()
-        {
-            throw new NotImplementedException();
+            act.Should().Throw<ArgumentOutOfRangeException>();
         }
     }
 }
