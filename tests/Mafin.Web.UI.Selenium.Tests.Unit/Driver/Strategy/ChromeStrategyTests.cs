@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver.Strategy;
 using Mafin.Web.UI.Selenium.Models;
-using Mafin.Web.UI.Selenium.Tests.Unit.Stubs;
+using Mafin.Web.UI.Selenium.Tests.Unit.TestDoubles;
 using Moq;
 using OpenQA.Selenium.Chrome;
 using WebDriverManager.DriverConfigs.Impl;
@@ -21,11 +21,11 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
         [Fact]
         public void GetDriver_ShouldReturn_NotNull_ChromeDriver()
         {
-            _strategy.Setup(x => x.GetSpecificDriver()).Returns(new StubDriver());
+            _strategy.Setup(x => x.GetSpecificDriver()).Returns(new DummyDriver());
             var driver = _strategy.Object.GetSpecificDriver();
 
             driver.Should().NotBeNull();
-            driver.Should().BeAssignableTo<StubDriver>();
+            driver.Should().BeAssignableTo<DummyDriver>();
         }
 
         [Fact]

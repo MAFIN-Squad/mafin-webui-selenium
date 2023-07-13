@@ -2,7 +2,7 @@ using System.Reflection;
 using AutoFixture;
 using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver;
-using Mafin.Web.UI.Selenium.Tests.Unit.Stubs;
+using Mafin.Web.UI.Selenium.Tests.Unit.TestDoubles;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Chromium;
 using OpenQA.Selenium.Firefox;

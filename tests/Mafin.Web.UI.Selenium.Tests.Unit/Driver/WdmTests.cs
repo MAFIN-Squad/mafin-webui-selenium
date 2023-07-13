@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver;
 using Mafin.Web.UI.Selenium.Models;
-using Mafin.Web.UI.Selenium.Tests.Unit.Stubs;
+using Mafin.Web.UI.Selenium.Tests.Unit.TestDoubles;
 using OpenQA.Selenium.Support.UI;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
@@ -12,7 +12,7 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
 
         public WdmTests()
         {
-            var driver = new StubDriver();
+            var driver = new DummyDriver();
             var timeoutsConfig = new TimeoutsConfig();
             _wdm = new Wdm(driver, timeoutsConfig);
         }
@@ -23,7 +23,7 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
             var driver = _wdm.GetDriver();
 
             driver.Should().NotBeNull();
-            driver.Should().BeAssignableTo<StubDriver>();
+            driver.Should().BeAssignableTo<DummyDriver>();
         }
 
         [Fact]
