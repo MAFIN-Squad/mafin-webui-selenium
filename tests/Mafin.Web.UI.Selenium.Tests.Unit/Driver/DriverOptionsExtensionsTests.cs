@@ -116,9 +116,9 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
         public void AddArgumentsToNotValidOptions_ShouldThrowArgumentOutOfRangeException()
         {
             List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
-            FakeOptions options = new FakeOptions();
+            DummyOptions options = new DummyOptions();
 
-            Action act = () => options.AddArguments<FakeOptions>(arguments);
+            Action act = () => options.AddArguments<DummyOptions>(arguments);
 
             act.Should().Throw<ArgumentOutOfRangeException>();
         }
