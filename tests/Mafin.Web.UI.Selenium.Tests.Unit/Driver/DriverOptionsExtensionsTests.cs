@@ -16,7 +16,7 @@ public class DriverOptionsExtensionsTests
     public void AddExtension_WhenChromeOptionsPassed_ShouldAddExtension()
     {
         const string extensionFilesFieldName = "extensionFiles";
-        string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().Location).Path);
+        string pathToExistingFile = Assembly.GetExecutingAssembly().Location;
         ChromeOptions options = new();
 
         options.AddExtension(pathToExistingFile);
@@ -33,7 +33,7 @@ public class DriverOptionsExtensionsTests
     public void AddExtension_WhenFirefoxOptionsPassed_ShouldAddExtension()
     {
         const string extensionsFieldName = "extensions";
-        string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().Location).Path);
+        string pathToExistingFile = Assembly.GetExecutingAssembly().Location;
         FirefoxOptions options = new();
 
         options.AddExtension(pathToExistingFile);
@@ -50,7 +50,7 @@ public class DriverOptionsExtensionsTests
     [Fact]
     public void AddExtension_WhenUnsupportedOptionsPassed_ShouldThrow()
     {
-        string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().Location).Path);
+        string pathToExistingFile = Assembly.GetExecutingAssembly().Location;
         SafariOptions options = new();
 
         Action act = () => options.AddExtension(pathToExistingFile);
