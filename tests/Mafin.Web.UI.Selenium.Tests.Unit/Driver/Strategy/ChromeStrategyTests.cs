@@ -1,49 +1,32 @@
-using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver.Strategy;
 using Mafin.Web.UI.Selenium.Models;
-using Mafin.Web.UI.Selenium.Tests.Unit.TestDoubles;
-using Moq;
 using OpenQA.Selenium.Chrome;
 using WebDriverManager.DriverConfigs.Impl;
 
-namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
+namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy;
+
+public class ChromeStrategyTests : ChromeStrategy
 {
-    public class ChromeStrategyTests : ChromeStrategy
+    public ChromeStrategyTests()
+        : base(new WebConfiguration())
     {
-        private readonly Mock<ChromeStrategyTests> _strategy;
+    }
 
-        public ChromeStrategyTests()
-            : base(new WebConfiguration())
-        {
-            _strategy = new Mock<ChromeStrategyTests>() { CallBase = true };
-        }
+    [Fact]
+    public void GetDriverSpecificConfig_WhenCalled_ShouldReturnChromeConfigInstance()
+    {
+        var driverConfig = GetDriverSpecificConfig();
 
-        [Fact]
-        public void GetDriver_ShouldReturn_NotNull_ChromeDriver()
-        {
-            _strategy.Setup(x => x.GetSpecificDriver()).Returns(new DummyDriver());
-            var driver = _strategy.Object.GetSpecificDriver();
+        driverConfig.Should().NotBeNull();
+        driverConfig.Should().BeAssignableTo<ChromeConfig>();
+    }
 
-            driver.Should().NotBeNull();
-            driver.Should().BeAssignableTo<DummyDriver>();
-        }
+    [Fact]
+    public void GetDriverSpecificOptions_WhenCalled_ShouldReturnChromeOptionsInstance()
+    {
+        var driverOptions = GetDriverSpecificOptions();
 
-        [Fact]
-        public void GetDriverSpecificConfig_ShouldReturn_NotNull_ChromeConfig()
-        {
-            var driverConfig = GetDriverSpecificConfig();
-
-            driverConfig.Should().NotBeNull();
-            driverConfig.Should().BeAssignableTo<ChromeConfig>();
-        }
-
-        [Fact]
-        public void GetDriverSpecificOptions_ShouldReturn_NotNull_ChromeOptions()
-        {
-            var driverOptions = GetDriverSpecificOptions();
-
-            driverOptions.Should().NotBeNull();
-            driverOptions.Should().BeAssignableTo<ChromeOptions>();
-        }
+        driverOptions.Should().NotBeNull();
+        driverOptions.Should().BeAssignableTo<ChromeOptions>();
     }
 }

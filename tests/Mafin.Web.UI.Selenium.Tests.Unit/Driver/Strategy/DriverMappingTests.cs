@@ -1,69 +1,69 @@
-using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver.Strategy;
 using Mafin.Web.UI.Selenium.Models;
 
-namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy
+namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy;
+
+public class DriverMappingTests
 {
-    public class DriverMappingTests
+    public static IEnumerable<object[]> DriverMappings
     {
-        public static List<object[]> DriverMappings => new List<object[]>
+        get
         {
-            new object[] { "chrome", typeof(ChromeStrategy) },
-            new object[] { "edge", typeof(EdgeStrategy) },
-            new object[] { "safari", typeof(SafariStrategy) },
-            new object[] { "firefox", typeof(FirefoxStrategy) }
+            yield return new object[] { "chrome", typeof(ChromeStrategy) };
+            yield return new object[] { "edge", typeof(EdgeStrategy) };
+            yield return new object[] { "safari", typeof(SafariStrategy) };
+            yield return new object[] { "firefox", typeof(FirefoxStrategy) };
+        }
+    }
+
+    [Theory]
+    [MemberData(nameof(DriverMappings))]
+    public void GetDriverStrategy_WhenPassedWebConfiguration_ShouldReturnCorrespondingDriverStrategy(string driverType, Type strategyType)
+    {
+        WebConfiguration webConfiguration = new()
+        {
+            DriverType = driverType
         };
 
-        [Theory]
-        [MemberData(nameof(DriverMappings))]
-        public void GetDriverStrategy_ShouldReturn_NotNull_SpecificDriverStrategy(string driverType, Type strategyType)
+        var driverStrategy = DriverMapping.GetDriverStrategy(webConfiguration);
+
+        driverStrategy.Should().NotBeNull();
+        driverStrategy.Should().BeAssignableTo(strategyType);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void GetDriverStrategy_WhenNullOrEmptyDriverType_ShouldThrow(string driverType)
+    {
+        WebConfiguration webConfiguration = new()
         {
-            var webConfiguration = new WebConfiguration();
-            webConfiguration.DriverType = driverType;
-            var driverStrategy = DriverMapping.GetDriverStrategy(webConfiguration);
+            DriverType = driverType
+        };
 
-            driverStrategy.Should().NotBeNull();
-            driverStrategy.Should().BeAssignableTo(strategyType);
-        }
+        Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
 
-        [Fact]
-        public void GetDriverStrategy_NullDriverType_ThrowsArgumentNullException()
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void GetDriverStrategy_WhenUnsupportedDriverType_ShouldThrow()
+    {
+        WebConfiguration webConfiguration = new()
         {
-            var webConfiguration = new WebConfiguration();
+            DriverType = "NotValidDriverType"
+        };
 
-            Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
+        Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
 
-            act.Should().Throw<ArgumentNullException>(); 
-        }
+        act.Should().Throw<KeyNotFoundException>();
+    }
 
-        [Fact]
-        public void GetDriverStrategy_EmptyDriverType_ThrowsArgumentNullException()
-        {
-            var webConfiguration = new WebConfiguration();
-            webConfiguration.DriverType = string.Empty;
+    [Fact]
+    public void GetDriverStrategy_WhenNullWebConfiguration_ShouldThrow()
+    {
+        Action act = () => DriverMapping.GetDriverStrategy(null!);
 
-            Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
-
-            act.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void GetDriverStrategy_NotValidDriverType_ThrowsKeyNotFoundException()
-        {
-            var webConfiguration = new WebConfiguration();
-            webConfiguration.DriverType = "NotValidDriverType";
-
-            Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
-
-            act.Should().Throw<KeyNotFoundException>();
-        }
-
-        [Fact]
-        public void GetDriverStrategy_NullWebConfigurationArgument_ThrowsNullReferenceException()
-        {
-            Action act = () => DriverMapping.GetDriverStrategy(null);
-
-            act.Should().Throw<NullReferenceException>();
-        }
+        act.Should().Throw<NullReferenceException>();
     }
 }

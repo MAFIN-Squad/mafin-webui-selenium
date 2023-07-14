@@ -1,174 +1,171 @@
 using System.Reflection;
 using AutoFixture;
-using FluentAssertions;
 using Mafin.Web.UI.Selenium.Driver;
 using Mafin.Web.UI.Selenium.Tests.Unit.TestDoubles;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Chromium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
 
-namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver
+namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver;
+
+public class DriverOptionsExtensionsTests
 {
-    public class DriverOptionsExtensionsTests
+    private readonly Fixture _fixture = new();
+
+    [Fact]
+    public void AddExtension_WhenChromeOptionsPassed_ShouldAddExtension()
     {
-        private readonly Fixture _fixture = new();
+        const string extensionFilesFieldName = "extensionFiles";
+        string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().Location).Path);
+        ChromeOptions options = new();
 
-        [Fact]
-        public void AddExtensionToChromeOptions_ShouldAddExtension()
-        {
-            string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path);
-            var extensionFilesFieldName = "extensionFiles";
-            ChromiumOptions options = new ChromeOptions();
+        options.AddExtension(pathToExistingFile);
+        var extractedType = options.GetType().BaseType;
+        var extracedFieldInfo = extractedType?.GetField(extensionFilesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        var extractedFieldValue = extracedFieldInfo?.GetValue(options) as List<string>;
 
-            options.AddExtension<ChromiumOptions>(pathToExistingFile);
-            Type extractedType = options.GetType();
-            var extracedFieldInfo = extractedType.BaseType.GetField(extensionFilesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            var extractedFieldValue = (List<string>)extracedFieldInfo.GetValue(options);
+        extractedFieldValue.Should().NotBeNull();
+        extractedFieldValue.Should().ContainSingle();
+        extractedFieldValue.Should().HaveElementAt(0, pathToExistingFile);
+    }
 
-            extractedFieldValue.Should().NotBeNull();
-            extractedFieldValue.Count.Should().Be(1);
-            extractedFieldValue.First().Should().Be(pathToExistingFile);
-        }
+    [Fact]
+    public void AddExtension_WhenFirefoxOptionsPassed_ShouldAddExtension()
+    {
+        const string extensionsFieldName = "extensions";
+        string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().Location).Path);
+        FirefoxOptions options = new();
 
-        [Fact]
-        public void AddExtensionToFirefoxOptions_ShouldAddExtension()
-        {
-            string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path);
-            var extensionsFieldName = "extensions";
-            FirefoxOptions options = new FirefoxOptions();
+        options.AddExtension(pathToExistingFile);
+        var profile = options.Profile;
+        var extractedType = profile.GetType();
+        var extracedFieldInfo = extractedType.GetField(extensionsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        var extractedFieldValue = extracedFieldInfo?.GetValue(profile) as Dictionary<string, FirefoxExtension>;
 
-            options.AddExtension<FirefoxOptions>(pathToExistingFile);
-            FirefoxProfile profile = options.Profile;
-            Type extractedType = profile.GetType();
-            var extracedFieldInfo = extractedType.GetField(extensionsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            var extractedFieldValue = (Dictionary<string, FirefoxExtension>)extracedFieldInfo.GetValue(profile);
+        extractedFieldValue.Should().NotBeNull();
+        extractedFieldValue.Should().ContainSingle();
+        pathToExistingFile.Should().Contain(extractedFieldValue!.First().Key);
+    }
 
-            extractedFieldValue.Should().NotBeNull();
-            extractedFieldValue.Count().Should().Be(1);
-            pathToExistingFile.Should().Contain(extractedFieldValue.First().Key);
-        }
+    [Fact]
+    public void AddExtension_WhenUnsupportedOptionsPassed_ShouldThrow()
+    {
+        string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().Location).Path);
+        SafariOptions options = new();
 
-        [Fact]
-        public void AddExtensionToNotValidOptions_ShouldThrowArgumentOutOfRangeException()
-        {
-            string pathToExistingFile = Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path);
-            SafariOptions options = new SafariOptions();
+        Action act = () => options.AddExtension(pathToExistingFile);
 
-            Action act = () => options.AddExtension<SafariOptions>(pathToExistingFile);
+        act.Should().Throw<ArgumentOutOfRangeException>();
+    }
 
-            act.Should().Throw<ArgumentOutOfRangeException>();
-        }
+    [Fact]
+    public void AddArguments_WhenChromeOptionsPassed_ShouldAddArguments()
+    {
+        const string argumentsFieldName = "arguments";
+        List<string> arguments = new() { _fixture.Create<string>(), _fixture.Create<string>() };
+        ChromeOptions options = new();
 
-        [Fact]
-        public void AddArgumentsToChromeOptions_ShouldAddArguments()
-        {
-            var argumentsFieldName = "arguments";
-            List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
-            ChromiumOptions options = new ChromeOptions();
+        options.AddArguments(arguments);
+        var extractedType = options.GetType().BaseType;
+        var extracedFieldInfo = extractedType?.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        var extractedFieldValue = extracedFieldInfo?.GetValue(options) as List<string>;
 
-            options.AddArguments<ChromiumOptions>(arguments);
-            Type extractedType = options.GetType();
-            var extracedFieldInfo = extractedType.BaseType.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            var extractedFieldValue = (List<string>)extracedFieldInfo.GetValue(options);
+        extractedFieldValue.Should().NotBeNull();
+        extractedFieldValue.Should().HaveCount(2);
+        extractedFieldValue.Should().BeEquivalentTo(arguments);
+    }
 
-            extractedFieldValue.Should().NotBeNull();
-            extractedFieldValue.Count.Should().Be(2);
-            extractedFieldValue.Should().BeEquivalentTo(arguments);
-        }
+    [Fact]
+    public void AddArguments_WhenFirefoxOptionsPassed_ShouldAddArguments()
+    {
+        const string argumentsFieldName = "firefoxArguments";
+        List<string> arguments = new() { _fixture.Create<string>(), _fixture.Create<string>() };
+        FirefoxOptions options = new();
 
-        [Fact]
-        public void AddArgumentsToFirefoxOptions_ShouldAddArguments()
-        {
-            var argumentsFieldName = "firefoxArguments";
-            List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
-            FirefoxOptions options = new FirefoxOptions();
+        options.AddArguments(arguments);
+        var extractedType = options.GetType();
+        var extracedFieldInfo = extractedType.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        var extractedFieldValue = extracedFieldInfo?.GetValue(options) as List<string>;
 
-            options.AddArguments<FirefoxOptions>(arguments);
-            Type extractedType = options.GetType();
-            var extracedFieldInfo = extractedType.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            var extractedFieldValue = (List<string>)extracedFieldInfo.GetValue(options);
+        extractedFieldValue.Should().NotBeNull();
+        extractedFieldValue.Should().HaveCount(2);
+        extractedFieldValue.Should().BeEquivalentTo(arguments);
+    }
 
-            extractedFieldValue.Should().NotBeNull();
-            extractedFieldValue.Count.Should().Be(2);
-            extractedFieldValue.Should().BeEquivalentTo(arguments);
-        }
+    [Fact]
+    public void AddArguments_WhenSafariOptionsPassed_ShouldAddArguments()
+    {
+        const string argumentsFieldName = "additionalCapabilities";
+        const string argsStorageName = "args";
+        List<string> arguments = new() { _fixture.Create<string>(), _fixture.Create<string>() };
+        SafariOptions options = new();
 
-        [Fact]
-        public void AddArgumentsToSafariOptions_ShouldAddArguments()
-        {
-            var argumentsFieldName = "additionalCapabilities";
-            var argsStorageName = "args";
-            List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
-            SafariOptions options = new SafariOptions();
+        options.AddArguments(arguments);
+        var extractedType = options.GetType().BaseType;
+        var extracedFieldInfo = extractedType?.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        var extractedFieldValue = extracedFieldInfo?.GetValue(options) as Dictionary<string, object>;
 
-            options.AddArguments<SafariOptions>(arguments);
-            Type extractedType = options.GetType();
-            var extracedFieldInfo = extractedType.BaseType.GetField(argumentsFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            var extractedFieldValue = (Dictionary<string, object>)extracedFieldInfo.GetValue(options);
+        extractedFieldValue.Should().NotBeNull();
+        extractedFieldValue.Should().ContainSingle();
+        extractedFieldValue![argsStorageName].Should().BeEquivalentTo(arguments);
+    }
 
-            extractedFieldValue.Should().NotBeNull();
-            extractedFieldValue.Count.Should().Be(1);
-            extractedFieldValue[argsStorageName].Should().BeEquivalentTo(arguments);
-        }
+    [Fact]
+    public void AddArguments_WhenUnsupportedOptionsPassed_ShouldThrow()
+    {
+        List<string> arguments = new() { _fixture.Create<string>(), _fixture.Create<string>() };
+        DummyOptions options = new();
 
-        [Fact]
-        public void AddArgumentsToNotValidOptions_ShouldThrowArgumentOutOfRangeException()
-        {
-            List<string> arguments = new List<string>() { _fixture.Create<string>(), _fixture.Create<string>() };
-            DummyOptions options = new DummyOptions();
+        Action act = () => options.AddArguments(arguments);
 
-            Action act = () => options.AddArguments<DummyOptions>(arguments);
+        act.Should().Throw<ArgumentOutOfRangeException>();
+    }
 
-            act.Should().Throw<ArgumentOutOfRangeException>();
-        }
+    [Fact]
+    public void AddPreference_WhenChromeOptionsPassed_ShouldAddPreference()
+    {
+        const string preferencesFieldName = "userProfilePreferences";
+        var referenceName = _fixture.Create<string>();
+        var referenceValue = _fixture.Create<string>();
+        ChromeOptions options = new();
 
-        [Fact]
-        public void AddPreferenceToChromeOptions_ShouldAddPreference()
-        {
-            var preferencesFieldName = "userProfilePreferences";
-            var referenceName = _fixture.Create<string>();
-            var referenceValue = _fixture.Create<string>();
-            ChromiumOptions options = new ChromeOptions();
+        options.AddPreference(referenceName, referenceValue);
+        var extractedType = options.GetType().BaseType;
+        var extracedFieldInfo = extractedType?.GetField(preferencesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        var extractedFieldValue = extracedFieldInfo?.GetValue(options) as Dictionary<string, object>;
 
-            options.AddPreference<ChromiumOptions>(referenceName, referenceValue);
-            Type extractedType = options.GetType();
-            var extracedFieldInfo = extractedType.BaseType.GetField(preferencesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            var extractedFieldValue = (Dictionary<string, object>)extracedFieldInfo.GetValue(options);
+        extractedFieldValue.Should().NotBeNull();
+        extractedFieldValue.Should().ContainSingle();
+        extractedFieldValue![referenceName].Should().BeEquivalentTo(referenceValue);
+    }
 
-            extractedFieldValue.Should().NotBeNull();
-            extractedFieldValue.Count.Should().Be(1);
-            extractedFieldValue[referenceName].Should().BeEquivalentTo(referenceValue);
-        }
+    [Fact]
+    public void AddPreference_WhenFirefoxOptionsPassed_ShouldAddPreference()
+    {
+        const string preferencesFieldName = "profilePreferences";
+        var referenceName = _fixture.Create<string>();
+        var referenceValue = _fixture.Create<string>();
+        FirefoxOptions options = new();
 
-        [Fact]
-        public void AddPreferenceToFirefoxOptions_ShouldAddPreference()
-        {
-            var preferencesFieldName = "profilePreferences";
-            var referenceName = _fixture.Create<string>();
-            var referenceValue = _fixture.Create<string>();
-            var options = new FirefoxOptions();
+        options.AddPreference(referenceName, referenceValue);
+        var extractedType = options.GetType();
+        var extracedFieldInfo = extractedType.GetField(preferencesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+        var extractedFieldValue = extracedFieldInfo?.GetValue(options) as Dictionary<string, object>;
 
-            options.AddPreference<FirefoxOptions>(referenceName, referenceValue);
-            Type extractedType = options.GetType();
-            var extracedFieldInfo = extractedType.GetField(preferencesFieldName, BindingFlags.NonPublic | BindingFlags.Instance);
-            var extractedFieldValue = (Dictionary<string, object>)extracedFieldInfo.GetValue(options);
+        extractedFieldValue.Should().NotBeNull();
+        extractedFieldValue.Should().ContainSingle();
+        extractedFieldValue![referenceName].Should().BeEquivalentTo(referenceValue);
+    }
 
-            extractedFieldValue.Should().NotBeNull();
-            extractedFieldValue.Count().Should().Be(1);
-            extractedFieldValue[referenceName].Should().BeEquivalentTo(referenceValue);
-        }
+    [Fact]
+    public void AddPreference_WhenUnsupportedOptionsPassed_ShouldThrow()
+    {
+        var referenceName = _fixture.Create<string>();
+        var referenceValue = _fixture.Create<string>();
+        SafariOptions options = new();
 
-        [Fact]
-        public void AddPreferenceToNotValidOptions_ShouldThrowArgumentOutOfRangeException()
-        {
-            var referenceName = _fixture.Create<string>();
-            var referenceValue = _fixture.Create<string>();
-            var options = new SafariOptions();
+        Action act = () => options.AddPreference(referenceName, referenceValue);
 
-            Action act = () => options.AddPreference<SafariOptions>(referenceName, referenceValue);
-
-            act.Should().Throw<ArgumentOutOfRangeException>();
-        }
+        act.Should().Throw<ArgumentOutOfRangeException>();
     }
 }
