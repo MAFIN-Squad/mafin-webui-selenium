@@ -15,7 +15,6 @@
 
     <PackageReference Include="Selenium.WebDriver" />
     <PackageReference Include="Selenium.Support" />
-    <PackageReference Include="WebDriverManager" />
 
     <None Include="build\**\*.props" Pack="true" PackagePath="build\" />
     <None Include="..\..\LICENSE" Pack="True" PackagePath="\" />

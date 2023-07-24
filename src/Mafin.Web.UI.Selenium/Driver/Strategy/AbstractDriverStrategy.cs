@@ -2,9 +2,6 @@ using Mafin.Web.UI.Selenium.Meta;
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs;
-using WebDriverManager.Helpers;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
@@ -21,8 +18,6 @@ public abstract class AbstractDriverStrategy
 
     protected abstract DriverOptions GetDriverSpecificOptions();
 
-    protected abstract IDriverConfig GetDriverSpecificConfig();
-
     public virtual IWebDriver GetDriver()
     {
         var driver = _webConfiguration.RunType == RunType.Local ?
@@ -34,15 +29,6 @@ public abstract class AbstractDriverStrategy
 
     public virtual IWebDriver GetLocalDriver()
     {
-        var isLatestLocal = _webConfiguration.IsLatestLocal;
-        var version = isLatestLocal ? VersionResolveStrategy.Latest : VersionResolveStrategy.MatchingBrowser;
-
-        var driverConfig = GetDriverSpecificConfig();
-        if (driverConfig is not null)
-        {
-            new DriverManager().SetUpDriver(driverConfig, version);
-        }
-
         return SetTimeouts(GetSpecificDriver());
     }
 

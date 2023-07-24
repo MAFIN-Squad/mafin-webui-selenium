@@ -12,14 +12,6 @@ public class SafariStrategyTests : SafariStrategy
     }
 
     [Fact]
-    public void GetDriverSpecificConfig_WhenCalled_ShouldReturnNull()
-    {
-        var driverConfig = GetDriverSpecificConfig();
-
-        driverConfig.Should().BeNull();
-    }
-
-    [Fact]
     public void GetDriverSpecificOptions_WhenCalled_ShouldReturnSafariOptionsInstance()
     {
         var driverOptions = GetDriverSpecificOptions();
