@@ -68,7 +68,7 @@ public abstract class AbstractDriverStrategy
     {
         var driverOptions = new T();
 
-        if (_webConfiguration.BrowserConfiguration.Capabilities is not null && _webConfiguration.BrowserConfiguration.Capabilities.Any())
+        if (_webConfiguration?.BrowserConfiguration?.Capabilities is not null && _webConfiguration.BrowserConfiguration.Capabilities.Any())
         {
             foreach (var capability in _webConfiguration.BrowserConfiguration.Capabilities)
             {
@@ -76,12 +76,12 @@ public abstract class AbstractDriverStrategy
             }
         }
 
-        if (_webConfiguration.BrowserConfiguration.Arguments is not null && _webConfiguration.BrowserConfiguration.Arguments.Any())
+        if (_webConfiguration?.BrowserConfiguration?.Arguments is not null && _webConfiguration.BrowserConfiguration.Arguments.Any())
         {
             driverOptions.AddArguments(_webConfiguration.BrowserConfiguration.Arguments);
         }
 
-        if (_webConfiguration.BrowserConfiguration.Extensions is not null && _webConfiguration.BrowserConfiguration.Extensions.Any())
+        if (_webConfiguration?.BrowserConfiguration?.Extensions is not null && _webConfiguration.BrowserConfiguration.Extensions.Any())
         {
             foreach (var extension in _webConfiguration.BrowserConfiguration.Extensions)
             {
@@ -89,7 +89,7 @@ public abstract class AbstractDriverStrategy
             }
         }
 
-        if (_webConfiguration.BrowserConfiguration.Preferences is not null && _webConfiguration.BrowserConfiguration.Preferences.Any())
+        if (_webConfiguration?.BrowserConfiguration?.Preferences is not null && _webConfiguration.BrowserConfiguration.Preferences.Any())
         {
             foreach (var preference in _webConfiguration.BrowserConfiguration.Preferences)
             {
