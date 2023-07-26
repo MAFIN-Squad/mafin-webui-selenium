@@ -3,7 +3,7 @@ namespace Mafin.Web.UI.Selenium.Configuration;
 /// <summary>
 /// Represents an attribute that contains the path to the section with the configuration.
 /// </summary>
-[AttributeUsage(AttributeTargets.Class)]
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 internal sealed class ConfigurationSectionAttribute : Attribute
 {
     /// <summary>
