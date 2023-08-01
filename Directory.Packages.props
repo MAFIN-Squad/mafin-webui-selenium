@@ -18,5 +18,7 @@
     <PackageVersion Include="Selenium.Support" Version="4.10.0" />
     <PackageVersion Include="WebDriverManager" Version="2.16.2" />
     <PackageVersion Include="Yapoml.Selenium" Version="0.35.2" />
+    <PackageVersion Include="Noksa.WebDriver.ScreenshotsExtensions" Version="0.1.5.4" />
+    <PackageVersion Include="System.Drawing.Common" Version="7.0.0" />    
   </ItemGroup>
 </Project>
