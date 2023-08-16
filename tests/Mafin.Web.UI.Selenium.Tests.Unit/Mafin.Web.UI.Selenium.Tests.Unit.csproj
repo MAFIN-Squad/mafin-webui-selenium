@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <Nullable>warnings</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" />
@@ -10,15 +9,10 @@
     <PackageReference Include="FluentAssertions.Analyzers" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="Selenium.Support" />
-    <PackageReference Include="Selenium.WebDriver.Extensions" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <PackageReference Include="coverlet.collector" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
 
     <ProjectReference Include="..\..\src\Mafin.Web.UI.Selenium\Mafin.Web.UI.Selenium.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestResults\" />
   </ItemGroup>
 </Project>
