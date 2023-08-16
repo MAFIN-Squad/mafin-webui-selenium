@@ -50,7 +50,9 @@ namespace Mafin.Web.UI.Selenium.Utilities
             }
         }
 
-        private static void TakeFullScreenshot(this IWebDriver driver, string screenshotFilePath = "", params By[] elementsToHide) => driver.TakeScreenshot(new VerticalCombineDecorator(elementsToHide == null ? new ScreenshotMaker() : new ScreenshotMaker().SetElementsToHide(elementsToHide))).ToMagickImage().Write(screenshotFilePath);
+        private static void TakeFullScreenshot(this IWebDriver driver, string screenshotFilePath = "", params By[] elementsToHide) =>
+            driver.TakeScreenshot(new VerticalCombineDecorator(elementsToHide == null ? new ScreenshotMaker() :
+                new ScreenshotMaker().SetElementsToHide(elementsToHide))).ToMagickImage().Write(screenshotFilePath);
 
         private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath)
         {
