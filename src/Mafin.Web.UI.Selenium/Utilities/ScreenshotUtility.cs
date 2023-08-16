@@ -1,6 +1,4 @@
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using Mafin.Web.UI.Selenium.Enums;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -11,8 +9,21 @@ using WDSE.ScreenshotMaker;
 
 namespace Mafin.Web.UI.Selenium.Utilities
 {
+    /// <summary>
+    /// Give possibility to take customizible screenshot.
+    /// </summary>
     public static class ScreenshotUtility
     {
+        /// <summary>
+        /// Customizible screenshot method.
+        /// </summary>
+        /// <param name="driver">Webdriver instance.</param>
+        /// <param name="screenshotType">Type of a screenshot.</param>
+        /// <param name="element">Element to take.</param>
+        /// <param name="screenshotName">Name of a screenshot file.</param>
+        /// <param name="screenshotDirectory">Directory to save a screenshot file.</param>
+        /// <param name="isAttached">If true - screenshot is atteched to the test result, false otherwise.</param>
+        /// <param name="elementsToHide">Elements to hide on a fullscreen picture.</param>
         public static void TakeFlexibleScreenshot(this IWebDriver driver, ScreenshotType screenshotType = ScreenshotType.DefaultScreen, IWebElement? element = null, string screenshotName = "", string screenshotDirectory = "Screenshots", bool isAttached = false, params By[] elementsToHide)
         {
             if (!Directory.Exists(screenshotDirectory))
@@ -23,7 +34,7 @@ namespace Mafin.Web.UI.Selenium.Utilities
             switch (screenshotType)
             {
                 case ScreenshotType.FullScreen:
-                    driver.TakeScreenshot(new VerticalCombineDecorator(elementsToHide == null ? new ScreenshotMaker() : new ScreenshotMaker().SetElementsToHide(elementsToHide))).ToMagickImage().Write(Path.Combine(screenshotDirectory, screenshotName));
+                    driver.TakeFullScreenshot(Path.Combine(screenshotDirectory, screenshotName), elementsToHide);
                     break;
                 case ScreenshotType.SingleElement:
                     driver.TakeElementScreenshot(element, Path.Combine(screenshotDirectory, screenshotName));
@@ -38,6 +49,8 @@ namespace Mafin.Web.UI.Selenium.Utilities
                 TestContext.AddTestAttachment(Path.Combine(screenshotDirectory, screenshotName));
             }
         }
+
+        private static void TakeFullScreenshot(this IWebDriver driver, string screenshotFilePath = "", params By[] elementsToHide) => driver.TakeScreenshot(new VerticalCombineDecorator(elementsToHide == null ? new ScreenshotMaker() : new ScreenshotMaker().SetElementsToHide(elementsToHide))).ToMagickImage().Write(screenshotFilePath);
 
         private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath)
         {
