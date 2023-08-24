@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using OpenQA.Selenium;
 
 namespace Mafin.Web.UI.Selenium.Models;

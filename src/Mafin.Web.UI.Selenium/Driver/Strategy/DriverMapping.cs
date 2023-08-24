@@ -5,7 +5,7 @@ namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
 public static class DriverMapping
 {
-    private static readonly Dictionary<string, Type> DriverMappings = new(StringComparer.InvariantCultureIgnoreCase)
+    private static readonly Dictionary<string, Type> DriverMappings = new(StringComparer.OrdinalIgnoreCase)
     {
         { "chrome", typeof(ChromeStrategy) },
         { "edge", typeof(EdgeStrategy) },

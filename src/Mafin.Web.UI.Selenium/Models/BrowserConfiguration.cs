@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using Mafin.Web.UI.Selenium.Configuration;
 
 namespace Mafin.Web.UI.Selenium.Models;
