@@ -28,7 +28,7 @@ public static class WebConfigurationProvider
 
         if (result.BrowserConfiguration is null)
         {
-            var browser = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(result.DriverType);
+            var browser = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(result.Browser);
             var browserConfigurationFileName = string.Format(CultureInfo.CurrentCulture, BrowserConfigurationFileNamePattern, browser);
 
             if (!File.Exists(ConfigurationFileName))
@@ -46,7 +46,12 @@ public static class WebConfigurationProvider
     {
         var pathParts = typeof(T).GetCustomAttributes<ConfigurationSectionAttribute>().FirstOrDefault()?.Path;
         var section = pathParts is null || !pathParts.Any() ? unparsedJson : GetSection(unparsedJson, pathParts);
-        var result = JsonSerializer.Deserialize<T>(section);
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var result = JsonSerializer.Deserialize<T>(section, options);
 
         return result;
     }

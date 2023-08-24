@@ -1,18 +1,16 @@
 {
-  "mafin": {
-    "selenium": {
-      "remote": {
-        "browserVersion": "",
-        "url": ""
-      },
-      "capabilities": {
-      },
-      "arguments": [
-      ],
-      "extensions": [],
-      "preferences": {
+  "selenium": {
+    "remote": {
+      "browserVersion": "",
+      "url": ""
+    },
+    "capabilities": {
+    },
+    "arguments": [
+    ],
+    "extensions": [],
+    "preferences": {
 
-      }
     }
   }
 }

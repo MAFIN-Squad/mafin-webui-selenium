@@ -19,7 +19,7 @@ public abstract class AbstractTest
         var strategy = DriverMapping.GetDriverStrategy(webConfiguration);
         driver = strategy.GetDriver();
 
-        wdm = new WdmExtended(driver, webConfiguration.TimeoutsConfig);
+        wdm = new WdmExtended(driver, webConfiguration.Timeouts);
     }
 
     [TearDown]

@@ -48,20 +48,20 @@ public abstract class AbstractDriverStrategy
 
     public virtual IWebDriver GetRemoteDriver()
     {
-        var url = _webConfiguration.BrowserConfiguration.RemoteConfig.Url;
-        var commandTimeout = _webConfiguration.TimeoutsConfig.CommandTimeout;
+        var url = _webConfiguration.BrowserConfiguration.Remote.Url;
+        var commandTimeout = _webConfiguration.Timeouts.CommandTimeout;
         return SetTimeouts(new RemoteWebDriver(url, GetRemoteOptions().ToCapabilities(), commandTimeout));
     }
 
     public virtual IWebDriver SetTimeouts(IWebDriver driver)
     {
-        driver.Manage().Timeouts().ImplicitWait = _webConfiguration.TimeoutsConfig.ImplicitWait;
-        driver.Manage().Timeouts().PageLoad = _webConfiguration.TimeoutsConfig.PageLoad;
-        driver.Manage().Timeouts().AsynchronousJavaScript = _webConfiguration.TimeoutsConfig.AsynchronousJavaScript;
+        driver.Manage().Timeouts().ImplicitWait = _webConfiguration.Timeouts.ImplicitWait;
+        driver.Manage().Timeouts().PageLoad = _webConfiguration.Timeouts.PageLoad;
+        driver.Manage().Timeouts().AsynchronousJavaScript = _webConfiguration.Timeouts.AsynchronousJavaScript;
         return driver;
     }
 
-    public TimeoutsConfig GetTimeouts() => _webConfiguration.TimeoutsConfig;
+    public TimeoutsConfig GetTimeouts() => _webConfiguration.Timeouts;
 
     protected DriverOptions BuildDriverOptions<T>()
         where T : DriverOptions, new()
@@ -104,7 +104,7 @@ public abstract class AbstractDriverStrategy
     {
         var driverOptions = GetDriverSpecificOptions();
 
-        var browserVersion = _webConfiguration.BrowserConfiguration.RemoteConfig.BrowserVersion;
+        var browserVersion = _webConfiguration.BrowserConfiguration.Remote.BrowserVersion;
 
         driverOptions.BrowserVersion = browserVersion;
 
