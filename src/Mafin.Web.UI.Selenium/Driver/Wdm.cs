@@ -38,7 +38,7 @@ public class Wdm
 
     public WebDriverWait GetWebDriverWait()
     {
-        WebDriverWait wait = new(new SystemClock(), _driver, _timeoutsConfig.ExplicitWaitTimeout, _timeoutsConfig.ExplicitWaitPoolingTimeout);
+        WebDriverWait wait = new(new SystemClock(), _driver, _timeoutsConfig.ExplicitWait, _timeoutsConfig.ExplicitWaitPooling);
         wait.IgnoreExceptionTypes(_ignoredExceptions);
         return wait;
     }

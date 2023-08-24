@@ -12,7 +12,7 @@ public class TimeoutsConfig : ITimeouts
 
     public TimeSpan CommandTimeout { get; set; }
 
-    public TimeSpan ExplicitWaitTimeout { get; set; }
+    public TimeSpan ExplicitWait { get; set; }
 
-    public TimeSpan ExplicitWaitPoolingTimeout { get; set; }
+    public TimeSpan ExplicitWaitPooling { get; set; }
 }

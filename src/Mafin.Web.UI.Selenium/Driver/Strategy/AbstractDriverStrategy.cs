@@ -48,50 +48,50 @@ public abstract class AbstractDriverStrategy
 
     public virtual IWebDriver GetRemoteDriver()
     {
-        var url = _webConfiguration.RemoteConfig.Url;
-        var commandTimeout = _webConfiguration.TimeoutsConfig.CommandTimeout;
+        var url = _webConfiguration.BrowserConfiguration.Remote.Url;
+        var commandTimeout = _webConfiguration.Timeouts.CommandTimeout;
         return SetTimeouts(new RemoteWebDriver(url, GetRemoteOptions().ToCapabilities(), commandTimeout));
     }
 
     public virtual IWebDriver SetTimeouts(IWebDriver driver)
     {
-        driver.Manage().Timeouts().ImplicitWait = _webConfiguration.TimeoutsConfig.ImplicitWait;
-        driver.Manage().Timeouts().PageLoad = _webConfiguration.TimeoutsConfig.PageLoad;
-        driver.Manage().Timeouts().AsynchronousJavaScript = _webConfiguration.TimeoutsConfig.AsynchronousJavaScript;
+        driver.Manage().Timeouts().ImplicitWait = _webConfiguration.Timeouts.ImplicitWait;
+        driver.Manage().Timeouts().PageLoad = _webConfiguration.Timeouts.PageLoad;
+        driver.Manage().Timeouts().AsynchronousJavaScript = _webConfiguration.Timeouts.AsynchronousJavaScript;
         return driver;
     }
 
-    public TimeoutsConfig GetTimeouts() => _webConfiguration.TimeoutsConfig;
+    public TimeoutsConfig GetTimeouts() => _webConfiguration.Timeouts;
 
     protected DriverOptions BuildDriverOptions<T>()
         where T : DriverOptions, new()
     {
         var driverOptions = new T();
 
-        if (_webConfiguration.Capabilities is not null && _webConfiguration.Capabilities.Any())
+        if (_webConfiguration?.BrowserConfiguration?.Capabilities is not null && _webConfiguration.BrowserConfiguration.Capabilities.Any())
         {
-            foreach (var capability in _webConfiguration.Capabilities)
+            foreach (var capability in _webConfiguration.BrowserConfiguration.Capabilities)
             {
                 driverOptions.AddAdditionalOption(capability.Key, capability.Value);
             }
         }
 
-        if (_webConfiguration.Arguments is not null && _webConfiguration.Arguments.Any())
+        if (_webConfiguration?.BrowserConfiguration?.Arguments is not null && _webConfiguration.BrowserConfiguration.Arguments.Any())
         {
-            driverOptions.AddArguments(_webConfiguration.Arguments);
+            driverOptions.AddArguments(_webConfiguration.BrowserConfiguration.Arguments);
         }
 
-        if (_webConfiguration.Extensions is not null && _webConfiguration.Extensions.Any())
+        if (_webConfiguration?.BrowserConfiguration?.Extensions is not null && _webConfiguration.BrowserConfiguration.Extensions.Any())
         {
-            foreach (var extension in _webConfiguration.Extensions)
+            foreach (var extension in _webConfiguration.BrowserConfiguration.Extensions)
             {
                 driverOptions.AddExtension(extension);
             }
         }
 
-        if (_webConfiguration.Preferences is not null && _webConfiguration.Preferences.Any())
+        if (_webConfiguration?.BrowserConfiguration?.Preferences is not null && _webConfiguration.BrowserConfiguration.Preferences.Any())
         {
-            foreach (var preference in _webConfiguration.Preferences)
+            foreach (var preference in _webConfiguration.BrowserConfiguration.Preferences)
             {
                 driverOptions.AddPreference(preference.Key, preference.Value);
             }
@@ -104,7 +104,7 @@ public abstract class AbstractDriverStrategy
     {
         var driverOptions = GetDriverSpecificOptions();
 
-        var browserVersion = _webConfiguration.RemoteConfig.BrowserVersion;
+        var browserVersion = _webConfiguration.BrowserConfiguration.Remote.BrowserVersion;
 
         driverOptions.BrowserVersion = browserVersion;
 

@@ -8,7 +8,7 @@
     <RepositoryUrl>https://github.com/MAFIN-Squad/mafin-webui-selenium</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
@@ -17,6 +17,7 @@
     <PackageReference Include="Selenium.Support" />
     <PackageReference Include="WebDriverManager" />
 
+    <None Include="build\**\*.props" Pack="true" PackagePath="build\" />
     <None Include="..\..\LICENSE" Pack="True" PackagePath="\" />
     <None Include="..\..\README.md" Pack="True" PackagePath="\" />
   </ItemGroup>

@@ -72,10 +72,7 @@ public class WdmExtended : Wdm
         return result;
     }
 
-    private bool ApplyWait()
-    {
-        return _waitConditions.All(c => c.Invoke());
-    }
+    private bool ApplyWait() => _waitConditions.TrueForAll(c => c.Invoke());
 
     private void Intercept() => _actionsToIntercept.ForEach(c => c.Invoke());
 }
