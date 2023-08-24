@@ -10,8 +10,8 @@ namespace Mafin.Web.UI.Selenium.Configuration;
 /// </summary>
 public static class WebConfigurationProvider
 {
-    private const string ConfigurationFileName = "Mafin.Configuration.json";
-    private const string BrowserConfigurationFileNamePattern = "Mafin.Configuration.{0}.json";
+    private const string CommonConfigFileName = "Mafin.Configuration.json";
+    private const string BrowserConfigFileNamePattern = "Mafin.Configuration.{0}.json";
 
     /// <summary>
     /// Gets <see cref='WebConfiguration'/> from Mafin.Configuration.json.
@@ -19,19 +19,19 @@ public static class WebConfigurationProvider
     /// <returns> <see cref='WebConfiguration'/>. </returns>
     public static WebConfiguration GetWebConfiguration()
     {
-        if (!File.Exists(ConfigurationFileName))
+        if (!File.Exists(CommonConfigFileName))
         {
-            throw new FileNotFoundException($"Unable to load configuration for Mafin.Web.UI.Selenium module because {ConfigurationFileName} file does not exist.");
+            throw new FileNotFoundException($"Unable to load configuration for Mafin.Web.UI.Selenium module because {CommonConfigFileName} file does not exist.");
         }
 
-        var result = File.ReadAllText(ConfigurationFileName).ParseObject<WebConfiguration>();
+        var result = File.ReadAllText(CommonConfigFileName).ParseObject<WebConfiguration>();
 
         if (result.BrowserConfiguration is null)
         {
             var browser = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(result.Browser);
-            var browserConfigurationFileName = string.Format(CultureInfo.CurrentCulture, BrowserConfigurationFileNamePattern, browser);
+            var browserConfigurationFileName = string.Format(CultureInfo.CurrentCulture, BrowserConfigFileNamePattern, browser);
 
-            if (!File.Exists(ConfigurationFileName))
+            if (!File.Exists(CommonConfigFileName))
             {
                 throw new FileNotFoundException($"Unable to load configuration for Mafin.Web.UI.Selenium module because {browserConfigurationFileName} file does not exist.");
             }
