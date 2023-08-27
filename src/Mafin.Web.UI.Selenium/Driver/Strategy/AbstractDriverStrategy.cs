@@ -17,12 +17,6 @@ public abstract class AbstractDriverStrategy
         _webConfiguration = webConfiguration;
     }
 
-    protected abstract IWebDriver GetSpecificDriver();
-
-    protected abstract DriverOptions GetDriverSpecificOptions();
-
-    protected abstract IDriverConfig GetDriverSpecificConfig();
-
     public virtual IWebDriver GetDriver()
     {
         var driver = _webConfiguration.RunType == RunType.Local ?
@@ -99,6 +93,12 @@ public abstract class AbstractDriverStrategy
 
         return driverOptions;
     }
+
+    protected abstract IWebDriver GetSpecificDriver();
+
+    protected abstract DriverOptions GetDriverSpecificOptions();
+
+    protected abstract IDriverConfig GetDriverSpecificConfig();
 
     private DriverOptions GetRemoteOptions()
     {

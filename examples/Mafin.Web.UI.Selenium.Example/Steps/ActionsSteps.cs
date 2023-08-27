@@ -1,6 +1,5 @@
 using Mafin.Web.UI.Selenium.Example.Core;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.Extensions;
 
 namespace Mafin.Web.UI.Selenium.Example.Steps;
 
@@ -34,12 +33,8 @@ public class ActionsSteps : BaseSteps
         Wdm.Wait(d => GetElements(byList).Any());
         var list = GetElements(byList);
 
-        var valueToSelect = list.FirstOrDefault(e => e.Text.Contains(value));
-
-        if (valueToSelect == null)
-        {
-            throw new Exception($"Unable to find element with value '{value}' in the target '{byList}' list");
-        }
+        var valueToSelect = list.Find(e => e.Text.Contains(value, StringComparison.Ordinal))
+            ?? throw new Exception($"Unable to find element with value '{value}' in the target '{byList}' list");
 
         ScrollToElement(valueToSelect).Click();
 

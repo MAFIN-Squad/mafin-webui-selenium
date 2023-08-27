@@ -1,6 +1,6 @@
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages.Components;
 
-partial class MultiSelectionFilterListComponent<TComponent, TConditions>
+public partial class MultiSelectionFilterListComponent<TComponent, TConditions>
 {
     public void Expand()
     {
