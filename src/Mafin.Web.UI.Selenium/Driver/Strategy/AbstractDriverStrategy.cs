@@ -18,6 +18,8 @@ public abstract class AbstractDriverStrategy
 
     protected abstract DriverOptions GetDriverSpecificOptions();
 
+    protected abstract DriverService GetDriverSpecificService();
+
     public virtual IWebDriver GetDriver()
     {
         var driver = _webConfiguration.RunType == RunType.Local ?
@@ -84,6 +86,37 @@ public abstract class AbstractDriverStrategy
         }
 
         return driverOptions;
+    }
+
+    /// <summary>
+    /// Configure path and port for local driver.<br/>
+    /// <a href="https://www.selenium.dev/documentation/webdriver/drivers/service/">More info</a>.
+    /// </summary>
+    /// <typeparam name="T">Specific Driver Service.</typeparam>
+    /// <param name="defaultService">Service where configuration is applied.</param>
+    /// <returns>Configured driver service object.</returns>
+    /// <exception cref="ArgumentNullException">Default service based on driver type shoul be provided.</exception>
+    protected DriverService BuildDriverService<T>(T defaultService)
+        where T : DriverService
+    {
+        if (defaultService is null)
+        {
+            throw new ArgumentNullException(nameof(defaultService), "Default service should be created for browser type");
+        }
+
+        var driverService = defaultService;
+
+        if (_webConfiguration.LocalDriverPath is not null)
+        {
+            driverService.DriverServicePath = _webConfiguration.LocalDriverPath;
+        }
+
+        if (_webConfiguration.LocalDriverPort is not null)
+        {
+            driverService.Port = (int)_webConfiguration.LocalDriverPort;
+        }
+
+        return driverService;
     }
 
     private DriverOptions GetRemoteOptions()

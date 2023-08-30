@@ -19,4 +19,10 @@ public class SafariStrategyTests : SafariStrategy
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<SafariOptions>();
     }
+
+    [Fact]
+    public void GetDriverSpecificService_WhenCalled_ShouldThrowNotImplemented()
+    {
+        Assert.Throws<NotImplementedException>(GetDriverSpecificService);
+    }
 }

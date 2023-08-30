@@ -13,11 +13,16 @@ public class ChromeStrategy : AbstractDriverStrategy
 
     protected override IWebDriver GetSpecificDriver()
     {
-        return new ChromeDriver((ChromeOptions)GetDriverSpecificOptions());
+        return new ChromeDriver((ChromeDriverService)GetDriverSpecificService(), (ChromeOptions)GetDriverSpecificOptions());
     }
 
     protected override DriverOptions GetDriverSpecificOptions()
     {
         return BuildDriverOptions<ChromeOptions>();
+    }
+
+    protected override DriverService GetDriverSpecificService()
+    {
+        return BuildDriverService(ChromeDriverService.CreateDefaultService());
     }
 }

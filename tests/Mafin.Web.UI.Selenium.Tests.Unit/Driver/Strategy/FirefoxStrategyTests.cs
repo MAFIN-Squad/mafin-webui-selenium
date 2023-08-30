@@ -19,4 +19,13 @@ public class FirefoxStrategyTests : FirefoxStrategy
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<FirefoxOptions>();
     }
+
+    [Fact]
+    public void GetDriverSpecificService_WhenCalled_ShouldReturnFirefoxServiceInstance()
+    {
+        var driverConfig = GetDriverSpecificService();
+
+        driverConfig.Should().NotBeNull();
+        driverConfig.Should().BeAssignableTo<FirefoxDriverService>();
+    }
 }

@@ -19,4 +19,13 @@ public class EdgeStrategyTests : EdgeStrategy
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<EdgeOptions>();
     }
+
+    [Fact]
+    public void GetDriverSpecificService_WhenCalled_ShouldReturnEdgeServiceInstance()
+    {
+        var driverConfig = GetDriverSpecificService();
+
+        driverConfig.Should().NotBeNull();
+        driverConfig.Should().BeAssignableTo<EdgeDriverService>();
+    }
 }

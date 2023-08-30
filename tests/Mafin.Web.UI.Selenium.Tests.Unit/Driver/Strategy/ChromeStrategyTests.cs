@@ -19,4 +19,13 @@ public class ChromeStrategyTests : ChromeStrategy
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<ChromeOptions>();
     }
+
+    [Fact]
+    public void GetDriverSpecificService_WhenCalled_ShouldReturnChromeServiceInstance()
+    {
+        var driverConfig = GetDriverSpecificService();
+
+        driverConfig.Should().NotBeNull();
+        driverConfig.Should().BeAssignableTo<ChromeDriverService>();
+    }
 }

@@ -20,4 +20,6 @@ public class SafariStrategy : AbstractDriverStrategy
     {
         return BuildDriverOptions<SafariOptions>();
     }
+
+    protected override DriverService GetDriverSpecificService() => throw new NotImplementedException();
 }

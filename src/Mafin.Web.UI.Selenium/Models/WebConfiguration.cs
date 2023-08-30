@@ -12,7 +12,9 @@ public class WebConfiguration
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public RunType RunType { get; set; }
 
-    public bool IsLatestLocal { get; set; }
+    public string? LocalDriverPath { get; set; }
+
+    public int? LocalDriverPort { get; set; }
 
     public TimeoutsConfig Timeouts { get; set; }
 
