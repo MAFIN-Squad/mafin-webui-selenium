@@ -7,6 +7,8 @@ namespace Mafin.Web.UI.Selenium.Example.Pages;
 
 public class ContactUsPage : BaseEpamPage
 {
+    private readonly string _locationListParametrized = "//li[contains(@id,'user_country-result')][contains(text(), '{0}')]";
+
     public ContactUsPage(WdmExtended wdm, ActionsSteps actions)
         : base(wdm, actions)
     {
@@ -30,8 +32,6 @@ public class ContactUsPage : BaseEpamPage
     public By Location => By.CssSelector("span[aria-labelledby*='user_country-container']");
 
     public By LocationList => By.CssSelector("li[id*='user_country-result']");
-
-    private string LocationListParametrized => "//li[contains(@id,'user_country-result')][contains(text(), '{0}')]";
 
     public By HowDidYouHearAboutEpam => By.CssSelector("span[aria-labelledby*='how_hear_about-container']");
 
@@ -92,7 +92,7 @@ public class ContactUsPage : BaseEpamPage
     public ContactUsPage SelectLocationFast(string locationToSelectValue)
     {
         _actions.Click(Location);
-        var replacedLocator = string.Format(LocationListParametrized, locationToSelectValue);
+        var replacedLocator = string.Format(_locationListParametrized, locationToSelectValue);
         var valueToSelect = _actions.MoveToElement(Wdm.GetElement(By.XPath(replacedLocator)));
 
         _actions.ScrollToElement(valueToSelect).Click();

@@ -13,11 +13,11 @@
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
 
-    <PackageReference Include="Selenium.WebDriver" />
     <PackageReference Include="Selenium.Support" />
+    <PackageReference Include="Selenium.WebDriver" />
 
-    <None Include="build\**\*.props" Pack="true" PackagePath="build\" />
-    <None Include="..\..\LICENSE" Pack="True" PackagePath="\" />
-    <None Include="..\..\README.md" Pack="True" PackagePath="\" />
+    <None Include="build\**\*.props" Pack="True" PackagePath="build\" />
+    <None Include="..\..\LICENSE" Pack="True" PackagePath="\" Visible="False" />
+    <None Include="..\..\README.md" Pack="True" PackagePath="\" Visible="False" />
   </ItemGroup>
 </Project>

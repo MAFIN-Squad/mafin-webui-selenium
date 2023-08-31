@@ -1,20 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Mafin.Web.UI.Selenium\Mafin.Web.UI.Selenium.csproj" />
-  </ItemGroup>
-  
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-  </ItemGroup>
 
-  <ItemGroup>
+    <ProjectReference Include="..\..\src\Mafin.Web.UI.Selenium\Mafin.Web.UI.Selenium.csproj" />
+
     <None Update="Mafin.Configuration.Chrome.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
