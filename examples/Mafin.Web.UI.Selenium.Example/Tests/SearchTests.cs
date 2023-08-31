@@ -20,7 +20,7 @@ public class SearchTests : BaseEpamTest
         Assert.IsTrue(_searchPage.IsOnPage(), "Verify that Search page is opened");
         var searchResults = _actionsSteps.GetElements(_searchPage.SearchResultsLinks);
         Assert.IsTrue(searchResults.Any(), "Verify that Search results are present");
-        _actionsSteps.Click(searchResults.First());
+        _actionsSteps.Click(searchResults[0]);
 
         // verify
         var actualTitle = wdm.GetDriver().Title;
@@ -46,7 +46,7 @@ public class SearchTests : BaseEpamTest
 
         // verify
         var element = _actionsSteps.GetElements(_leadershipPage.Names)
-            .FirstOrDefault(e => e.Text.Replace("\r\n", " ").ToUpper().Equals(expectedName));
+            .Find(e => e.Text.Replace("\r\n", " ", StringComparison.Ordinal).Equals(expectedName, StringComparison.OrdinalIgnoreCase));
         Assert.IsNotNull(element, $"Verify that leadership name contains '{expectedName}'");
     }
 }

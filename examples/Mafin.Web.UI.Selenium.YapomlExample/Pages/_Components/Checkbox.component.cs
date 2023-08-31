@@ -1,11 +1,11 @@
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages.Components;
 
-partial class CheckboxComponent<TComponent, TConditions>
+public partial class CheckboxComponent<TComponent, TConditions>
 {
+    public bool IsChecked => WrappedElement.Selected;
+
     public void Check()
     {
         Label.Click();
     }
-
-    public bool IsChecked => WrappedElement.Selected;
 }

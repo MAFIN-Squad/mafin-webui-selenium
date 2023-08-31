@@ -21,7 +21,7 @@ public abstract class BaseWebPage
 
     public BaseWebPage OpenPage()
     {
-        var targetPath = Path.StartsWith("/") ? Path[1..] : Path;
+        var targetPath = Path.StartsWith('/') ? Path[1..] : Path;
         Wdm.GetDriver().Navigate().GoToUrl(SiteUrl + targetPath);
         return this;
     }
@@ -29,8 +29,8 @@ public abstract class BaseWebPage
     public bool IsOnPage()
     {
         var currentUrl = Wdm.GetDriver().Url;
-        currentUrl = currentUrl.Replace(SiteUrl.ToString(), string.Empty);
-        var targetPath = Path.StartsWith("/") ? Path[1..] : Path;
-        return currentUrl.StartsWith(targetPath);
+        currentUrl = currentUrl.Replace(SiteUrl.ToString(), string.Empty, StringComparison.Ordinal);
+        var targetPath = Path.StartsWith('/') ? Path[1..] : Path;
+        return currentUrl.StartsWith(targetPath, StringComparison.Ordinal);
     }
 }

@@ -2,7 +2,7 @@ using OpenQA.Selenium;
 
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages;
 
-partial class BasePage
+public partial class BasePage
 {
     public void AcceptCookies()
     {
