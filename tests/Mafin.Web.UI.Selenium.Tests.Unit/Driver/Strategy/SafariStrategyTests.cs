@@ -23,6 +23,8 @@ public class SafariStrategyTests : SafariStrategy
     [Fact]
     public void GetDriverSpecificService_WhenCalled_ShouldThrowNotImplemented()
     {
-        Assert.Throws<NotImplementedException>(GetDriverSpecificService);
+        var act = GetDriverSpecificService;
+
+        act.Should().Throw<NotImplementedException>();
     }
 }
