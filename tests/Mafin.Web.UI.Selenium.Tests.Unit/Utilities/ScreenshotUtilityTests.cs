@@ -29,10 +29,10 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Utilities
             takesScreenshotDriverMock.Setup(d => d.GetScreenshot()).Returns(new Screenshot(string.Empty));
 
             // Act
-            driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, $"{ScreenshotsFileName}.{extension}", ScreenshotsFolderName, false, elementsToHide.ToArray());
+            driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, $"{ScreenshotsFileName}.{extension}", ScreenshotsFolderName, elementsToHide.ToArray());
 
             // Assert
-            Assert.True(File.Exists(elementScreenshotPath));
+            File.Exists(elementScreenshotPath).Should().BeTrue();
         }
 
         [Fact]
@@ -51,10 +51,10 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Utilities
             takesScreenshotDriverMock.Setup(d => d.GetScreenshot()).Returns(new Screenshot(string.Empty));
 
             // Act
-            driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, pictureName, ScreenshotsFolderName, false, elementsToHide.ToArray());
+            driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, pictureName, ScreenshotsFolderName, elementsToHide.ToArray());
 
             // Assert
-            Assert.True(File.Exists(elementScreenshotPath));
+            File.Exists(elementScreenshotPath).Should().BeTrue();
         }
 
         [Fact]
@@ -70,10 +70,10 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Utilities
             takesScreenshotDriverMock.Setup(d => d.GetScreenshot()).Returns(new Screenshot(string.Empty));
 
             // Act
-            driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, $"{ScreenshotsFileName}.png", ScreenshotsFolderName, false, elementsToHide.ToArray());
+            driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, $"{ScreenshotsFileName}.png", ScreenshotsFolderName, elementsToHide.ToArray());
 
             // Assert
-            Assert.True(Directory.Exists(ScreenshotsFolderName));
+            File.Exists(ScreenshotsFileName).Should().BeTrue();
         }
     }
 }

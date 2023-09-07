@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <Nullable>warnings</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" />
@@ -15,12 +14,7 @@
     <PackageReference Include="xunit.core" />
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Selenium.Support" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="coverlet.collector" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
 
     <ProjectReference Include="..\..\src\Mafin.Web.UI.Selenium\Mafin.Web.UI.Selenium.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestResults\" />
   </ItemGroup>
 </Project>
