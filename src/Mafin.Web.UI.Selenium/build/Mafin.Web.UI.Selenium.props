@@ -1,0 +1,19 @@
+<Project>
+  <ItemGroup>
+    <None Include="Mafin.Configuration.json" Condition=" Exists('Mafin.Configuration.json') ">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Mafin.Configuration.Chrome.json" Condition=" Exists('Mafin.Configuration.Chrome.json') ">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Mafin.Configuration.Edge.json" Condition=" Exists('Mafin.Configuration.Edge.json') ">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Mafin.Configuration.Firefox.json" Condition=" Exists('Mafin.Configuration.Firefox.json') ">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Mafin.Configuration.Safari.json" Condition=" Exists('Mafin.Configuration.Safari.json') ">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

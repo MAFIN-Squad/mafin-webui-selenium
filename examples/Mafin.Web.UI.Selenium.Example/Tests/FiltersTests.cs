@@ -18,9 +18,9 @@ public class FiltersTests : BaseEpamTest
         _actionsSteps.Click(_insightsPage.ApplyButton);
 
         var allResultsContainsTagText = _actionsSteps.GetElements(_insightsPage.IndustriesList)
-            .All(ul =>
+            .TrueForAll(ul =>
                 _actionsSteps.GetElements(ul, _insightsPage.IndustriesItem)
-                    .Any(li => _actionsSteps.GetText(li).Contains(expectedFilteringTag)));
+                    .Exists(li => _actionsSteps.GetText(li).Contains(expectedFilteringTag, StringComparison.Ordinal)));
 
         // verify
         Assert.IsTrue(allResultsContainsTagText, "Verify that filtering is applied");

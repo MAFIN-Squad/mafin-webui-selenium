@@ -22,7 +22,7 @@ public class DriverMappingTests
     {
         WebConfiguration webConfiguration = new()
         {
-            DriverType = driverType
+            Browser = driverType
         };
 
         var driverStrategy = DriverMapping.GetDriverStrategy(webConfiguration);
@@ -38,7 +38,7 @@ public class DriverMappingTests
     {
         WebConfiguration webConfiguration = new()
         {
-            DriverType = driverType
+            Browser = driverType
         };
 
         Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);
@@ -51,7 +51,7 @@ public class DriverMappingTests
     {
         WebConfiguration webConfiguration = new()
         {
-            DriverType = "NotValidDriverType"
+            Browser = "NotValidDriverType"
         };
 
         Action act = () => DriverMapping.GetDriverStrategy(webConfiguration);

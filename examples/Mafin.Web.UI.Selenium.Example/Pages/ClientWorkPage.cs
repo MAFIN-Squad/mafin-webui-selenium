@@ -44,7 +44,7 @@ public class ClientWorkPage : BaseEpamPage
 
         for (var i = 0; i < MaxScrollCount; i++)
         {
-            var item = _actions.GetElements(ActiveOffices).FirstOrDefault(w => _actions.GetText(w).Equals(office));
+            var item = _actions.GetElements(ActiveOffices).Find(w => _actions.GetText(w).Equals(office, StringComparison.Ordinal));
             if (item != null)
             {
                 isFound = true;
@@ -53,8 +53,10 @@ public class ClientWorkPage : BaseEpamPage
             }
 
             Wdm.GetDriver()
-                .ExecuteJavaScript("arguments[0].setAttribute('class', arguments[1])",
-                    _actions.GetElement(NavigationItems), "owl-nav");
+                .ExecuteJavaScript(
+                "arguments[0].setAttribute('class', arguments[1])",
+                _actions.GetElement(NavigationItems),
+                "owl-nav");
             _actions.Click(NextItem);
         }
 

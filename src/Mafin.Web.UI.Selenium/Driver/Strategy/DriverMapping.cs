@@ -5,7 +5,7 @@ namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
 public static class DriverMapping
 {
-    private static readonly Dictionary<string, Type> DriverMappings = new(StringComparer.InvariantCultureIgnoreCase)
+    private static readonly Dictionary<string, Type> DriverMappings = new(StringComparer.OrdinalIgnoreCase)
     {
         { "chrome", typeof(ChromeStrategy) },
         { "edge", typeof(EdgeStrategy) },
@@ -15,11 +15,11 @@ public static class DriverMapping
 
     public static AbstractDriverStrategy GetDriverStrategy([NotNull] WebConfiguration webConfiguration)
     {
-        var driverType = webConfiguration.DriverType;
+        var driverType = webConfiguration.Browser;
 
         if (string.IsNullOrEmpty(driverType))
         {
-            throw new ArgumentNullException($"Driver type is not defined, set {nameof(webConfiguration.DriverType)} in {nameof(webConfiguration)}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
+            throw new ArgumentNullException($"Driver type is not defined, set {nameof(webConfiguration.Browser)} in {nameof(webConfiguration)}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
         }
 
         if (!DriverMappings.ContainsKey(driverType))

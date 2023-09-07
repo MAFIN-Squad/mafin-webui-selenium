@@ -1,6 +1,6 @@
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages.Components;
 
-partial class SingleSelectionComboboxComponent<TComponent, TConditions>
+public partial class SingleSelectionComboboxComponent<TComponent, TConditions>
 {
     public string SelectedOption => Selected.Text.Trim();
 
