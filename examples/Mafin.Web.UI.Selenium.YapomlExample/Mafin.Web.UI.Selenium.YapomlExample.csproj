@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -9,6 +9,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Selenium.Support" />
     <PackageReference Include="Selenium.WebDriver.Extensions" />
+    <PackageReference Include="SkiaSharp" />
     <PackageReference Include="Yapoml.Selenium" />
 
     <ProjectReference Include="..\..\src\Mafin.Web.UI.Selenium\Mafin.Web.UI.Selenium.csproj" />

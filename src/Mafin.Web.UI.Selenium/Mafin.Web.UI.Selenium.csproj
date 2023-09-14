@@ -12,11 +12,11 @@
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
-
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" />
     <PackageReference Include="Selenium.Support" />
     <PackageReference Include="Selenium.WebDriver" />
+    <PackageReference Include="SkiaSharp" />
     <PackageReference Include="WebDriverManager" />
-    <PackageReference Include="Noksa.WebDriver.ScreenshotsExtensions" />
     <PackageReference Include="System.Drawing.Common" />
 
     <None Include="build\**\*.props" Pack="True" PackagePath="build\" />

@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Utilities
 {
-    public class ScreenshotUtilityTests : IDisposable
+    public class DriverScreenshotExtensionsTests : IDisposable
     {
         private const string ScreenshotsFolderName = "Screenshots";
         private const string ScreenshotsFileName = "testscreenshot";
