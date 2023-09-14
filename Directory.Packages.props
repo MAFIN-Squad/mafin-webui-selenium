@@ -6,23 +6,20 @@
     <PackageVersion Include="AutoFixture" Version="4.18.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="FluentAssertions" Version="6.12.0" />
-    <PackageVersion Include="FluentAssertions.Analyzers" Version="0.23.1" />
+    <PackageVersion Include="FluentAssertions.Analyzers" Version="0.24.0" />
     <PackageVersion Include="Magick.NET-Q16-AnyCPU" Version="13.2.0" />
     <PackageVersion Include="Microsoft.CST.DevSkim" Version="1.0.20" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageVersion Include="Moq" Version="4.18.4" />
     <PackageVersion Include="nunit" Version="3.13.3" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageVersion Include="Philips.CodeAnalysis.DuplicateCodeAnalyzer" Version="1.1.7" />
-    <PackageVersion Include="Selenium.WebDriver.Extensions" Version="4.1.0" />
     <PackageVersion Include="SkiaSharp" Version="2.88.5" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.8.0.76515" />
     <PackageVersion Include="StyleCop.Analyzers.Unstable" Version="1.2.0.507" />
-    <PackageVersion Include="Selenium.Support" Version="4.11.0" />
-    <PackageVersion Include="Selenium.WebDriver" Version="4.11.0" />
+    <PackageVersion Include="Selenium.Support" Version="4.12.4" />
+    <PackageVersion Include="Selenium.WebDriver" Version="4.12.4" />
     <PackageVersion Include="WebDriverManager" Version="2.16.3" />
-    <PackageVersion Include="Noksa.WebDriver.ScreenshotsExtensions" Version="0.1.5.4" />
-    <PackageVersion Include="System.Drawing.Common" Version="7.0.0" />
     <PackageVersion Include="xunit.analyzers" Version="1.2.0" />
     <PackageVersion Include="xunit.core" Version="2.5.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.0" />
