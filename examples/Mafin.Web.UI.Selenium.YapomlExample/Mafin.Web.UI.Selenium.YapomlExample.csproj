@@ -8,7 +8,6 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Selenium.Support" />
-    <PackageReference Include="Selenium.WebDriver.Extensions" />
     <PackageReference Include="SkiaSharp" />
     <PackageReference Include="Yapoml.Selenium" />
 

@@ -17,7 +17,6 @@
     <PackageReference Include="Selenium.WebDriver" />
     <PackageReference Include="SkiaSharp" />
     <PackageReference Include="WebDriverManager" />
-    <PackageReference Include="System.Drawing.Common" />
 
     <None Include="build\**\*.props" Pack="True" PackagePath="build\" />
     <None Include="..\..\LICENSE" Pack="True" PackagePath="\" Visible="False" />
