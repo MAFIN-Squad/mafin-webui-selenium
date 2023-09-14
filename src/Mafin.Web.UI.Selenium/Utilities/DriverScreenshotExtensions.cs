@@ -19,7 +19,7 @@ public static class DriverScreenshotExtensions
     /// <param name="element">Element to take.</param>
     /// <param name="screenshotName">Name of a screenshot file.</param>
     /// <param name="screenshotDirectory">Directory to save a screenshot file.</param>
-    /// <param name="elementsToHide">Elements to hide on a fullscreen picture.</param>
+    /// <param name="elementsLocatorToHide">Elements to hide on a fullscreen picture.</param>
     public static void TakeFlexibleScreenshot(this IWebDriver driver, ScreenshotType screenshotType = ScreenshotType.DefaultScreen, IWebElement? element = null, string screenshotName = "", string screenshotDirectory = "Screenshots", params By[] elementsLocatorToHide)
     {
         Directory.CreateDirectory(screenshotDirectory);
@@ -38,8 +38,7 @@ public static class DriverScreenshotExtensions
         }
     }
 
-    private static void TakeFullScreenshot(this IWebDriver driver, string screenshotFilePath = "", params By[] elementsLocatorToHide) =>
-        driver.TakeFullPageScreenshot(screenshotFilePath, elementsLocatorToHide);
+    private static void TakeFullScreenshot(this IWebDriver driver, string screenshotFilePath = "", params By[] elementsLocatorToHide) => driver.TakeFullPageScreenshot(screenshotFilePath, elementsLocatorToHide);
 
     private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath, SKEncodedImageFormat format = SKEncodedImageFormat.Png, int quality = 100)
     {
