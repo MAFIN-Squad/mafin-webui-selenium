@@ -22,42 +22,42 @@ public static class DriverScreenshotExtensions
     public static void TakeFlexibleScreenshot(this IWebDriver driver, ScreenshotType screenshotType = ScreenshotType.DefaultScreen, IWebElement? element = null, string screenshotName = "", string screenshotDirectory = "Screenshots", params By[] elementsLocatorToHide)
     {
         Directory.CreateDirectory(screenshotDirectory);
+        var screenshotPath = Path.Combine(screenshotDirectory, screenshotName);
 
         switch (screenshotType)
         {
             case ScreenshotType.FullScreen:
-                driver.TakeFullPageScreenshot(Path.Combine(screenshotDirectory, screenshotName), elementsLocatorToHide);
+                driver?.TakeFullPageScreenshot(screenshotPath, elementsLocatorToHide);
                 break;
             case ScreenshotType.SingleElement:
-                driver.TakeElementScreenshot(element, Path.Combine(screenshotDirectory, screenshotName));
+                driver?.TakeElementScreenshot(element, screenshotPath);
                 break;
             case ScreenshotType.DefaultScreen:
-                driver.TakeScreenshot().SaveAsFile(Path.Combine(screenshotDirectory, screenshotName));
+                driver?.TakeScreenshot().SaveAsFile(screenshotPath);
+                break;
+            default:
                 break;
         }
     }
 
     private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath)
     {
+        using MemoryStream screenshotStream = new(driver.TakeScreenshot().AsByteArray);
+        using MagickImage image = new(screenshotStream);
+        MagickGeometry cropRectangle = new(element.Location.X, element.Location.Y, element.Size.Width, element.Size.Height);
 
-        using (var screenshotStream = new MemoryStream(driver.TakeScreenshot().AsByteArray))
-        using (var image = new MagickImage(screenshotStream))
-        {
-            var cropRectangle = new MagickGeometry(element.Location.X, element.Location.Y, element.Size.Width, element.Size.Height);
-
-            image.Crop(cropRectangle);
-            image.Write(filePath);
-        }
+        image.Crop(cropRectangle);
+        image.Write(filePath);
     }
 
     private static void TakeFullPageScreenshot(this IWebDriver driver, string screenshotFilePath = "", params By[] elementsLocatorToHide)
     {
-        long windowHeight = (long)((IJavaScriptExecutor)driver).ExecuteScript("return window.innerHeight;");
-        long totalHeight = (long)((IJavaScriptExecutor)driver).ExecuteScript("return document.documentElement.scrollHeight;");
+        var windowHeight = (long)((IJavaScriptExecutor)driver).ExecuteScript("return window.innerHeight;");
+        var totalHeight = (long)((IJavaScriptExecutor)driver).ExecuteScript("return document.documentElement.scrollHeight;");
 
-        var screenshotCollection = new MagickImageCollection();
+        MagickImageCollection screenshotCollection = new();
 
-        long scrolledHeight = 0;
+        var scrolledHeight = 0L;
 
         ((IJavaScriptExecutor)driver).ExecuteScript("return document.body.style.overflow = 'hidden';");
 
@@ -75,9 +75,7 @@ public static class DriverScreenshotExtensions
             scrolledHeight += windowHeight;
         }
 
-        using (var vertical = screenshotCollection.AppendVertically())
-        {
-            vertical.Write(screenshotFilePath);
-        }
+        using var vertical = screenshotCollection.AppendVertically();
+        vertical.Write(screenshotFilePath);
     }
 }
