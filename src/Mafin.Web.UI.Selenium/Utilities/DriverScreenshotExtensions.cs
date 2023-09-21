@@ -2,7 +2,6 @@ using ImageMagick;
 using Mafin.Web.UI.Selenium.Enums;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
-using SkiaSharp;
 
 namespace Mafin.Web.UI.Selenium.Utilities;
 
@@ -27,7 +26,7 @@ public static class DriverScreenshotExtensions
         switch (screenshotType)
         {
             case ScreenshotType.FullScreen:
-                driver.TakeFullScreenshot(Path.Combine(screenshotDirectory, screenshotName), elementsLocatorToHide);
+                driver.TakeFullPageScreenshot(Path.Combine(screenshotDirectory, screenshotName), elementsLocatorToHide);
                 break;
             case ScreenshotType.SingleElement:
                 driver.TakeElementScreenshot(element, Path.Combine(screenshotDirectory, screenshotName));
@@ -38,22 +37,16 @@ public static class DriverScreenshotExtensions
         }
     }
 
-    private static void TakeFullScreenshot(this IWebDriver driver, string screenshotFilePath = "", params By[] elementsLocatorToHide) => driver.TakeFullPageScreenshot(screenshotFilePath, elementsLocatorToHide);
-
-    private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath, SKEncodedImageFormat format = SKEncodedImageFormat.Png, int quality = 100)
+    private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath)
     {
-        using (var image = SKBitmap.Decode(driver.TakeScreenshot().AsByteArray))
-        {
-            using (var croppedImage = new SKBitmap(element.Size.Width, element.Size.Height))
-            using (var canvas = new SKCanvas(croppedImage))
-            {
-                canvas.DrawBitmap(image, new SKRect(element.Location.X, element.Location.Y, element.Location.X + element.Size.Width, element.Location.Y + element.Size.Height), new SKRect(0, 0, element.Size.Width, element.Size.Height));
 
-                using (var output = File.OpenWrite(filePath))
-                {
-                    croppedImage.Encode(format, quality).SaveTo(output);
-                }
-            }
+        using (var screenshotStream = new MemoryStream(driver.TakeScreenshot().AsByteArray))
+        using (var image = new MagickImage(screenshotStream))
+        {
+            var cropRectangle = new MagickGeometry(element.Location.X, element.Location.Y, element.Size.Width, element.Size.Height);
+
+            image.Crop(cropRectangle);
+            image.Write(filePath);
         }
     }
 
