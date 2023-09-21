@@ -7,10 +7,10 @@ namespace Mafin.Web.UI.Selenium.Tests.Unit.Utilities;
 
 public class DriverScreenshotExtensionsTests : IDisposable
 {
-    private const string ScreenshotsFolderName = "Screenshots";
-    private const string ScreenshotsFileName = "testscreenshot";
+    private const string ScreenshotsFolder = "Screenshots";
+    private const string ScreenshotFileName = "testScreenshot";
 
-    public void Dispose() => Directory.Delete(ScreenshotsFolderName, true);
+    public void Dispose() => Directory.Delete(ScreenshotsFolder, true);
 
     [Theory]
     [InlineData("png")]
@@ -18,18 +18,18 @@ public class DriverScreenshotExtensionsTests : IDisposable
     public void TakeFlexibleScreenshot_WhenTakeScreensotWithDifferentExtensions_ShouldSaveWithCorrespondingExtension(string extension)
     {
         // Arrange
-        var driverMock = new Mock<IWebDriver>();
+        var fileName = $"{ScreenshotFileName}.{extension}";
+        var elementScreenshotPath = Path.Combine(ScreenshotsFolder, fileName);
+        List<By> elementsToHide = new();
 
-        var elementScreenshotPath = Path.Combine(ScreenshotsFolderName, $"{ScreenshotsFileName}.{extension}");
-
-        var elementsToHide = new List<By>();
-        var elementMock = new Mock<IWebElement>();
+        Mock<IWebElement> elementMock = new();
+        Mock<IWebDriver> driverMock = new();
 
         var takesScreenshotDriverMock = driverMock.As<ITakesScreenshot>();
         takesScreenshotDriverMock.Setup(d => d.GetScreenshot()).Returns(new Screenshot(string.Empty));
 
         // Act
-        driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, $"{ScreenshotsFileName}.{extension}", ScreenshotsFolderName, elementsToHide.ToArray());
+        driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, fileName, ScreenshotsFolder, elementsToHide.ToArray());
 
         // Assert
         File.Exists(elementScreenshotPath).Should().BeTrue();
@@ -39,19 +39,18 @@ public class DriverScreenshotExtensionsTests : IDisposable
     public void TakeFlexibleScreenshot_WhenTakeDefaultScreenshot_ShouldSaveScreenshot()
     {
         // Arrange
-        var driverMock = new Mock<IWebDriver>();
+        const string fileName = $"{ScreenshotFileName}.png";
+        var elementScreenshotPath = Path.Combine(ScreenshotsFolder, fileName);
+        List<By> elementsToHide = new();
 
-        var pictureName = $"{ScreenshotsFileName}.png";
-        var elementScreenshotPath = Path.Combine(ScreenshotsFolderName, pictureName);
-
-        var elementsToHide = new List<By>();
-        var elementMock = new Mock<IWebElement>();
+        Mock<IWebElement> elementMock = new();
+        Mock<IWebDriver> driverMock = new();
 
         var takesScreenshotDriverMock = driverMock.As<ITakesScreenshot>();
         takesScreenshotDriverMock.Setup(d => d.GetScreenshot()).Returns(new Screenshot(string.Empty));
 
         // Act
-        driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, pictureName, ScreenshotsFolderName, elementsToHide.ToArray());
+        driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, fileName, ScreenshotsFolder, elementsToHide.ToArray());
 
         // Assert
         File.Exists(elementScreenshotPath).Should().BeTrue();
@@ -61,18 +60,18 @@ public class DriverScreenshotExtensionsTests : IDisposable
     public void TakeFlexibleScreenshot_WhenTakeScreenshot_ShouldCreateFolder()
     {
         // Arrange
-        var driverMock = new Mock<IWebDriver>();
+        List<By> elementsToHide = new();
 
-        var elementsToHide = new List<By>();
-        var elementMock = new Mock<IWebElement>();
+        Mock<IWebDriver> driverMock = new();
+        Mock<IWebElement> elementMock = new();
 
         var takesScreenshotDriverMock = driverMock.As<ITakesScreenshot>();
         takesScreenshotDriverMock.Setup(d => d.GetScreenshot()).Returns(new Screenshot(string.Empty));
 
         // Act
-        driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, $"{ScreenshotsFileName}.png", ScreenshotsFolderName, elementsToHide.ToArray());
+        driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.DefaultScreen, elementMock.Object, $"{ScreenshotFileName}.png", ScreenshotsFolder, elementsToHide.ToArray());
 
         // Assert
-        File.Exists(ScreenshotsFileName).Should().BeTrue();
+        Directory.Exists(ScreenshotsFolder).Should().BeTrue();
     }
 }
