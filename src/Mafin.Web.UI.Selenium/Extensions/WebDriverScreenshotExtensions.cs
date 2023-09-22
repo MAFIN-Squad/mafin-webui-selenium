@@ -6,43 +6,44 @@ using OpenQA.Selenium.Support.Extensions;
 namespace Mafin.Web.UI.Selenium.Extensions;
 
 /// <summary>
-/// Presents screenshot extension methods for <see cref="IWebDriver"/>.
+/// Provides screenshot extension methods for <see cref="IWebDriver"/>.
 /// </summary>
 public static class WebDriverScreenshotExtensions
 {
     /// <summary>
-    /// Customizible screenshot method.
+    /// Takes a customized area screenshot.
     /// </summary>
-    /// <param name="driver">Webdriver instance.</param>
-    /// <param name="visibleArea">Type of a screenshot.</param>
-    /// <param name="element">Element to take.</param>
-    /// <param name="screenshotName">Name of a screenshot file.</param>
+    /// <param name="driver">WebDriver instance.</param>
+    /// <param name="screenshotType">Type of a screenshot to take.</param>
     /// <param name="screenshotDirectory">Directory to save a screenshot file.</param>
-    /// <param name="elementsToHideLocators">Elements to hide on a fullscreen picture.</param>
-    public static void TakeFlexibleScreenshot(this IWebDriver driver, VisibleArea visibleArea = VisibleArea.DefaultScreen, IWebElement? element = null, string? screenshotName = null, string? screenshotDirectory = null, params By[] elementsToHideLocators)
+    /// <param name="screenshotName">Name for a screenshot file.</param>
+    /// <param name="element">Element to make screenshot of (only for <see cref="ScreenshotType.SingleElement"/>).</param>
+    /// <param name="elementsToHideLocators">Elements to hide on a screenshot (only for <see cref="ScreenshotType.FullScreen"/>).</param>
+    /// <exception cref="ArgumentNullException"><paramref name="element"/> is null when <see cref="ScreenshotType.SingleElement"/>.</exception>
+    public static void TakeFlexibleScreenshot(this IWebDriver driver, ScreenshotType screenshotType = default, string? screenshotDirectory = null, string? screenshotName = null, IWebElement? element = null, params By[] elementsToHideLocators)
     {
-        if (string.IsNullOrEmpty(screenshotName))
-        {
-            screenshotName = $"Screenshot_{DateTime.Now.ToFileTime()}";
-        }
-
-        if (string.IsNullOrEmpty(screenshotDirectory))
+        if (string.IsNullOrWhiteSpace(screenshotDirectory))
         {
             screenshotDirectory = "Screenshots";
+        }
+
+        if (string.IsNullOrWhiteSpace(screenshotName))
+        {
+            screenshotName = $"Screenshot_{DateTime.UtcNow.ToFileTime()}.png";
         }
 
         Directory.CreateDirectory(screenshotDirectory);
         var screenshotPath = Path.Combine(screenshotDirectory, screenshotName);
 
-        switch (visibleArea)
+        switch (screenshotType)
         {
-            case VisibleArea.FullScreen:
+            case ScreenshotType.FullScreen:
                 driver?.TakeFullPageScreenshot(screenshotPath, elementsToHideLocators);
                 break;
-            case VisibleArea.SingleElement:
-                driver?.TakeElementScreenshot(element ?? throw new NoSuchElementException(), screenshotPath);
+            case ScreenshotType.SingleElement:
+                driver?.TakeElementScreenshot(element ?? throw new ArgumentNullException(nameof(element)), screenshotPath);
                 break;
-            case VisibleArea.DefaultScreen:
+            case ScreenshotType.ViewPort:
                 driver?.TakeScreenshot().SaveAsFile(screenshotPath);
                 break;
             default:
@@ -60,26 +61,22 @@ public static class WebDriverScreenshotExtensions
         image.Write(filePath);
     }
 
-    private static void TakeFullPageScreenshot(this IWebDriver driver, string? screenshotFilePath = null, params By[]? elementsToHideLocators)
+    private static void TakeFullPageScreenshot(this IWebDriver driver, string filePath, By[]? elementsToHideLocators)
     {
-        if (elementsToHideLocators is null)
-        {
-            elementsToHideLocators = Array.Empty<By>();
-        }
+        elementsToHideLocators ??= Array.Empty<By>();
 
         var windowHeight = driver.ExecuteJavaScript<long>("return window.innerHeight;");
         var totalHeight = driver.ExecuteJavaScript<long>("return document.documentElement.scrollHeight;");
-        
-        using MagickImageCollection screenshotCollection = new();
 
-        var scrolledHeight = 0L;
-
-        driver.ExecuteJavaScript("return document.body.style.overflow = 'hidden';");
+        driver.ExecuteJavaScript("document.body.style.overflow = 'hidden';");
 
         foreach (var element in elementsToHideLocators)
         {
-            driver.ExecuteJavaScript("arguments[0].style.visibility='hidden';", driver.FindElement(element));
+            driver.ExecuteJavaScript("arguments[0].style.visibility = 'hidden';", driver.FindElement(element));
         }
+
+        var scrolledHeight = 0L;
+        using MagickImageCollection screenshotCollection = new();
 
         while (scrolledHeight < totalHeight)
         {
@@ -90,7 +87,7 @@ public static class WebDriverScreenshotExtensions
             scrolledHeight += windowHeight;
         }
 
-        using var vertical = screenshotCollection.AppendVertically();
-        vertical.Write(screenshotFilePath);
+        using var resultingImage = screenshotCollection.AppendVertically();
+        resultingImage.Write(filePath);
     }
 }
