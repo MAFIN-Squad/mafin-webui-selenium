@@ -1,12 +1,12 @@
 using System.Reflection;
 using AutoFixture;
-using Mafin.Web.UI.Selenium.Driver;
+using Mafin.Web.UI.Selenium.Extensions;
 using Mafin.Web.UI.Selenium.Tests.Unit.TestDoubles;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
 
-namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver;
+namespace Mafin.Web.UI.Selenium.Tests.Unit.Extensions;
 
 public class DriverOptionsExtensionsTests
 {
@@ -16,7 +16,7 @@ public class DriverOptionsExtensionsTests
     public void AddExtension_WhenChromeOptionsPassed_ShouldAddExtension()
     {
         const string extensionFilesFieldName = "extensionFiles";
-        string pathToExistingFile = Assembly.GetExecutingAssembly().Location;
+        var pathToExistingFile = Assembly.GetExecutingAssembly().Location;
         ChromeOptions options = new();
 
         options.AddExtension(pathToExistingFile);
@@ -33,7 +33,7 @@ public class DriverOptionsExtensionsTests
     public void AddExtension_WhenFirefoxOptionsPassed_ShouldAddExtension()
     {
         const string extensionsFieldName = "extensions";
-        string pathToExistingFile = Assembly.GetExecutingAssembly().Location;
+        var pathToExistingFile = Assembly.GetExecutingAssembly().Location;
         FirefoxOptions options = new();
 
         options.AddExtension(pathToExistingFile);
@@ -50,7 +50,7 @@ public class DriverOptionsExtensionsTests
     [Fact]
     public void AddExtension_WhenUnsupportedOptionsPassed_ShouldThrow()
     {
-        string pathToExistingFile = Assembly.GetExecutingAssembly().Location;
+        var pathToExistingFile = Assembly.GetExecutingAssembly().Location;
         SafariOptions options = new();
 
         Action act = () => options.AddExtension(pathToExistingFile);

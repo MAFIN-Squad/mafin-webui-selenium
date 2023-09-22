@@ -11,7 +11,7 @@ public class WdmTests
 
     public WdmTests()
     {
-        DummyDriver driver = new();
+        using DummyDriver driver = new();
         TimeoutsConfig timeoutsConfig = new();
         _wdm = new Wdm(driver, timeoutsConfig);
     }

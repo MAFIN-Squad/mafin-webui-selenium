@@ -3,10 +3,10 @@ using OpenQA.Selenium.Chromium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
 
-namespace Mafin.Web.UI.Selenium.Driver;
+namespace Mafin.Web.UI.Selenium.Extensions;
 
 /// <summary>
-/// Presents extension methods for <see cref="DriverOptions"/>.
+/// Provides extension methods for <see cref="DriverOptions"/>.
 /// </summary>
 internal static class DriverOptionsExtensions
 {
@@ -14,8 +14,8 @@ internal static class DriverOptionsExtensions
     /// Adds driver arguments to the <paramref name="options"/>.
     /// </summary>
     /// <param name="options"><see cref="DriverOptions"/>.</param>
-    /// <param name="arguments">list of driver arguments.</param>
-    /// <typeparam name="T">object type inherited from <see cref="DriverOptions"/>.</typeparam>
+    /// <param name="arguments">Collection of driver arguments.</param>
+    /// <typeparam name="T">Object type inherited from <see cref="DriverOptions"/>.</typeparam>
     public static void AddArguments<T>(this T options, IEnumerable<string> arguments)
         where T : DriverOptions
     {
@@ -39,8 +39,8 @@ internal static class DriverOptionsExtensions
     /// Adds an extension to the <paramref name="options"/> located at <paramref name="path"/>.
     /// </summary>
     /// <param name="options"><see cref="DriverOptions"/>.</param>
-    /// <param name="path">the path to the browser extension.</param>
-    /// <typeparam name="T">object type inherited from <see cref="DriverOptions"/>.</typeparam>
+    /// <param name="path">Path to the browser extension.</param>
+    /// <typeparam name="T">Object type inherited from <see cref="DriverOptions"/>.</typeparam>
     public static void AddExtension<T>(this T options, string path)
         where T : DriverOptions
     {
@@ -62,9 +62,9 @@ internal static class DriverOptionsExtensions
     /// Adds a user profile preference to the <paramref name="options"/>.
     /// </summary>
     /// <param name="options"><see cref="DriverOptions"/>.</param>
-    /// <param name="preferenceName">preference name.</param>
-    /// <param name="preferenceValue">preference value.</param>
-    /// <typeparam name="T">object type inherited from <see cref="DriverOptions"/>.</typeparam>
+    /// <param name="preferenceName">Preference name.</param>
+    /// <param name="preferenceValue">Preference value.</param>
+    /// <typeparam name="T">Object type inherited from <see cref="DriverOptions"/>.</typeparam>
     public static void AddPreference<T>(this T options, string preferenceName, object preferenceValue)
         where T : DriverOptions
     {
