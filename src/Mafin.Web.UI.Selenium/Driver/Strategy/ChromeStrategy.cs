@@ -1,8 +1,6 @@
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using WebDriverManager.DriverConfigs;
-using WebDriverManager.DriverConfigs.Impl;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
@@ -14,17 +12,9 @@ public class ChromeStrategy : AbstractDriverStrategy
     }
 
     protected override IWebDriver GetSpecificDriver()
-    {
-        return new ChromeDriver((ChromeOptions)GetDriverSpecificOptions());
-    }
+        => new ChromeDriver(GetSpecificDriverService() as ChromeDriverService, GetSpecificDriverOptions() as ChromeOptions);
 
-    protected override IDriverConfig GetDriverSpecificConfig()
-    {
-        return new ChromeConfig();
-    }
+    protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<ChromeOptions>();
 
-    protected override DriverOptions GetDriverSpecificOptions()
-    {
-        return BuildDriverOptions<ChromeOptions>();
-    }
+    protected override DriverService GetSpecificDriverService() => BuildDriverService(ChromeDriverService.CreateDefaultService());
 }

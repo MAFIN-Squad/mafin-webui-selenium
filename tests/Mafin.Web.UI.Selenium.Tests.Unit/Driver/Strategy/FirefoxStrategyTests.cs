@@ -1,7 +1,6 @@
 using Mafin.Web.UI.Selenium.Driver.Strategy;
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium.Firefox;
-using WebDriverManager.DriverConfigs.Impl;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy;
 
@@ -13,20 +12,20 @@ public class FirefoxStrategyTests : FirefoxStrategy
     }
 
     [Fact]
-    public void GetDriverSpecificConfig_WhenCalled_ShouldReturnFirefoxConfigInstance()
+    public void GetSpecificDriverOptions_WhenCalled_ShouldReturnFirefoxOptionsInstance()
     {
-        var driverConfig = GetDriverSpecificConfig();
-
-        driverConfig.Should().NotBeNull();
-        driverConfig.Should().BeAssignableTo<FirefoxConfig>();
-    }
-
-    [Fact]
-    public void GetDriverSpecificOptions_WhenCalled_ShouldReturnFirefoxOptionsInstance()
-    {
-        var driverOptions = GetDriverSpecificOptions();
+        var driverOptions = GetSpecificDriverOptions();
 
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<FirefoxOptions>();
+    }
+
+    [Fact]
+    public void GetSpecificDriverService_WhenCalled_ShouldReturnFirefoxServiceInstance()
+    {
+        var driverConfig = GetSpecificDriverService();
+
+        driverConfig.Should().NotBeNull();
+        driverConfig.Should().BeAssignableTo<FirefoxDriverService>();
     }
 }

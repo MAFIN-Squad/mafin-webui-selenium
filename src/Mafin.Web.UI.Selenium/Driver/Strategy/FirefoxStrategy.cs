@@ -1,8 +1,6 @@
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using WebDriverManager.DriverConfigs;
-using WebDriverManager.DriverConfigs.Impl;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
@@ -14,17 +12,9 @@ public class FirefoxStrategy : AbstractDriverStrategy
     }
 
     protected override IWebDriver GetSpecificDriver()
-    {
-        return new FirefoxDriver((FirefoxOptions)GetDriverSpecificOptions());
-    }
+        => new FirefoxDriver(GetSpecificDriverService() as FirefoxDriverService, GetSpecificDriverOptions() as FirefoxOptions);
 
-    protected override IDriverConfig GetDriverSpecificConfig()
-    {
-        return new FirefoxConfig();
-    }
+    protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<FirefoxOptions>();
 
-    protected override DriverOptions GetDriverSpecificOptions()
-    {
-        return BuildDriverOptions<FirefoxOptions>();
-    }
+    protected override DriverService GetSpecificDriverService() => BuildDriverService(FirefoxDriverService.CreateDefaultService());
 }

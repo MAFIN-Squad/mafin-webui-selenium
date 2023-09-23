@@ -1,7 +1,6 @@
 using Mafin.Web.UI.Selenium.Driver.Strategy;
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium.Edge;
-using WebDriverManager.DriverConfigs.Impl;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy;
 
@@ -13,20 +12,20 @@ public class EdgeStrategyTests : EdgeStrategy
     }
 
     [Fact]
-    public void GetDriverSpecificConfig_WhenCalled_ShouldReturnEdgeConfigInstance()
+    public void GetSpecificDriverOptions_WhenCalled_ShouldReturnEdgeOptionsInstance()
     {
-        var driverConfig = GetDriverSpecificConfig();
-
-        driverConfig.Should().NotBeNull();
-        driverConfig.Should().BeAssignableTo<EdgeConfig>();
-    }
-
-    [Fact]
-    public void GetDriverSpecificOptions_WhenCalled_ShouldReturnEdgeOptionsInstance()
-    {
-        var driverOptions = GetDriverSpecificOptions();
+        var driverOptions = GetSpecificDriverOptions();
 
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<EdgeOptions>();
+    }
+
+    [Fact]
+    public void GetSpecificDriverService_WhenCalled_ShouldReturnEdgeServiceInstance()
+    {
+        var driverConfig = GetSpecificDriverService();
+
+        driverConfig.Should().NotBeNull();
+        driverConfig.Should().BeAssignableTo<EdgeDriverService>();
     }
 }

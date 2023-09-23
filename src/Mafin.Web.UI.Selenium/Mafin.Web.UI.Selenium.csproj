@@ -16,7 +16,6 @@
     <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="Selenium.Support" />
     <PackageReference Include="Selenium.WebDriver" />
-    <PackageReference Include="WebDriverManager" />
 
     <None Include="build\**\*.props" Pack="True" PackagePath="build\" />
     <None Include="..\..\LICENSE" Pack="True" PackagePath="\" Visible="False" />

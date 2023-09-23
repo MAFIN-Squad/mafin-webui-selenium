@@ -52,9 +52,8 @@ public static class WebConfigurationProvider
         {
             PropertyNameCaseInsensitive = true
         };
-        var result = JsonSerializer.Deserialize<T>(section, options);
 
-        return result!;
+        return JsonSerializer.Deserialize<T>(section, options);
     }
 
     private static string GetSection(string element, string[] pathParts)
