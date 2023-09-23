@@ -12,14 +12,9 @@ public class SafariStrategy : AbstractDriverStrategy
     }
 
     protected override IWebDriver GetSpecificDriver()
-    {
-        return new SafariDriver((SafariOptions)GetDriverSpecificOptions());
-    }
+        => new SafariDriver(GetSpecificDriverService() as SafariDriverService, GetSpecificDriverOptions() as SafariOptions);
 
-    protected override DriverOptions GetDriverSpecificOptions()
-    {
-        return BuildDriverOptions<SafariOptions>();
-    }
+    protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<SafariOptions>();
 
-    protected override DriverService GetDriverSpecificService() => throw new NotImplementedException();
+    protected override DriverService GetSpecificDriverService() => BuildDriverService(SafariDriverService.CreateDefaultService());
 }

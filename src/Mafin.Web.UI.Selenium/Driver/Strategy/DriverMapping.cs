@@ -17,7 +17,7 @@ public static class DriverMapping
     {
         var driverType = webConfiguration.Browser;
 
-        if (string.IsNullOrEmpty(driverType))
+        if (string.IsNullOrWhiteSpace(driverType))
         {
             throw new ArgumentNullException($"Driver type is not defined, set {nameof(webConfiguration.Browser)} in {nameof(webConfiguration)}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
         }
@@ -27,6 +27,6 @@ public static class DriverMapping
             throw new KeyNotFoundException($"There is no registered DriverStrategy for the {nameof(driverType)} = {driverType}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
         }
 
-        return (AbstractDriverStrategy)Activator.CreateInstance(DriverMappings[driverType], webConfiguration)!;
+        return (Activator.CreateInstance(DriverMappings[driverType], webConfiguration) as AbstractDriverStrategy)!;
     }
 }

@@ -12,19 +12,20 @@ public class SafariStrategyTests : SafariStrategy
     }
 
     [Fact]
-    public void GetDriverSpecificOptions_WhenCalled_ShouldReturnSafariOptionsInstance()
+    public void GetSpecificDriverOptions_WhenCalled_ShouldReturnSafariOptionsInstance()
     {
-        var driverOptions = GetDriverSpecificOptions();
+        var driverOptions = GetSpecificDriverOptions();
 
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<SafariOptions>();
     }
 
     [Fact]
-    public void GetDriverSpecificService_WhenCalled_ShouldThrowNotImplemented()
+    public void GetSpecificDriverService_WhenCalled_ShouldReturnSafariServiceInstance()
     {
-        var act = GetDriverSpecificService;
+        var driverConfig = GetSpecificDriverService();
 
-        act.Should().Throw<NotImplementedException>();
+        driverConfig.Should().NotBeNull();
+        driverConfig.Should().BeAssignableTo<SafariDriverService>();
     }
 }

@@ -12,18 +12,18 @@ public class FirefoxStrategyTests : FirefoxStrategy
     }
 
     [Fact]
-    public void GetDriverSpecificOptions_WhenCalled_ShouldReturnFirefoxOptionsInstance()
+    public void GetSpecificDriverOptions_WhenCalled_ShouldReturnFirefoxOptionsInstance()
     {
-        var driverOptions = GetDriverSpecificOptions();
+        var driverOptions = GetSpecificDriverOptions();
 
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<FirefoxOptions>();
     }
 
     [Fact]
-    public void GetDriverSpecificService_WhenCalled_ShouldReturnFirefoxServiceInstance()
+    public void GetSpecificDriverService_WhenCalled_ShouldReturnFirefoxServiceInstance()
     {
-        var driverConfig = GetDriverSpecificService();
+        var driverConfig = GetSpecificDriverService();
 
         driverConfig.Should().NotBeNull();
         driverConfig.Should().BeAssignableTo<FirefoxDriverService>();

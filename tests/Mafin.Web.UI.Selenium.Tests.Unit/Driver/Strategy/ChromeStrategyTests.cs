@@ -12,18 +12,18 @@ public class ChromeStrategyTests : ChromeStrategy
     }
 
     [Fact]
-    public void GetDriverSpecificOptions_WhenCalled_ShouldReturnChromeOptionsInstance()
+    public void GetSpecificDriverOptions_WhenCalled_ShouldReturnChromeOptionsInstance()
     {
-        var driverOptions = GetDriverSpecificOptions();
+        var driverOptions = GetSpecificDriverOptions();
 
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<ChromeOptions>();
     }
 
     [Fact]
-    public void GetDriverSpecificService_WhenCalled_ShouldReturnChromeServiceInstance()
+    public void GetSpecificDriverService_WhenCalled_ShouldReturnChromeServiceInstance()
     {
-        var driverConfig = GetDriverSpecificService();
+        var driverConfig = GetSpecificDriverService();
 
         driverConfig.Should().NotBeNull();
         driverConfig.Should().BeAssignableTo<ChromeDriverService>();

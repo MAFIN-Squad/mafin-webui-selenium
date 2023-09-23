@@ -12,17 +12,9 @@ public class FirefoxStrategy : AbstractDriverStrategy
     }
 
     protected override IWebDriver GetSpecificDriver()
-    {
-        return new FirefoxDriver((FirefoxDriverService)GetDriverSpecificService(), (FirefoxOptions)GetDriverSpecificOptions());
-    }
+        => new FirefoxDriver(GetSpecificDriverService() as FirefoxDriverService, GetSpecificDriverOptions() as FirefoxOptions);
 
-    protected override DriverOptions GetDriverSpecificOptions()
-    {
-        return BuildDriverOptions<FirefoxOptions>();
-    }
+    protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<FirefoxOptions>();
 
-    protected override DriverService GetDriverSpecificService()
-    {
-        return BuildDriverService(FirefoxDriverService.CreateDefaultService());
-    }
+    protected override DriverService GetSpecificDriverService() => BuildDriverService(FirefoxDriverService.CreateDefaultService());
 }

@@ -12,17 +12,9 @@ public class EdgeStrategy : AbstractDriverStrategy
     }
 
     protected override IWebDriver GetSpecificDriver()
-    {
-        return new EdgeDriver((EdgeDriverService)GetDriverSpecificService(), (EdgeOptions)GetDriverSpecificOptions());
-    }
+        => new EdgeDriver(GetSpecificDriverService() as EdgeDriverService, GetSpecificDriverOptions() as EdgeOptions);
 
-    protected override DriverOptions GetDriverSpecificOptions()
-    {
-        return BuildDriverOptions<EdgeOptions>();
-    }
+    protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<EdgeOptions>();
 
-    protected override DriverService GetDriverSpecificService()
-    {
-        return BuildDriverService(EdgeDriverService.CreateDefaultService());
-    }
+    protected override DriverService GetSpecificDriverService() => BuildDriverService(EdgeDriverService.CreateDefaultService());
 }

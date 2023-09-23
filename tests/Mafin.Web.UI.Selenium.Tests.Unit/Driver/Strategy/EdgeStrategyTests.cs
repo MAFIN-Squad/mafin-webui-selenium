@@ -12,18 +12,18 @@ public class EdgeStrategyTests : EdgeStrategy
     }
 
     [Fact]
-    public void GetDriverSpecificOptions_WhenCalled_ShouldReturnEdgeOptionsInstance()
+    public void GetSpecificDriverOptions_WhenCalled_ShouldReturnEdgeOptionsInstance()
     {
-        var driverOptions = GetDriverSpecificOptions();
+        var driverOptions = GetSpecificDriverOptions();
 
         driverOptions.Should().NotBeNull();
         driverOptions.Should().BeAssignableTo<EdgeOptions>();
     }
 
     [Fact]
-    public void GetDriverSpecificService_WhenCalled_ShouldReturnEdgeServiceInstance()
+    public void GetSpecificDriverService_WhenCalled_ShouldReturnEdgeServiceInstance()
     {
-        var driverConfig = GetDriverSpecificService();
+        var driverConfig = GetSpecificDriverService();
 
         driverConfig.Should().NotBeNull();
         driverConfig.Should().BeAssignableTo<EdgeDriverService>();
