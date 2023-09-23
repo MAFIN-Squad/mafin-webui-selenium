@@ -1,3 +1,4 @@
+using Mafin.Web.UI.Selenium.Extensions;
 using Mafin.Web.UI.Selenium.Meta;
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium;

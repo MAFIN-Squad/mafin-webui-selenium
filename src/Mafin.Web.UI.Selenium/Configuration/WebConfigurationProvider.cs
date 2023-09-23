@@ -14,16 +14,13 @@ public static class WebConfigurationProvider
     private const string BrowserConfigFileNamePattern = "Mafin.Configuration.{0}.json";
 
     /// <summary>
-    /// Gets <see cref='WebConfiguration'/> from Mafin.Configuration.json.
+    /// Gets <see cref='WebConfiguration'/> values from Mafin.Configuration.json.
     /// </summary>
-    /// <returns> <see cref='WebConfiguration'/>. </returns>
+    /// <returns><see cref='WebConfiguration'/> instance.</returns>
+    /// <exception cref="FileNotFoundException">Configuration file is not created.</exception>
     public static WebConfiguration GetWebConfiguration()
     {
-        if (!File.Exists(CommonConfigFileName))
-        {
-            throw new FileNotFoundException($"Unable to load configuration for Mafin.Web.UI.Selenium module because {CommonConfigFileName} file does not exist.");
-        }
-
+        VerifyFileExists(CommonConfigFileName);
         var result = File.ReadAllText(CommonConfigFileName).ParseObject<WebConfiguration>();
 
         if (result.BrowserConfiguration is null)
@@ -31,15 +28,19 @@ public static class WebConfigurationProvider
             var browser = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(result.Browser);
             var browserConfigurationFileName = string.Format(CultureInfo.CurrentCulture, BrowserConfigFileNamePattern, browser);
 
-            if (!File.Exists(CommonConfigFileName))
-            {
-                throw new FileNotFoundException($"Unable to load configuration for Mafin.Web.UI.Selenium module because {browserConfigurationFileName} file does not exist.");
-            }
-
+            VerifyFileExists(browserConfigurationFileName);
             result.BrowserConfiguration = File.ReadAllText(browserConfigurationFileName).ParseObject<BrowserConfiguration>();
         }
 
         return result;
+    }
+
+    private static void VerifyFileExists(string fileName)
+    {
+        if (!File.Exists(fileName))
+        {
+            throw new FileNotFoundException($"Unable to load configuration for Mafin.Web.UI.Selenium module because {fileName} file does not exist.");
+        }
     }
 
     private static T ParseObject<T>(this string unparsedJson)
@@ -53,7 +54,7 @@ public static class WebConfigurationProvider
         };
         var result = JsonSerializer.Deserialize<T>(section, options);
 
-        return result;
+        return result!;
     }
 
     private static string GetSection(string element, string[] pathParts)
@@ -62,15 +63,15 @@ public static class WebConfigurationProvider
 
         foreach (var part in pathParts)
         {
-            result = GetSection(result, part);
+            result = GetSection(result!, part);
         }
 
         return result;
     }
 
-    private static string GetSection(string element, string key)
+    private static string? GetSection(string element, string key)
     {
         var node = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(element);
-        return node[key].GetRawText();
+        return node?[key].GetRawText();
     }
 }
