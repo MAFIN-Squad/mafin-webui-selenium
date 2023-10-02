@@ -1,7 +1,0 @@
-SelectionPane: .selected-params
-
-Flyout:
-  by: .multi-select-dropdown-container
-
-  Option:
-    by: .//li//span[contains(text(),'{name}')]

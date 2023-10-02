@@ -1,6 +1,0 @@
-Industry:
-    by: css div[class*='detail-pages-filter-23-ui multi-select-filter']
-    base: multi_selection_filter_list
-
-Tags:
-  by: .//li[@class='detail-pages-filter-23__filter-tag-item']

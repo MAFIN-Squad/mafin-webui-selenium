@@ -1,8 +1,0 @@
-Selected: .//span[@role='textbox']
-
-Arrow: .select2-selection__arrow
-
-Flyout:
-  by: .select2-results__options
-
-  Options: .//li
