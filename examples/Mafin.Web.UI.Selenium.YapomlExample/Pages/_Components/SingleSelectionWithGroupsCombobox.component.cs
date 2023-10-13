@@ -1,6 +1,6 @@
 namespace Mafin.Web.UI.Selenium.YapomlExample.Pages.Components;
 
-public partial class SingleSelectionWithGroupsComboboxComponent<TComponent, TConditions>
+public partial class SingleSelectionWithGroupsComboboxComponent<TComponent, TConditions, TCondition>
 {
     public void Expand()
     {
