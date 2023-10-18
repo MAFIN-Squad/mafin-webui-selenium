@@ -1,3 +1,0 @@
-url: /about
-
-SeeAll: .//div[@class='button__wrapper button--left']//a[contains(@href, 'leadership')]
