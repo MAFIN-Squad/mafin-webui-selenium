@@ -1,8 +1,0 @@
-url: /careers/job-listings
-
-ResultItems:
-  by: .search-result__item
-
-  Name: css a[class*=search-result__item-name]
-
-  ViewAndApplyButton: css a[class*='search-result__item-apply']
