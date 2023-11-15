@@ -1,7 +1,0 @@
-url: /search?q={query}
-
-Results:
-  by: .search-results__item
-
-  Title: .search-results__title-link
-  Description: .search-results__description
