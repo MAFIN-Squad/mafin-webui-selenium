@@ -28,11 +28,10 @@ public sealed class WebDriverScreenshotExtensionsTests : IDisposable
         var elementScreenshotPath = Path.Combine(_screenshotDirectory, screenshotName);
         var elementsToHide = Array.Empty<By>();
 
-        IWebDriver driverMock = Substitute.For<IWebDriver, ITakesScreenshot>();
-        ITakesScreenshot takesScreenshotDriver = (ITakesScreenshot)driverMock;
-        IWebElement elementMock = Substitute.For<IWebElement>();
+        var driverMock = Substitute.For<IWebDriver, ITakesScreenshot>();
+        var elementMock = Substitute.For<IWebElement>();
 
-        takesScreenshotDriver.GetScreenshot().Returns(new Screenshot(string.Empty));
+        ((ITakesScreenshot)driverMock).GetScreenshot().Returns(new Screenshot(string.Empty));
 
         driverMock.TakeFlexibleScreenshot(ScreenshotType.ViewPort, _screenshotDirectory, screenshotName, elementMock, elementsToHide);
 
