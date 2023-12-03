@@ -10,13 +10,13 @@ public class Wdm
 {
     private readonly IWebDriver _driver;
     private readonly TimeoutsConfig _timeoutsConfig;
-    private Type[] _ignoredExceptions = new[]
-    {
+    private Type[] _ignoredExceptions =
+    [
         typeof(NoSuchElementException),
         typeof(StaleElementReferenceException),
         typeof(ElementNotInteractableException),
         typeof(AggregateException)
-    };
+    ];
 
     public Wdm(IWebDriver driver, TimeoutsConfig timeoutsConfig)
     {
