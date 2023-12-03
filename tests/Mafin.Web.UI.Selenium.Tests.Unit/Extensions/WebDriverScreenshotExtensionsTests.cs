@@ -1,7 +1,7 @@
 using AutoFixture;
 using Mafin.Web.UI.Selenium.Extensions;
 using Mafin.Web.UI.Selenium.Meta;
-using Moq;
+using NSubstitute;
 using OpenQA.Selenium;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Extensions;
@@ -28,13 +28,12 @@ public sealed class WebDriverScreenshotExtensionsTests : IDisposable
         var elementScreenshotPath = Path.Combine(_screenshotDirectory, screenshotName);
         var elementsToHide = Array.Empty<By>();
 
-        Mock<IWebDriver> driverMock = new();
-        Mock<IWebElement> elementMock = new();
+        var driverMock = Substitute.For<IWebDriver, ITakesScreenshot>();
+        var elementMock = Substitute.For<IWebElement>();
 
-        var takesScreenshotDriverMock = driverMock.As<ITakesScreenshot>();
-        takesScreenshotDriverMock.Setup(d => d.GetScreenshot()).Returns(new Screenshot(string.Empty));
+        ((ITakesScreenshot)driverMock).GetScreenshot().Returns(new Screenshot(string.Empty));
 
-        driverMock.Object.TakeFlexibleScreenshot(ScreenshotType.ViewPort, _screenshotDirectory, screenshotName, elementMock.Object, elementsToHide);
+        driverMock.TakeFlexibleScreenshot(ScreenshotType.ViewPort, _screenshotDirectory, screenshotName, elementMock, elementsToHide);
 
         File.Exists(elementScreenshotPath).Should().BeTrue();
     }

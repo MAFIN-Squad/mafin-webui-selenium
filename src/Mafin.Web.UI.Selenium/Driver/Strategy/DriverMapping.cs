@@ -22,11 +22,11 @@ public static class DriverMapping
             throw new ArgumentNullException($"Driver type is not defined, set {nameof(webConfiguration.Browser)} in {nameof(webConfiguration)}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
         }
 
-        if (!DriverMappings.ContainsKey(driverType))
+        if (!DriverMappings.TryGetValue(driverType, out var value))
         {
             throw new KeyNotFoundException($"There is no registered DriverStrategy for the {nameof(driverType)} = {driverType}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
         }
 
-        return (Activator.CreateInstance(DriverMappings[driverType], webConfiguration) as AbstractDriverStrategy)!;
+        return (Activator.CreateInstance(value, webConfiguration) as AbstractDriverStrategy)!;
     }
 }

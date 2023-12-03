@@ -35,7 +35,7 @@ public class DriverMappingTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData(" ")]
-    public void GetDriverStrategy_WhenNullOrEmptyOrWhitespaceDriverType_ShouldThrow(string driverType)
+    public void GetDriverStrategy_WhenNullOrEmptyOrWhitespaceDriverType_ShouldThrow(string? driverType)
     {
         WebConfiguration webConfiguration = new()
         {

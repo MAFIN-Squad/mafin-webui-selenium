@@ -7,11 +7,11 @@ public class BrowserConfiguration
 {
     public RemoteConfig? Remote { get; set; }
 
-    public Dictionary<string, object>? Capabilities { get; set; }
+    public IDictionary<string, object>? Capabilities { get; set; }
 
-    public List<string>? Arguments { get; set; }
+    public IList<string>? Arguments { get; set; }
 
-    public List<string>? Extensions { get; set; }
+    public IList<string>? Extensions { get; set; }
 
-    public Dictionary<string, object>? Preferences { get; set; }
+    public IDictionary<string, object>? Preferences { get; set; }
 }
