@@ -11,8 +11,8 @@ public class SafariStrategy : AbstractDriverStrategy
     {
     }
 
-    protected override IWebDriver GetSpecificDriver()
-        => new SafariDriver(GetSpecificDriverService() as SafariDriverService, GetSpecificDriverOptions() as SafariOptions);
+    protected override IWebDriver GetSpecificDriver() =>
+        new SafariDriver(GetSpecificDriverService() as SafariDriverService, GetSpecificDriverOptions() as SafariOptions);
 
     protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<SafariOptions>();
 

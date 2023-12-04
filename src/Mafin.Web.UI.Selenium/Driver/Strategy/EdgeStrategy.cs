@@ -11,8 +11,8 @@ public class EdgeStrategy : AbstractDriverStrategy
     {
     }
 
-    protected override IWebDriver GetSpecificDriver()
-        => new EdgeDriver(GetSpecificDriverService() as EdgeDriverService, GetSpecificDriverOptions() as EdgeOptions);
+    protected override IWebDriver GetSpecificDriver() =>
+        new EdgeDriver(GetSpecificDriverService() as EdgeDriverService, GetSpecificDriverOptions() as EdgeOptions);
 
     protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<EdgeOptions>();
 

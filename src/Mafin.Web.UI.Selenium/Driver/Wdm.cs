@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -24,17 +23,11 @@ public class Wdm
         _timeoutsConfig = timeoutsConfig;
     }
 
-    public IWebDriver GetDriver()
-    {
-        return _driver;
-    }
+    public IWebDriver GetDriver() => _driver;
 
-    public Actions GetActions()
-    {
-        return new Actions(GetDriver());
-    }
+    public Actions GetActions() => new(GetDriver());
 
-    public void SetIgnoredExceptions([NotNull] Type[] ignoredExceptions) => _ignoredExceptions = ignoredExceptions;
+    public void SetIgnoredExceptions(Type[] ignoredExceptions) => _ignoredExceptions = ignoredExceptions;
 
     public WebDriverWait GetWebDriverWait()
     {

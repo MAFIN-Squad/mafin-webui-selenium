@@ -11,8 +11,8 @@ public class FirefoxStrategy : AbstractDriverStrategy
     {
     }
 
-    protected override IWebDriver GetSpecificDriver()
-        => new FirefoxDriver(GetSpecificDriverService() as FirefoxDriverService, GetSpecificDriverOptions() as FirefoxOptions);
+    protected override IWebDriver GetSpecificDriver() =>
+        new FirefoxDriver(GetSpecificDriverService() as FirefoxDriverService, GetSpecificDriverOptions() as FirefoxOptions);
 
     protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<FirefoxOptions>();
 

@@ -62,7 +62,7 @@ public class DriverOptionsExtensionsTests
     public void AddArguments_WhenChromeOptionsPassed_ShouldAddArguments()
     {
         const string argumentsFieldName = "arguments";
-        List<string> arguments = new() { _fixture.Create<string>(), _fixture.Create<string>() };
+        List<string> arguments = [_fixture.Create<string>(), _fixture.Create<string>()];
         ChromeOptions options = new();
 
         options.AddArguments(arguments);
@@ -79,7 +79,7 @@ public class DriverOptionsExtensionsTests
     public void AddArguments_WhenFirefoxOptionsPassed_ShouldAddArguments()
     {
         const string argumentsFieldName = "firefoxArguments";
-        List<string> arguments = new() { _fixture.Create<string>(), _fixture.Create<string>() };
+        List<string> arguments = [_fixture.Create<string>(), _fixture.Create<string>()];
         FirefoxOptions options = new();
 
         options.AddArguments(arguments);
@@ -97,7 +97,7 @@ public class DriverOptionsExtensionsTests
     {
         const string argumentsFieldName = "additionalCapabilities";
         const string argsStorageName = "args";
-        List<string> arguments = new() { _fixture.Create<string>(), _fixture.Create<string>() };
+        List<string> arguments = [_fixture.Create<string>(), _fixture.Create<string>()];
         SafariOptions options = new();
 
         options.AddArguments(arguments);
@@ -113,7 +113,7 @@ public class DriverOptionsExtensionsTests
     [Fact]
     public void AddArguments_WhenUnsupportedOptionsPassed_ShouldThrow()
     {
-        List<string> arguments = new() { _fixture.Create<string>(), _fixture.Create<string>() };
+        List<string> arguments = [_fixture.Create<string>(), _fixture.Create<string>()];
         DummyOptions options = new();
 
         Action act = () => options.AddArguments(arguments);
