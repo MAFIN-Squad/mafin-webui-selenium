@@ -17,7 +17,7 @@ public class Wdm(IWebDriver driver, TimeoutsConfig timeoutsConfig)
 
     public IWebDriver GetDriver() => driver;
 
-    public Actions GetActions() => new(GetDriver());
+    public Actions GetActions() => new(driver);
 
     public void SetIgnoredExceptions(Type[] ignoredExceptions) => _ignoredExceptions = ignoredExceptions;
 
