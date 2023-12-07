@@ -4,13 +4,8 @@ using OpenQA.Selenium.Safari;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy;
 
-public class SafariStrategyTests : SafariStrategy
+public class SafariStrategyTests() : SafariStrategy(new WebConfiguration())
 {
-    public SafariStrategyTests()
-        : base(new WebConfiguration())
-    {
-    }
-
     [Fact]
     public void GetSpecificDriverOptions_WhenCalled_ShouldReturnSafariOptionsInstance()
     {

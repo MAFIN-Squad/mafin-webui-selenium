@@ -4,13 +4,8 @@ using OpenQA.Selenium.Chrome;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy;
 
-public class ChromeStrategyTests : ChromeStrategy
+public class ChromeStrategyTests() : ChromeStrategy(new WebConfiguration())
 {
-    public ChromeStrategyTests()
-        : base(new WebConfiguration())
-    {
-    }
-
     [Fact]
     public void GetSpecificDriverOptions_WhenCalled_ShouldReturnChromeOptionsInstance()
     {

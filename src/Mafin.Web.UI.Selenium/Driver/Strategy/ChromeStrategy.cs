@@ -4,13 +4,8 @@ using OpenQA.Selenium.Chrome;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
-public class ChromeStrategy : AbstractDriverStrategy
+public class ChromeStrategy(WebConfiguration webConfiguration) : AbstractDriverStrategy(webConfiguration)
 {
-    public ChromeStrategy(WebConfiguration webConfiguration)
-        : base(webConfiguration)
-    {
-    }
-
     protected override IWebDriver GetSpecificDriver() =>
         new ChromeDriver(GetSpecificDriverService() as ChromeDriverService, GetSpecificDriverOptions() as ChromeOptions);
 

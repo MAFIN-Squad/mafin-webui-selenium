@@ -4,13 +4,8 @@ using OpenQA.Selenium.Firefox;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy;
 
-public class FirefoxStrategyTests : FirefoxStrategy
+public class FirefoxStrategyTests() : FirefoxStrategy(new WebConfiguration())
 {
-    public FirefoxStrategyTests()
-        : base(new WebConfiguration())
-    {
-    }
-
     [Fact]
     public void GetSpecificDriverOptions_WhenCalled_ShouldReturnFirefoxOptionsInstance()
     {

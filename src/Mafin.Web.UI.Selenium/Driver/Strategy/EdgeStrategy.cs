@@ -4,13 +4,8 @@ using OpenQA.Selenium.Edge;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
-public class EdgeStrategy : AbstractDriverStrategy
+public class EdgeStrategy(WebConfiguration webConfiguration) : AbstractDriverStrategy(webConfiguration)
 {
-    public EdgeStrategy(WebConfiguration webConfiguration)
-        : base(webConfiguration)
-    {
-    }
-
     protected override IWebDriver GetSpecificDriver() =>
         new EdgeDriver(GetSpecificDriverService() as EdgeDriverService, GetSpecificDriverOptions() as EdgeOptions);
 
