@@ -12,8 +12,8 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageVersion Include="NSubstitute" Version="5.1.0" />
     <PackageVersion Include="Philips.CodeAnalysis.DuplicateCodeAnalyzer" Version="1.1.7" />
-    <PackageVersion Include="Selenium.Support" Version="4.15.0" />
-    <PackageVersion Include="Selenium.WebDriver" Version="4.15.0" />
+    <PackageVersion Include="Selenium.Support" Version="4.16.2" />
+    <PackageVersion Include="Selenium.WebDriver" Version="4.16.2" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.14.0.81108" />
     <PackageVersion Include="StyleCop.Analyzers.Unstable" Version="1.2.0.507" />
     <PackageVersion Include="xunit.analyzers" Version="1.6.0" />
