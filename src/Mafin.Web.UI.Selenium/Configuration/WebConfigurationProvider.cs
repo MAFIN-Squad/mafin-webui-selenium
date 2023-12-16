@@ -46,7 +46,9 @@ public static class WebConfigurationProvider
     private static T ParseObject<T>(this string unparsedJson)
     {
         var pathParts = typeof(T).GetCustomAttributes<ConfigurationSectionAttribute>().FirstOrDefault()?.Path;
-        var section = pathParts is null || !pathParts.Any() ? unparsedJson : GetSection(unparsedJson, pathParts);
+        var section = pathParts is null || !pathParts.Any()
+            ? unparsedJson
+            : GetSection(unparsedJson, pathParts);
 
         var options = new JsonSerializerOptions
         {
@@ -62,7 +64,7 @@ public static class WebConfigurationProvider
 
         foreach (var part in pathParts)
         {
-            result = GetSection(result!, part);
+            result = GetSection(result, part);
         }
 
         return result;

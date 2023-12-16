@@ -4,13 +4,8 @@ using OpenQA.Selenium.Edge;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Driver.Strategy;
 
-public class EdgeStrategyTests : EdgeStrategy
+public class EdgeStrategyTests() : EdgeStrategy(new WebConfiguration())
 {
-    public EdgeStrategyTests()
-        : base(new WebConfiguration())
-    {
-    }
-
     [Fact]
     public void GetSpecificDriverOptions_WhenCalled_ShouldReturnEdgeOptionsInstance()
     {

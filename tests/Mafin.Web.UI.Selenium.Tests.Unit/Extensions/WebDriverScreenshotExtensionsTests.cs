@@ -26,7 +26,7 @@ public sealed class WebDriverScreenshotExtensionsTests : IDisposable
     {
         var screenshotName = $"{_fixture.Create<string>()}.{extension}";
         var elementScreenshotPath = Path.Combine(_screenshotDirectory, screenshotName);
-        var elementsToHide = Array.Empty<By>();
+        By[] elementsToHide = [];
 
         var driverMock = Substitute.For<IWebDriver, ITakesScreenshot>();
         var elementMock = Substitute.For<IWebElement>();

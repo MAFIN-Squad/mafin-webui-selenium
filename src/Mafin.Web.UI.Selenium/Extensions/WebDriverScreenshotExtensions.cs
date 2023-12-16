@@ -63,7 +63,7 @@ public static class WebDriverScreenshotExtensions
 
     private static void TakeFullPageScreenshot(this IWebDriver driver, string filePath, By[]? elementsToHideLocators)
     {
-        elementsToHideLocators ??= Array.Empty<By>();
+        elementsToHideLocators ??= [];
 
         var windowHeight = driver.ExecuteJavaScript<long>("return window.innerHeight;");
         var totalHeight = driver.ExecuteJavaScript<long>("return document.documentElement.scrollHeight;");
@@ -76,7 +76,7 @@ public static class WebDriverScreenshotExtensions
         }
 
         var scrolledHeight = 0L;
-        using MagickImageCollection screenshotCollection = new();
+        using MagickImageCollection screenshotCollection = [];
 
         while (scrolledHeight < totalHeight)
         {

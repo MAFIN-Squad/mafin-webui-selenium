@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Mafin.Web.UI.Selenium.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -6,10 +5,8 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Mafin.Web.UI.Selenium.Driver;
 
-public class Wdm
+public class Wdm(IWebDriver driver, TimeoutsConfig timeoutsConfig)
 {
-    private readonly IWebDriver _driver;
-    private readonly TimeoutsConfig _timeoutsConfig;
     private Type[] _ignoredExceptions =
     [
         typeof(NoSuchElementException),
@@ -18,27 +15,15 @@ public class Wdm
         typeof(AggregateException)
     ];
 
-    public Wdm(IWebDriver driver, TimeoutsConfig timeoutsConfig)
-    {
-        _driver = driver;
-        _timeoutsConfig = timeoutsConfig;
-    }
+    public IWebDriver GetDriver() => driver;
 
-    public IWebDriver GetDriver()
-    {
-        return _driver;
-    }
+    public Actions GetActions() => new(driver);
 
-    public Actions GetActions()
-    {
-        return new Actions(GetDriver());
-    }
-
-    public void SetIgnoredExceptions([NotNull] Type[] ignoredExceptions) => _ignoredExceptions = ignoredExceptions;
+    public void SetIgnoredExceptions(Type[] ignoredExceptions) => _ignoredExceptions = ignoredExceptions;
 
     public WebDriverWait GetWebDriverWait()
     {
-        WebDriverWait wait = new(new SystemClock(), _driver, _timeoutsConfig.ExplicitWait, _timeoutsConfig.ExplicitWaitPooling);
+        WebDriverWait wait = new(new SystemClock(), driver, timeoutsConfig.ExplicitWait, timeoutsConfig.ExplicitWaitPooling);
         wait.IgnoreExceptionTypes(_ignoredExceptions);
         return wait;
     }

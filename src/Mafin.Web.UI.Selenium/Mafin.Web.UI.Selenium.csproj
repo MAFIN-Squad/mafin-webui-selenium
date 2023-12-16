@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net6.0;netstandard2.1</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Mafin.Web.UI.Selenium</PackageId>
     <Description>MAFIN Web UI Selenium-based package</Description>
     <Authors>MAFIN Squad</Authors>
@@ -8,14 +8,15 @@
     <RepositoryUrl>https://github.com/MAFIN-Squad/mafin-webui-selenium</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>0.1.2</Version>
+    <Version>0.2.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
 
     <PackageReference Include="Magick.NET-Q8-AnyCPU" />
     <PackageReference Include="Selenium.Support" />
-    <PackageReference Include="Selenium.WebDriver" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Yapoml.Selenium" />
 
     <None Include="build\**\*.props" Pack="True" PackagePath="build\" />
     <None Include="..\..\LICENSE" Pack="True" PackagePath="\" Visible="False" />

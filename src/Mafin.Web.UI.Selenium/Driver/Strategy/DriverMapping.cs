@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Mafin.Web.UI.Selenium.Models;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
@@ -13,7 +12,7 @@ public static class DriverMapping
         { "firefox", typeof(FirefoxStrategy) }
     };
 
-    public static AbstractDriverStrategy GetDriverStrategy([NotNull] WebConfiguration webConfiguration)
+    public static AbstractDriverStrategy GetDriverStrategy(WebConfiguration webConfiguration)
     {
         var driverType = webConfiguration.Browser;
 
@@ -27,6 +26,6 @@ public static class DriverMapping
             throw new KeyNotFoundException($"There is no registered DriverStrategy for the {nameof(driverType)} = {driverType}. Available values are: [{string.Join("], [", DriverMappings.Keys)}]");
         }
 
-        return (Activator.CreateInstance(value, webConfiguration) as AbstractDriverStrategy)!;
+        return Activator.CreateInstance(value, webConfiguration) as AbstractDriverStrategy;
     }
 }

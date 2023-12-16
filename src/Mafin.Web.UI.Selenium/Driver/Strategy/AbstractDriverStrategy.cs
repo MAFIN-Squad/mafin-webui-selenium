@@ -14,7 +14,7 @@ public abstract class AbstractDriverStrategy
     protected AbstractDriverStrategy(WebConfiguration webConfiguration)
     {
         _webConfiguration = webConfiguration;
-        _browserConfiguration = webConfiguration.BrowserConfiguration ?? new();
+        _browserConfiguration = webConfiguration?.BrowserConfiguration ?? new();
     }
 
     public TimeoutsConfig Timeouts => _webConfiguration.Timeouts ?? new();
@@ -25,8 +25,8 @@ public abstract class AbstractDriverStrategy
 
     public virtual IWebDriver GetLocalDriver() => ConfigureDriverTimeouts(GetSpecificDriver());
 
-    public virtual IWebDriver GetRemoteDriver()
-        => ConfigureDriverTimeouts(new RemoteWebDriver(_browserConfiguration.Remote?.Url, GetRemoteOptions().ToCapabilities(), Timeouts.CommandTimeout));
+    public virtual IWebDriver GetRemoteDriver() =>
+        ConfigureDriverTimeouts(new RemoteWebDriver(_browserConfiguration.Remote?.Url, GetRemoteOptions().ToCapabilities(), Timeouts.CommandTimeout));
 
     public virtual IWebDriver ConfigureDriverTimeouts(IWebDriver driver)
     {

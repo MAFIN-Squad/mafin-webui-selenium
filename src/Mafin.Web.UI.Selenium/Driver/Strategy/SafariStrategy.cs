@@ -4,15 +4,10 @@ using OpenQA.Selenium.Safari;
 
 namespace Mafin.Web.UI.Selenium.Driver.Strategy;
 
-public class SafariStrategy : AbstractDriverStrategy
+public class SafariStrategy(WebConfiguration webConfiguration) : AbstractDriverStrategy(webConfiguration)
 {
-    public SafariStrategy(WebConfiguration webConfiguration)
-        : base(webConfiguration)
-    {
-    }
-
-    protected override IWebDriver GetSpecificDriver()
-        => new SafariDriver(GetSpecificDriverService() as SafariDriverService, GetSpecificDriverOptions() as SafariOptions);
+    protected override IWebDriver GetSpecificDriver() =>
+        new SafariDriver(GetSpecificDriverService() as SafariDriverService, GetSpecificDriverOptions() as SafariOptions);
 
     protected override DriverOptions GetSpecificDriverOptions() => BuildDriverOptions<SafariOptions>();
 
