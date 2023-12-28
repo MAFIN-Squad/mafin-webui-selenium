@@ -12,8 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
-
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" />
+    <PackageReference Include="Magick.NET-Q8-x64" />
     <PackageReference Include="Selenium.Support" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Yapoml.Selenium" />
