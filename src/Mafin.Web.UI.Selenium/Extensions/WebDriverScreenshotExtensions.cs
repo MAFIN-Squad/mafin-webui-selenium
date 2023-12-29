@@ -1,7 +1,7 @@
-using ImageMagick;
 using Mafin.Web.UI.Selenium.Meta;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
+using SkiaSharp;
 
 namespace Mafin.Web.UI.Selenium.Extensions;
 
@@ -18,9 +18,10 @@ public static class WebDriverScreenshotExtensions
     /// <param name="screenshotDirectory">Directory to save a screenshot file.</param>
     /// <param name="screenshotName">Name for a screenshot file.</param>
     /// <param name="element">Element to make screenshot of (only for <see cref="ScreenshotType.SingleElement"/>).</param>
+    /// <param name="imageFormat">Image format.</param>
     /// <param name="elementsToHideLocators">Elements to hide on a screenshot (only for <see cref="ScreenshotType.FullScreen"/>).</param>
     /// <exception cref="ArgumentNullException"><paramref name="element"/> is null when <see cref="ScreenshotType.SingleElement"/>.</exception>
-    public static void TakeFlexibleScreenshot(this IWebDriver driver, ScreenshotType screenshotType = default, string? screenshotDirectory = null, string? screenshotName = null, IWebElement? element = null, params By[] elementsToHideLocators)
+    public static void TakeFlexibleScreenshot(this IWebDriver driver, ScreenshotType screenshotType = default, string? screenshotDirectory = null, string? screenshotName = null, IWebElement? element = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png, params By[] elementsToHideLocators)
     {
         if (string.IsNullOrWhiteSpace(screenshotDirectory))
         {
@@ -38,10 +39,10 @@ public static class WebDriverScreenshotExtensions
         switch (screenshotType)
         {
             case ScreenshotType.FullScreen:
-                driver?.TakeFullPageScreenshot(screenshotPath, elementsToHideLocators);
+                driver?.TakeFullPageScreenshot(screenshotPath, imageFormat, elementsToHideLocators);
                 break;
             case ScreenshotType.SingleElement:
-                driver?.TakeElementScreenshot(element ?? throw new ArgumentNullException(nameof(element)), screenshotPath);
+                driver?.TakeElementScreenshot(element ?? throw new ArgumentNullException(nameof(element)), screenshotPath, imageFormat);
                 break;
             case ScreenshotType.ViewPort:
                 driver?.TakeScreenshot().SaveAsFile(screenshotPath);
@@ -51,17 +52,20 @@ public static class WebDriverScreenshotExtensions
         }
     }
 
-    private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath)
+    private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath, SKEncodedImageFormat imageFormat)
     {
-        using MemoryStream screenshotStream = new(driver.TakeScreenshot().AsByteArray);
-        using MagickImage image = new(screenshotStream);
-        MagickGeometry cropRectangle = new(element.Location.X, element.Location.Y, element.Size.Width, element.Size.Height);
+        using var screenshot = SKBitmap.Decode(driver.TakeScreenshot().AsByteArray);
 
-        image.Crop(cropRectangle);
-        image.Write(filePath);
+        var info = new SKImageInfo(element.Size.Width, element.Size.Height);
+
+        using var surface = SKSurface.Create(info);
+        surface.Canvas.DrawBitmap(screenshot, -element.Location.X, -element.Location.Y);
+
+        using var fileStream = File.OpenWrite(filePath);
+        surface.Snapshot().Encode(imageFormat, default).SaveTo(fileStream);
     }
 
-    private static void TakeFullPageScreenshot(this IWebDriver driver, string filePath, By[]? elementsToHideLocators)
+    private static void TakeFullPageScreenshot(this IWebDriver driver, string filePath, SKEncodedImageFormat imageFormat, By[]? elementsToHideLocators = null)
     {
         elementsToHideLocators ??= [];
 
@@ -76,18 +80,37 @@ public static class WebDriverScreenshotExtensions
         }
 
         var scrolledHeight = 0L;
-        using MagickImageCollection screenshotCollection = [];
+        List<SKBitmap> screenshotCollection = [];
 
         while (scrolledHeight < totalHeight)
         {
             driver.ExecuteJavaScript($"window.scrollTo(0, {scrolledHeight});");
 
-            screenshotCollection.Add(new MagickImage(driver.TakeScreenshot().AsByteArray));
+            screenshotCollection.Add(SKBitmap.Decode(driver.TakeScreenshot().AsByteArray));
 
             scrolledHeight += windowHeight;
         }
 
-        using var resultingImage = screenshotCollection.AppendVertically();
-        resultingImage.Write(filePath);
+        using var stream = File.OpenWrite(filePath);
+        AppendVertically(screenshotCollection).Encode(stream, imageFormat, default);
+    }
+
+    private static SKBitmap AppendVertically(List<SKBitmap> images)
+    {
+        var totalHeight = images.Sum(image => image.Height);
+        var maxWidth = images.Max(image => image.Width);
+
+        var finalBitmap = new SKBitmap(maxWidth, totalHeight);
+        using var canvas = new SKCanvas(finalBitmap);
+
+        var currentY = 0;
+
+        foreach (var image in images)
+        {
+            canvas.DrawBitmap(image, new SKRect(0, currentY, image.Width, currentY + image.Height));
+            currentY += image.Height;
+        }
+
+        return finalBitmap;
     }
 }
