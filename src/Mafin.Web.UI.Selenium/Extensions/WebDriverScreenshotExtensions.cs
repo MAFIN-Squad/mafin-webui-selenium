@@ -19,9 +19,9 @@ public static class WebDriverScreenshotExtensions
     /// <param name="screenshotName">Name for a screenshot file.</param>
     /// <param name="element">Element to make screenshot of (only for <see cref="ScreenshotType.SingleElement"/>).</param>
     /// <param name="imageFormat">Image format.</param>
-    /// <param name="elementsToHideLocators">Elements to hide on a screenshot (only for <see cref="ScreenshotType.FullScreen"/>).</param>
+    /// <param name="elementsToHide">Locators of elements to hide on a screenshot (only for <see cref="ScreenshotType.FullScreen"/>).</param>
     /// <exception cref="ArgumentNullException"><paramref name="element"/> is null when <see cref="ScreenshotType.SingleElement"/>.</exception>
-    public static void TakeFlexibleScreenshot(this IWebDriver driver, ScreenshotType screenshotType = default, string? screenshotDirectory = null, string? screenshotName = null, IWebElement? element = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png, params By[] elementsToHideLocators)
+    public static void TakeFlexibleScreenshot(this IWebDriver driver, ScreenshotType screenshotType = default, string? screenshotDirectory = null, string? screenshotName = null, IWebElement? element = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png, params By[] elementsToHide)
     {
         if (string.IsNullOrWhiteSpace(screenshotDirectory))
         {
@@ -30,7 +30,7 @@ public static class WebDriverScreenshotExtensions
 
         if (string.IsNullOrWhiteSpace(screenshotName))
         {
-            screenshotName = $"Screenshot_{DateTime.UtcNow.ToFileTime()}.png";
+            screenshotName = $"Screenshot_{DateTime.UtcNow.ToFileTime()}.{nameof(imageFormat)}";
         }
 
         Directory.CreateDirectory(screenshotDirectory);
@@ -39,7 +39,7 @@ public static class WebDriverScreenshotExtensions
         switch (screenshotType)
         {
             case ScreenshotType.FullScreen:
-                driver?.TakeFullPageScreenshot(screenshotPath, imageFormat, elementsToHideLocators);
+                driver?.TakeFullPageScreenshot(screenshotPath, imageFormat, elementsToHide);
                 break;
             case ScreenshotType.SingleElement:
                 driver?.TakeElementScreenshot(element ?? throw new ArgumentNullException(nameof(element)), screenshotPath, imageFormat);
@@ -54,27 +54,27 @@ public static class WebDriverScreenshotExtensions
 
     private static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string filePath, SKEncodedImageFormat imageFormat)
     {
-        using var screenshot = SKBitmap.Decode(driver.TakeScreenshot().AsByteArray);
+        using var bitmap = SKBitmap.Decode(driver.TakeScreenshot().AsByteArray);
 
         var info = new SKImageInfo(element.Size.Width, element.Size.Height);
 
         using var surface = SKSurface.Create(info);
-        surface.Canvas.DrawBitmap(screenshot, -element.Location.X, -element.Location.Y);
+        surface.Canvas.DrawBitmap(bitmap, -element.Location.X, -element.Location.Y);
 
         using var fileStream = File.OpenWrite(filePath);
         surface.Snapshot().Encode(imageFormat, default).SaveTo(fileStream);
     }
 
-    private static void TakeFullPageScreenshot(this IWebDriver driver, string filePath, SKEncodedImageFormat imageFormat, By[]? elementsToHideLocators = null)
+    private static void TakeFullPageScreenshot(this IWebDriver driver, string filePath, SKEncodedImageFormat imageFormat, By[]? elementsToHide = null)
     {
-        elementsToHideLocators ??= [];
+        elementsToHide ??= [];
 
         var windowHeight = driver.ExecuteJavaScript<long>("return window.innerHeight;");
         var totalHeight = driver.ExecuteJavaScript<long>("return document.documentElement.scrollHeight;");
 
         driver.ExecuteJavaScript("document.body.style.overflow = 'hidden';");
 
-        foreach (var element in elementsToHideLocators)
+        foreach (var element in elementsToHide)
         {
             driver.ExecuteJavaScript("arguments[0].style.visibility = 'hidden';", driver.FindElement(element));
         }
@@ -92,13 +92,14 @@ public static class WebDriverScreenshotExtensions
         }
 
         using var stream = File.OpenWrite(filePath);
-        AppendVertically(screenshotCollection).Encode(stream, imageFormat, default);
+        using var bitmap = AppendVertically(screenshotCollection);
+        _ = bitmap.Encode(stream, imageFormat, default);
     }
 
     private static SKBitmap AppendVertically(List<SKBitmap> images)
     {
-        var totalHeight = images.Sum(image => image.Height);
-        var maxWidth = images.Max(image => image.Width);
+        var totalHeight = images.Sum(i => i.Height);
+        var maxWidth = images.Max(i => i.Width);
 
         var finalBitmap = new SKBitmap(maxWidth, totalHeight);
         using var canvas = new SKCanvas(finalBitmap);

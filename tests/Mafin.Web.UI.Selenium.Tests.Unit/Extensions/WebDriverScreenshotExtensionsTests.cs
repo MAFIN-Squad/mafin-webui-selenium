@@ -33,7 +33,7 @@ public sealed class WebDriverScreenshotExtensionsTests : IDisposable
 
         ((ITakesScreenshot)driverMock).GetScreenshot().Returns(new Screenshot(string.Empty));
 
-        driverMock.TakeFlexibleScreenshot(ScreenshotType.ViewPort, _screenshotDirectory, screenshotName, elementMock, elementsToHideLocators: elementsToHide);
+        driverMock.TakeFlexibleScreenshot(ScreenshotType.ViewPort, _screenshotDirectory, screenshotName, elementMock, elementsToHide: elementsToHide);
 
         File.Exists(elementScreenshotPath).Should().BeTrue();
     }
