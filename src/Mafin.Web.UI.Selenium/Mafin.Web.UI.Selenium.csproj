@@ -12,6 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
+
     <PackageReference Include="Selenium.Support" />
     <PackageReference Include="SkiaSharp" />
     <PackageReference Include="System.Text.Json" />
