@@ -1,22 +1,22 @@
 namespace Mafin.Web.UI.Selenium.Meta;
 
 /// <summary>
-/// Represents type of screenshot by the visible area.
+/// Represents type of screenshot by the area.
 /// </summary>
 public enum ScreenshotType
 {
     /// <summary>
-    /// Screenshot of screen's visible area.
+    /// Screenshot of a screen's visible area.
     /// </summary>
     ViewPort,
 
     /// <summary>
-    /// Screenshot of full screen page.
+    /// Screenshot of a full page.
     /// </summary>
     FullScreen,
 
     /// <summary>
-    /// Screenshot of screen's single element.
+    /// Screenshot of a pages' single element.
     /// </summary>
     SingleElement
 }
