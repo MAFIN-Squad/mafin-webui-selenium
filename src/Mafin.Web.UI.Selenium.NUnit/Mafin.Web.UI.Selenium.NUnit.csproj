@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Mafin.Web.UI.Selenium.NUnit</PackageId>
+    <Description>MAFIN Web UI Selenium-based package. This package brings in additional helpers and fixtures to enable using it within NUnit.</Description>
+    <Authors>MAFIN Squad</Authors>
+    <PackageProjectUrl>https://github.com/MAFIN-Squad</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MAFIN-Squad/mafin-webui-selenium</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>0.2.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(MSBuildProjectName).Tests.Unit" />
+
+    <PackageReference Include="NUnit" />
+
+    <ProjectReference Include="..\Mafin.Web.UI.Selenium\Mafin.Web.UI.Selenium.csproj" />
+
+    <None Include="build\**\*.props" Pack="True" PackagePath="build\" />
+    <None Include="..\..\LICENSE" Pack="True" PackagePath="\" Visible="False" />
+    <None Include="..\..\README.md" Pack="True" PackagePath="\" Visible="False" />
+  </ItemGroup>
+</Project>

@@ -9,7 +9,9 @@
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.27.0" />
     <PackageVersion Include="Magick.NET-Q8-AnyCPU" Version="13.5.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageVersion Include="MSTest" Version="3.0.3" />
     <PackageVersion Include="NSubstitute" Version="5.1.0" />
+    <PackageVersion Include="NUnit" Version="3.13.3" />
     <PackageVersion Include="Philips.CodeAnalysis.DuplicateCodeAnalyzer" Version="1.1.7" />
     <PackageVersion Include="Selenium.Support" Version="4.16.2" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.15.0.81779" />
