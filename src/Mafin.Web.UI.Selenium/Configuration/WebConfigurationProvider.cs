@@ -46,7 +46,7 @@ public static class WebConfigurationProvider
     private static T ParseObject<T>(this string unparsedJson)
     {
         var pathParts = typeof(T).GetCustomAttributes<ConfigurationSectionAttribute>().FirstOrDefault()?.Path;
-        var section = pathParts is null || !pathParts.Any()
+        var section = pathParts is null || pathParts.Length == 0
             ? unparsedJson
             : GetSection(unparsedJson, pathParts);
 

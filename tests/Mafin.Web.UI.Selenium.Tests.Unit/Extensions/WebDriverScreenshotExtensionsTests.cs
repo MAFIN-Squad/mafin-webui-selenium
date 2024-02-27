@@ -1,8 +1,8 @@
 using AutoFixture;
 using Mafin.Web.UI.Selenium.Extensions;
-using Mafin.Web.UI.Selenium.Meta;
 using NSubstitute;
 using OpenQA.Selenium;
+using SkiaSharp;
 
 namespace Mafin.Web.UI.Selenium.Tests.Unit.Extensions;
 
@@ -18,22 +18,19 @@ public sealed class WebDriverScreenshotExtensionsTests : IDisposable
 
     public void Dispose() => Directory.Delete(_screenshotDirectory, true);
 
-    // TODO: revisit this test, seems we don't have any functionality related to extensions.
     [Theory]
-    [InlineData("png")]
-    [InlineData("jpg")]
-    public void TakeFlexibleScreenshot_WhenDifferentExtensions_ShouldSaveWithCorrespondingExtension(string extension)
+    [InlineData(SKEncodedImageFormat.Png)]
+    [InlineData(SKEncodedImageFormat.Jpeg)]
+    public void TakeViewPortScreenshot_WhenDifferentExtensions_ShouldSaveWithCorrespondingExtension(SKEncodedImageFormat extension)
     {
         var screenshotName = $"{_fixture.Create<string>()}.{extension}";
         var elementScreenshotPath = Path.Combine(_screenshotDirectory, screenshotName);
         By[] elementsToHide = [];
 
         var driverMock = Substitute.For<IWebDriver, ITakesScreenshot>();
-        var elementMock = Substitute.For<IWebElement>();
+        _ = ((ITakesScreenshot)driverMock).GetScreenshot().Returns(new Screenshot(string.Empty));
 
-        ((ITakesScreenshot)driverMock).GetScreenshot().Returns(new Screenshot(string.Empty));
-
-        driverMock.TakeFlexibleScreenshot(ScreenshotType.ViewPort, _screenshotDirectory, screenshotName, elementMock, elementsToHide);
+        driverMock.TakeViewPortScreenshot(_screenshotDirectory, screenshotName, extension, elementsToHide);
 
         File.Exists(elementScreenshotPath).Should().BeTrue();
     }
