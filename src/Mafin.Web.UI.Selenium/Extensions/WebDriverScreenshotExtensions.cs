@@ -10,26 +10,26 @@ namespace Mafin.Web.UI.Selenium.Extensions;
 public static class WebDriverScreenshotExtensions
 {
     /// <summary>
-    /// Takes a screenshot of the current viewport.
+    /// Takes a screenshot of the current screen visible area.
     /// </summary>
     /// <param name="driver">WebDriver instance.</param>
     /// <param name="screenshotDirectory">Directory to save a screenshot file.</param>
-    /// <param name="screenshotName">Name for a screenshot file.</param>
+    /// <param name="screenshotName">Screenshot file name.</param>
     /// <param name="imageFormat">Image format.</param>
-    public static void TakeViewPortScreenshot(this IWebDriver driver, string? screenshotDirectory = null, string? screenshotName = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png, By[]? elementsToHide = null)
+    /// <param name="elementsToHide">Locators of elements to hide on a screenshot.</param>
+    public static void TakeViewPortScreenshot(this IWebDriver driver, string? screenshotDirectory = null, string? screenshotName = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png, params By[] elementsToHide)
     {
         driver.HideElements(elementsToHide);
-
-        driver?.TakeScreenshot().SaveAsFile(GetScreenshotPath(screenshotDirectory, screenshotName, imageFormat));
+        driver.TakeScreenshot().SaveAsFile(GetScreenshotPath(screenshotDirectory, screenshotName, imageFormat));
     }
 
     /// <summary>
-    /// Takes a screenshot of a single WebElement.
+    /// Takes a screenshot of a single element on a page.
     /// </summary>
     /// <param name="driver">WebDriver instance.</param>
     /// <param name="element">Element to make screenshot of.</param>
     /// <param name="screenshotDirectory">Directory to save a screenshot file.</param>
-    /// <param name="screenshotName">Name for a screenshot file.</param>
+    /// <param name="screenshotName">Screenshot file name.</param>
     /// <param name="imageFormat">Image format.</param>
     /// <exception cref="ArgumentNullException"><paramref name="element"/> is null.</exception>
     public static void TakeElementScreenshot(this IWebDriver driver, IWebElement element, string? screenshotDirectory = null, string? screenshotName = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png)
@@ -55,16 +55,15 @@ public static class WebDriverScreenshotExtensions
     /// </summary>
     /// <param name="driver">WebDriver instance.</param>
     /// <param name="screenshotDirectory">Directory to save a screenshot file.</param>
-    /// <param name="screenshotName">Name for a screenshot file.</param>
+    /// <param name="screenshotName">Screenshot file name.</param>
     /// <param name="imageFormat">Image format.</param>
     /// <param name="elementsToHide">Locators of elements to hide on a screenshot.</param>
-    public static void TakeFullPageScreenshot(this IWebDriver driver, string? screenshotDirectory = null, string? screenshotName = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png, By[]? elementsToHide = null)
+    public static void TakeFullPageScreenshot(this IWebDriver driver, string? screenshotDirectory = null, string? screenshotName = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png, params By[] elementsToHide)
     {
         var windowHeight = driver.ExecuteJavaScript<long>("return window.innerHeight;");
         var totalHeight = driver.ExecuteJavaScript<long>("return document.documentElement.scrollHeight;");
 
         driver.ExecuteJavaScript("document.body.style.overflow = 'hidden';");
-
         driver.HideElements(elementsToHide);
 
         var scrolledHeight = 0L;
@@ -84,7 +83,16 @@ public static class WebDriverScreenshotExtensions
         _ = bitmap.Encode(stream, imageFormat, default);
     }
 
-    private static string GetScreenshotPath(string? screenshotDirectory = null, string? screenshotName = null, SKEncodedImageFormat imageFormat = SKEncodedImageFormat.Png)
+    private static void HideElements(this IWebDriver driver, By[] elementsToHide)
+    {
+        elementsToHide ??= [];
+        foreach (var element in elementsToHide)
+        {
+            driver.ExecuteJavaScript("arguments[0].style.visibility = 'hidden';", driver.FindElement(element));
+        }
+    }
+
+    private static string GetScreenshotPath(string? screenshotDirectory, string? screenshotName, SKEncodedImageFormat imageFormat)
     {
         if (string.IsNullOrWhiteSpace(screenshotDirectory))
         {
@@ -93,7 +101,7 @@ public static class WebDriverScreenshotExtensions
 
         if (string.IsNullOrWhiteSpace(screenshotName))
         {
-            screenshotName = $"Screenshot_{DateTime.UtcNow.ToFileTime()}.{nameof(imageFormat)}";
+            screenshotName = $"Screenshot_{DateTime.UtcNow.ToFileTime()}.{imageFormat}";
         }
 
         Directory.CreateDirectory(screenshotDirectory);
@@ -118,13 +126,5 @@ public static class WebDriverScreenshotExtensions
         }
 
         return finalBitmap;
-    }
-
-    private static void HideElements(this IWebDriver driver, By[]? elementsToHide = null)
-    {
-        foreach (var element in elementsToHide ??= [])
-        {
-            driver.ExecuteJavaScript("arguments[0].style.visibility = 'hidden';", driver.FindElement(element));
-        }
     }
 }
